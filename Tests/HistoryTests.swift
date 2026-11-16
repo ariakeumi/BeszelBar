@@ -37,7 +37,8 @@ final class HistoryTests: XCTestCase {
         XCTAssertEqual(refreshed.containerRecords.map(\.id), initial.containerRecords.map(\.id))
         XCTAssertEqual(refreshed.cpu.last?.yEnd, initial.cpu.last?.yEnd)
         XCTAssertEqual(refreshed.records.last?.created, initial.records.last?.created.addingTimeInterval(60))
-        XCTAssertTrue(refreshed.notices.contains { $0.hasPrefix("Container history:") })
+        let expectedNotice = String(localized: "Container history: \(URLError(.cannotConnectToHost).localizedDescription)")
+        XCTAssertTrue(refreshed.notices.contains(expectedNotice))
 
         let withoutPrevious = try await ChartDataLoader.load(service: service, systemID: "another-server", range: .day, now: now)
         XCTAssertTrue(withoutPrevious.containers.isEmpty)

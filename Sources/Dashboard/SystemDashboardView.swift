@@ -225,7 +225,7 @@ private struct ChartPanelControls: View {
 
     private var period: some View {
         Picker("Time range", selection: $settings.selectedTimeRange) {
-            ForEach(HistoryRange.allCases) { Text($0.rawValue).tag($0) }
+            ForEach(HistoryRange.allCases) { Text($0.displayName).tag($0) }
         }
         .pickerStyle(.segmented).labelsHidden()
     }

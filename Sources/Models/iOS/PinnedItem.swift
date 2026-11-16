@@ -138,17 +138,17 @@ enum PinnedItem: Codable, Hashable, Identifiable, Sendable {
         case .systemNetworkInterfaces:
             return NSLocalizedString("pinned.item.system.networkinterfaces", bundle: bundle, comment: "")
         case .extraDiskUsage(let name):
-            return "\(name) Usage"
+            return String(localized: "chart.extraDisk.usage.title \(name)", bundle: bundle)
         case .extraDiskIO(let name):
-            return "\(name) I/O"
+            return String(localized: "chart.extraDisk.io.title \(name)", bundle: bundle)
         case .extraDiskIOUtilization(let name):
-            return "\(name) I/O Utilization"
+            return "\(name) \(String(localized: "chart.diskIO.utilization", bundle: bundle))"
         case .extraDiskIOTimes(let name):
-            return "\(name) I/O Times"
+            return "\(name) \(String(localized: "chart.diskIO.times", bundle: bundle))"
         case .extraDiskAwait(let name):
-            return "\(name) Await"
+            return "\(name) \(String(localized: "chart.diskIO.await", bundle: bundle))"
         case .extraDiskIOQueueDepth(let name):
-            return "\(name) Queue Depth"
+            return "\(name) \(String(localized: "chart.diskIO.queueDepth", bundle: bundle))"
         case .containerCPU(let name):
             let format = NSLocalizedString("pinned.item.container.cpu", bundle: bundle, comment: "")
             return String(format: format, name)

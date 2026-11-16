@@ -5,24 +5,42 @@ import AppKit
 enum MenuBuilder {
     private static let menuWidth: CGFloat = 320
 
-    static func build(appState: AppState) -> NSMenu {
-        let menu = NSMenu()
+    static func build(appState: AppState, appearance: MenuAppearance = .load()) -> NSMenu {
+        let menu = makeMenu(appearance: appearance)
         menu.autoenablesItems = false
         let actions = MenuActions.shared
 
         let headerItem = NSMenuItem()
-        let headerView = NSHostingView(rootView: MenuHeaderView(appState: appState))
-        headerView.frame = NSRect(x: 0, y: 0, width: menuWidth, height: 46)
+        let headerView = host(MenuHeaderView(
+            appState: appState,
+            width: appearance.size(menuWidth),
+            onOpenWebDashboard: { [weak headerItem] url in
+                headerItem?.menu?.cancelTracking()
+                NSWorkspace.shared.open(url)
+            },
+            onOpenSettings: { [weak headerItem] in
+                headerItem?.menu?.cancelTracking()
+                actions.openSettings(nil)
+            },
+            onQuit: { [weak headerItem] in
+                headerItem?.menu?.cancelTracking()
+                actions.quit(nil)
+            },
+            onSelectHub: { [weak headerItem] instance in
+                headerItem?.menu?.cancelTracking()
+                appState.selectInstance(instance)
+            }
+        ), width: menuWidth, minimumHeight: 46, appearance: appearance)
         headerItem.view = headerView
         menu.addItem(headerItem)
 
         if !appState.activeAlerts.isEmpty {
-            menu.addItem(createAlertsSubmenu(alerts: appState.activeAlerts))
+            menu.addItem(createAlertsSubmenu(alerts: appState.activeAlerts, appearance: appearance))
             menu.addItem(NSMenuItem.separator())
         }
 
         if appState.instances.isEmpty {
-            menu.addItem(createInfoItem("No Hub Configured", subtext: "Open Settings to add a hub"))
+            menu.addItem(createInfoItem("No Hub Configured", subtext: String(localized: "Open Settings to add a hub"), appearance: appearance))
         } else {
             for instance in appState.visibleInstances {
                 let snapshot = appState.hubSnapshots[instance.id] ?? HubSnapshot()
@@ -31,109 +49,37 @@ enum MenuBuilder {
                     menu.addItem(heading)
                 }
                 if let notice = snapshot.notice {
-                    menu.addItem(createInfoItem("Hub needs attention", subtext: notice))
+                    menu.addItem(createInfoItem("Hub needs attention", subtext: notice, appearance: appearance))
                 }
                 if snapshot.isLoading && snapshot.systems.isEmpty {
-                    menu.addItem(createInfoItem("Loading…", subtext: nil))
+                    menu.addItem(createInfoItem("Loading…", subtext: nil, appearance: appearance))
                 } else if snapshot.systems.isEmpty && snapshot.errorMessage == nil {
-                    menu.addItem(createInfoItem("No Systems Found", subtext: nil))
+                    menu.addItem(createInfoItem("No Systems Found", subtext: nil, appearance: appearance))
                 }
                 for system in snapshot.systems {
-                    menu.addItem(createSystemItem(for: HubSystem(instance: instance, system: system, connectionURL: snapshot.connectedURL), appState: appState))
+                    menu.addItem(createSystemItem(for: HubSystem(instance: instance, system: system, connectionURL: snapshot.connectedURL), appState: appState, appearance: appearance))
                 }
             }
         }
-
-        menu.addItem(NSMenuItem.separator())
-
-        if appState.instances.count > 1 {
-            menu.addItem(createHubSwitcherSubmenu(appState: appState))
-        }
-
-        let dashboardItem = NSMenuItem(title: "Open Dashboard…", action: #selector(MenuActions.openDashboard(_:)), keyEquivalent: "d")
-        dashboardItem.target = actions
-        dashboardItem.image = NSImage(systemSymbolName: "rectangle.split.2x2", accessibilityDescription: nil)
-        menu.addItem(dashboardItem)
-
-        let settingsItem = NSMenuItem(
-            title: "Settings...",
-            action: #selector(MenuActions.openSettings),
-            keyEquivalent: ","
-        )
-        settingsItem.target = actions
-        settingsItem.image = NSImage(systemSymbolName: "gear", accessibilityDescription: nil)
-        settingsItem.image?.size = NSSize(width: 14, height: 14)
-        menu.addItem(settingsItem)
-
-        let refreshItem = NSMenuItem(
-            title: "Refresh Now",
-            action: #selector(MenuActions.refreshNow),
-            keyEquivalent: "r"
-        )
-        refreshItem.target = actions
-        refreshItem.image = NSImage(systemSymbolName: "arrow.clockwise", accessibilityDescription: nil)
-        refreshItem.image?.size = NSSize(width: 14, height: 14)
-        menu.addItem(refreshItem)
-
-        menu.addItem(NSMenuItem.separator())
-
-        let quitItem = NSMenuItem(
-            title: "Quit BeszelBar",
-            action: #selector(MenuActions.quit),
-            keyEquivalent: "q"
-        )
-        quitItem.target = MenuActions.shared
-        menu.addItem(quitItem)
 
         return menu
     }
 
-    private static func createHubSwitcherSubmenu(appState: AppState) -> NSMenuItem {
-        let item = NSMenuItem(title: "Show Hubs", action: nil, keyEquivalent: "")
-        item.image = NSImage(systemSymbolName: "arrow.left.arrow.right", accessibilityDescription: nil)
-        item.image?.size = NSSize(width: 14, height: 14)
-
-        let submenu = NSMenu()
-        let allItem = NSMenuItem(title: "All Hubs", action: #selector(MenuActions.showAllHubs(_:)), keyEquivalent: "")
-        allItem.target = MenuActions.shared
-        allItem.state = appState.showsAllHubs ? .on : .off
-        submenu.addItem(allItem)
-        submenu.addItem(.separator())
-        for instance in appState.instances {
-            let hubItem = NSMenuItem(
-                title: instance.name.isEmpty ? instance.url : instance.name,
-                action: #selector(MenuActions.switchHub(_:)),
-                keyEquivalent: ""
-            )
-            hubItem.target = MenuActions.shared
-            hubItem.representedObject = instance.id
-
-            if !appState.showsAllHubs && instance.id == appState.selectedInstance?.id {
-                hubItem.state = .on
-            }
-
-            submenu.addItem(hubItem)
-        }
-
-        item.submenu = submenu
-        return item
-    }
-
-    private static func createAlertsSubmenu(alerts: [HubAlert]) -> NSMenuItem {
-        let item = NSMenuItem(title: "Alerts (\(alerts.count))", action: nil, keyEquivalent: "")
+    private static func createAlertsSubmenu(alerts: [HubAlert], appearance: MenuAppearance) -> NSMenuItem {
+        let item = NSMenuItem(title: String(localized: "Alerts (\(alerts.count))"), action: nil, keyEquivalent: "")
         item.image = NSImage(systemSymbolName: "exclamationmark.triangle.fill", accessibilityDescription: nil)
-        item.image?.size = NSSize(width: 14, height: 14)
+        item.image?.size = NSSize(width: appearance.size(14), height: appearance.size(14))
         item.image?.isTemplate = false
 
-        let submenu = NSMenu()
+        let submenu = makeMenu(appearance: appearance)
 
         for entry in alerts.prefix(10) {
             let alert = entry.alert
             let systemName = "\(entry.systemName) · \(entry.instance.displayName)"
             let alertItem = NSMenuItem()
 
-            let view = NSHostingView(rootView: AlertMenuRowView(alert: alert, systemName: systemName))
-            view.frame = NSRect(x: 0, y: 0, width: menuWidth - 20, height: 44)
+            let view = host(AlertMenuRowView(alert: alert, systemName: systemName),
+                            width: menuWidth - 20, minimumHeight: 44, appearance: appearance)
             alertItem.view = view
 
             submenu.addItem(alertItem)
@@ -141,7 +87,7 @@ enum MenuBuilder {
 
         if alerts.count > 10 {
             submenu.addItem(NSMenuItem.separator())
-            let moreItem = NSMenuItem(title: "+\(alerts.count - 10) more alerts", action: nil, keyEquivalent: "")
+            let moreItem = NSMenuItem(title: String(localized: "+\(alerts.count - 10) more alerts"), action: nil, keyEquivalent: "")
             moreItem.isEnabled = false
             submenu.addItem(moreItem)
         }
@@ -150,16 +96,16 @@ enum MenuBuilder {
         return item
     }
 
-    private static func createInfoItem(_ title: String, subtext: String?) -> NSMenuItem {
+    private static func createInfoItem(_ title: LocalizedStringKey, subtext: String?, appearance: MenuAppearance) -> NSMenuItem {
         let item = NSMenuItem()
-        let view = NSHostingView(rootView: InfoMenuRowView(title: title, subtext: subtext))
-        view.frame = NSRect(x: 0, y: 0, width: menuWidth, height: subtext != nil ? 40 : 28)
+        let view = host(InfoMenuRowView(title: title, subtext: subtext), width: menuWidth,
+                        minimumHeight: subtext != nil ? 40 : 28, appearance: appearance)
         item.view = view
         item.isEnabled = true
         return item
     }
 
-    private static func createSystemItem(for entry: HubSystem, appState: AppState) -> NSMenuItem {
+    private static func createSystemItem(for entry: HubSystem, appState: AppState, appearance: MenuAppearance) -> NSMenuItem {
         let system = entry.system
         let item = NSMenuItem(
             title: system.name.isEmpty ? system.id : system.name,
@@ -169,8 +115,8 @@ enum MenuBuilder {
         item.target = MenuActions.shared
         item.representedObject = entry.id
 
-        let hostingView = NSHostingView(rootView: SystemMenuRowView(system: system))
-        hostingView.frame = NSRect(x: 0, y: 0, width: menuWidth, height: 44)
+        let hostingView = host(SystemMenuRowView(appState: appState, entry: entry),
+                               width: menuWidth, minimumHeight: 48, appearance: appearance)
 
         let wrapper = NSView(frame: hostingView.frame)
         wrapper.wantsLayer = true
@@ -184,20 +130,20 @@ enum MenuBuilder {
 
         let snapshot = appState.hubSnapshots[entry.instance.id] ?? HubSnapshot()
         let containers = snapshot.containers.filter { $0.system == system.id }
-        let submenu = createSystemSubmenu(for: entry, containers: containers, appState: appState)
+        let submenu = createSystemSubmenu(for: entry, containers: containers, appState: appState, appearance: appearance)
         item.submenu = submenu
 
         return item
     }
 
-    private static func createSystemSubmenu(for entry: HubSystem, containers: [ContainerRecord], appState: AppState) -> NSMenu {
-        let submenu = NSMenu()
+    private static func createSystemSubmenu(for entry: HubSystem, containers: [ContainerRecord], appState: AppState, appearance: MenuAppearance) -> NSMenu {
+        let submenu = makeMenu(appearance: appearance)
         let system = entry.system
         let details = appState.hubSnapshots[entry.instance.id]?.details[system.id]
 
         let detailItem = NSMenuItem()
-        let detailView = NSHostingView(rootView: SystemDetailView(system: system, details: details))
-        detailView.frame = NSRect(x: 0, y: 0, width: 250, height: 180)
+        let detailView = host(SystemDetailView(appState: appState, entry: entry),
+                              width: 250, minimumHeight: 180, appearance: appearance)
         detailItem.view = detailView
         submenu.addItem(detailItem)
 
@@ -205,17 +151,17 @@ enum MenuBuilder {
             submenu.addItem(NSMenuItem.separator())
 
             let headerItem = NSMenuItem()
-            let headerView = NSHostingView(rootView:
+            let headerView = host(
                 HStack {
                     Label("Containers (\(containers.count))", systemImage: "shippingbox.fill")
-                        .font(.system(size: 11, weight: .semibold))
+                        .font(.system(size: appearance.size(11), weight: .semibold))
                         .foregroundColor(.primary)
                     Spacer()
                 }
-                .padding(.horizontal, 10)
-                .padding(.vertical, 4)
+                .padding(.horizontal, appearance.size(10))
+                .padding(.vertical, appearance.size(4)),
+                width: 260, minimumHeight: 24, appearance: appearance
             )
-            headerView.frame = NSRect(x: 0, y: 0, width: 260, height: 24)
             headerItem.view = headerView
             submenu.addItem(headerItem)
 
@@ -223,22 +169,24 @@ enum MenuBuilder {
 
             for container in sortedContainers.prefix(10) {
                 let containerItem = NSMenuItem()
-                let view = NSHostingView(rootView: ContainerMenuRowView(container: container))
-                view.frame = NSRect(x: 0, y: 0, width: 260, height: 50)
+                let view = host(ContainerMenuRowView(appState: appState,
+                    entry: HubContainer(instance: entry.instance, container: container, systemName: system.name)),
+                    width: 260, minimumHeight: 50, appearance: appearance)
                 containerItem.view = view
                 submenu.addItem(containerItem)
             }
 
             if containers.count > 10 {
-                let moreItem = NSMenuItem(title: "+\(containers.count - 10) more containers", action: nil, keyEquivalent: "")
+                let moreItem = NSMenuItem(title: String(localized: "+\(containers.count - 10) more containers"), action: nil, keyEquivalent: "")
                 moreItem.image = NSImage(systemSymbolName: "ellipsis.circle", accessibilityDescription: nil)
-                moreItem.image?.size = NSSize(width: 12, height: 12)
+                moreItem.image?.size = NSSize(width: appearance.size(12), height: appearance.size(12))
 
-                let moreSubmenu = NSMenu()
+                let moreSubmenu = makeMenu(appearance: appearance)
                 for container in sortedContainers.dropFirst(10) {
                     let containerItem = NSMenuItem()
-                    let view = NSHostingView(rootView: ContainerMenuRowView(container: container))
-                    view.frame = NSRect(x: 0, y: 0, width: 260, height: 50)
+                    let view = host(ContainerMenuRowView(appState: appState,
+                        entry: HubContainer(instance: entry.instance, container: container, systemName: system.name)),
+                        width: 260, minimumHeight: 50, appearance: appearance)
                     containerItem.view = view
                     moreSubmenu.addItem(containerItem)
                 }
@@ -249,36 +197,52 @@ enum MenuBuilder {
 
         submenu.addItem(NSMenuItem.separator())
 
-        let dashboardItem = NSMenuItem(title: "View Charts…", action: #selector(MenuActions.openDashboard(_:)), keyEquivalent: "")
+        let dashboardItem = NSMenuItem(title: String(localized: "View Charts…"), action: #selector(MenuActions.openDashboard(_:)), keyEquivalent: "")
         dashboardItem.target = MenuActions.shared
         dashboardItem.representedObject = entry.id
         submenu.addItem(dashboardItem)
 
         let openItem = NSMenuItem(
-            title: "Open in Browser",
+            title: String(localized: "Open in Browser"),
             action: #selector(MenuActions.openSystemInBrowser(_:)),
             keyEquivalent: ""
         )
         openItem.target = MenuActions.shared
         openItem.representedObject = entry.id
         openItem.image = NSImage(systemSymbolName: "safari", accessibilityDescription: nil)
-        openItem.image?.size = NSSize(width: 14, height: 14)
+        openItem.image?.size = NSSize(width: appearance.size(14), height: appearance.size(14))
         submenu.addItem(openItem)
 
         let hostname = details?.hostname ?? system.info?.h
         if let hostname = hostname {
             let copyItem = NSMenuItem(
-                title: "Copy Hostname",
+                title: String(localized: "Copy Hostname"),
                 action: #selector(MenuActions.copyToClipboard(_:)),
                 keyEquivalent: ""
             )
             copyItem.target = MenuActions.shared
             copyItem.representedObject = hostname
             copyItem.image = NSImage(systemSymbolName: "doc.on.doc", accessibilityDescription: nil)
-            copyItem.image?.size = NSSize(width: 14, height: 14)
+            copyItem.image?.size = NSSize(width: appearance.size(14), height: appearance.size(14))
             submenu.addItem(copyItem)
         }
 
         return submenu
+    }
+
+    private static func makeMenu(appearance: MenuAppearance) -> NSMenu {
+        let menu = NSMenu()
+        menu.font = NSFont.menuFont(ofSize: appearance.size(NSFont.menuFont(ofSize: 0).pointSize))
+        return menu
+    }
+
+    private static func host<Content: View>(_ content: Content, width: CGFloat,
+                                           minimumHeight: CGFloat, appearance: MenuAppearance) -> NSView {
+        let view = NSHostingView(rootView: content
+            .environment(\.menuAppearance, appearance)
+            .frame(width: appearance.size(width)))
+        view.frame = NSRect(x: 0, y: 0, width: appearance.size(width),
+                            height: max(appearance.size(minimumHeight), view.fittingSize.height))
+        return view
     }
 }

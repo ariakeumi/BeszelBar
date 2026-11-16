@@ -9,9 +9,15 @@ struct SystemRecord: Identifiable, Codable, Hashable {
     let info: SystemInfo?
     let v: String?
     let updated: String?
+    // Directional rates come from rt_metrics, not the systems collection.
+    var networkTraffic: SystemNetworkTraffic? = nil
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, status, host, port, info, v, updated
+    }
 }
 
-struct SystemInfo: Codable, Hashable {
+struct SystemInfo: Codable, Hashable, Sendable {
     let h: String?
     let k: String?
     let c: Int?
@@ -21,18 +27,18 @@ struct SystemInfo: Codable, Hashable {
     let os: Int?
     let u: Double?
     let v: String?
-    let cpu: Double?
-    let mp: Double?
-    let dp: Double?
-    let b: Double?
-    let bb: Double?
+    var cpu: Double?
+    var mp: Double?
+    var dp: Double?
+    var b: Double?
+    var bb: Double?
     let l1: Double?
     let l5: Double?
     let l15: Double?
     let la: [Double]?
     let bat: [Double]?
     let g: Double?
-    let dt: Double?
+    var dt: Double?
     let p: Bool?
     let ct: Int?
     let efs: [String: Double]?
@@ -41,11 +47,13 @@ struct SystemInfo: Codable, Hashable {
 
 extension SystemRecord {
     var displayStatus: String {
-        guard let status = status?.lowercased() else { return "Unknown" }
+        guard let status = status?.lowercased() else { return String(localized: "status.unknown") }
         switch status {
-        case "up", "online": return "Online"
-        case "down", "offline": return "Offline"
-        case "pending": return "Pending"
+        case "up", "online": return String(localized: "status.operational")
+        case "down", "offline": return String(localized: "status.offline")
+        case "pending": return String(localized: "status.pending")
+        case "paused": return String(localized: "status.paused")
+        case "unknown": return String(localized: "status.unknown")
         default: return status.capitalized
         }
     }
@@ -122,10 +130,10 @@ enum ContainerHealth: Int, Codable, Hashable {
 
     var displayText: String {
         switch self {
-        case .none: return "No Health Check"
-        case .starting: return "Starting"
-        case .healthy: return "Healthy"
-        case .unhealthy: return "Unhealthy"
+        case .none: return String(localized: "No Health Check")
+        case .starting: return String(localized: "container.health.starting")
+        case .healthy: return String(localized: "container.health.healthy")
+        case .unhealthy: return String(localized: "container.health.unhealthy")
         }
     }
 
@@ -153,6 +161,20 @@ struct ContainerRecord: Identifiable, Codable, Hashable {
 
     var updatedDate: Date {
         Date(timeIntervalSince1970: Double(updated) / 1000.0)
+    }
+
+    var displayStatus: String {
+        switch status.lowercased() {
+        case "running": return String(localized: "container.status.running")
+        case "stopped": return String(localized: "container.status.stopped")
+        case "created": return String(localized: "container.status.created")
+        case "restarting": return String(localized: "container.status.restarting")
+        case "paused": return String(localized: "container.status.paused")
+        case "exited": return String(localized: "container.status.exited")
+        case "dead": return String(localized: "container.status.dead")
+        case "removing": return String(localized: "container.status.removing")
+        default: return status
+        }
     }
 }
 
@@ -182,7 +204,15 @@ struct AlertRecord: Identifiable, Codable {
     var value: Double? = nil
 
     var displayMetric: String {
-        metric ?? name
+        switch metric?.lowercased() {
+        case "cpu": return String(localized: "CPU")
+        case "memory", "mem": return String(localized: "Memory")
+        case "disk": return String(localized: "Disk")
+        case "temperature", "temp": return String(localized: "chart.temperatures")
+        case "network": return String(localized: "Network")
+        case "bandwidth": return String(localized: "Bandwidth")
+        default: return metric ?? name
+        }
     }
 
     var displayThreshold: String {

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CD9C7A0E8CE34C5685047511 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = CD9C7A0E8CE34C5685047512 /* InfoPlist.xcstrings */; };
+		CE370A7F729A4A0E89F19B81 /* MenuAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE370A7F729A4A0E89F19B82 /* MenuAppearance.swift */; };
+		A2B7D29EF44B4F03AEBCC701 /* RefreshService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF36076631342404B904AA0 /* RefreshService.swift */; };
+		A2B7D29EF44B4F03AEBCC702 /* RefreshServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2B7D29EF44B4F03AEBCC703 /* RefreshServiceTests.swift */; };
 		00BEF778E4F97D70D504F343 /* RefreshService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF36076631342404B904AA0 /* RefreshService.swift */; };
 		020A2A7AD7195CF5D7697E62 /* ContainerMenuRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E306F321988C9BDBA716CE6C /* ContainerMenuRowView.swift */; };
 		04414FEE9200D249052D36BE /* MonitoringDesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF853EEE78078AE5AB0B273 /* MonitoringDesignSystem.swift */; };
@@ -55,6 +59,7 @@
 		4EC3B0B68C9D4ABC63442E98 /* StackedCpuChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC79DE378BD5F46779EA427B /* StackedCpuChartView.swift */; };
 		51BFB0D564C805713F53F0AF /* DetailedMemoryChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F9765850BDEB18A5CF7137 /* DetailedMemoryChartView.swift */; };
 		54EE4EECD70FC8E443017B73 /* BeszelAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FB1983B02FC00BAF135EA2 /* BeszelAPIService.swift */; };
+		AEB26D3E93AC5552913D6224 /* BeszelRealtimeConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF85B2CF4B51A89BECB04E /* BeszelRealtimeConnection.swift */; };
 		55B592970E81B1E0B0A06566 /* DiskIOSummaryChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEEA4C7095FE8B4050B31A3 /* DiskIOSummaryChartView.swift */; };
 		5644673A89BB724247D2FF40 /* SystemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12063024AA456FC00EDFD5B1 /* SystemDetailView.swift */; };
 		59F0527E6DDBFF84DA176C95 /* HubSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D20E00E40E73AA7C100CA91 /* HubSnapshot.swift */; };
@@ -67,10 +72,13 @@
 		6AA2969ED346949EFD3FB216 /* SystemDiskUsageChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01ED90EE68034BB93ECE6ED9 /* SystemDiskUsageChartView.swift */; };
 		6B2583C6E13EE07620540AE2 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEEEFF3346DB11D69170DD6 /* DateFormatter+Extensions.swift */; };
 		6BA11964B29B9CFE967A8494 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9464DC3B398E06901D68550F /* Models.swift */; };
+		CDEBFAA8F564521BBE01BB90 /* RealtimeMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187DA787C9BD569AA5CFB98E /* RealtimeMetrics.swift */; };
 		6C904759DA3567365D9D1A01 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9464DC3B398E06901D68550F /* Models.swift */; };
+		D315B2511535597188EDEEB9 /* RealtimeMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187DA787C9BD569AA5CFB98E /* RealtimeMetrics.swift */; };
 		6D3F3DB99ABCF517C95AF8AF /* SystemCpuDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CA9CF8BC7BDDE0627669F2 /* SystemCpuDetailView.swift */; };
 		75AB550E353ED7DDF658670D /* SystemGPUChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56728F1A5F0B585DC4997595 /* SystemGPUChartView.swift */; };
 		7626E2F290CA38ECD86F9B8E /* APITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950CA47185A3CEE462BEE2D2 /* APITests.swift */; };
+		0D8CEF7CD49B54C8873E6B92 /* RealtimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3254D868227557EBEF47603 /* RealtimeTests.swift */; };
 		7697F524522F1F40FEC08E2F /* HistoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43FBD575C42EBD72214EE9D /* HistoryTests.swift */; };
 		77B0735762EE78F247FEC5EE /* PinButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B58C576B2B3AC9AA7C53C3B /* PinButtonView.swift */; };
 		78044708FD58447218E3DBE1 /* ChartDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD3DBE77A4AE94A5B081F56 /* ChartDataLoader.swift */; };
@@ -109,6 +117,7 @@
 		ACBFEFCFE2CCC9FADDFACA5D /* SystemCpuSummaryChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF98E0D05B0891A04C21E1F /* SystemCpuSummaryChartView.swift */; };
 		AF8FD98E25D74E8C3A3634C1 /* ActivityDashboardViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BB94251446BAE75AD972524 /* ActivityDashboardViews.swift */; };
 		B0C0312A6D672B48C138F70B /* BeszelAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8FB1983B02FC00BAF135EA2 /* BeszelAPIService.swift */; };
+		FB72F4760BAC5CC8AF322108 /* BeszelRealtimeConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFF85B2CF4B51A89BECB04E /* BeszelRealtimeConnection.swift */; };
 		B191E71B42E2163271C9DE45 /* DateFormatter+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEEEFF3346DB11D69170DD6 /* DateFormatter+Extensions.swift */; };
 		B20663FD7955BC80ADB16E4C /* SystemSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EA5A900F66584388F5A3B5 /* SystemSummaryCard.swift */; };
 		B24F25F2CCED18F1874B633E /* SystemLoadChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DCA020B4BE78C1A2A9226F /* SystemLoadChartView.swift */; };
@@ -172,6 +181,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CD9C7A0E8CE34C5685047512 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		CE370A7F729A4A0E89F19B82 /* MenuAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuAppearance.swift; sourceTree = "<group>"; };
+		A2B7D29EF44B4F03AEBCC703 /* RefreshServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshServiceTests.swift; sourceTree = "<group>"; };
 		01ED90EE68034BB93ECE6ED9 /* SystemDiskUsageChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDiskUsageChartView.swift; sourceTree = "<group>"; };
 		02AF1D0303C8AAB0873F5D6E /* ChartParityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartParityTests.swift; sourceTree = "<group>"; };
 		02DBDD86F824A5EADC70729D /* HubConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubConnectionTests.swift; sourceTree = "<group>"; };
@@ -224,7 +236,9 @@
 		7D20E00E40E73AA7C100CA91 /* HubSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubSnapshot.swift; sourceTree = "<group>"; };
 		83F9586459A4B49C89216486 /* SystemDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemDataPoint.swift; sourceTree = "<group>"; };
 		9464DC3B398E06901D68550F /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		187DA787C9BD569AA5CFB98E /* RealtimeMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeMetrics.swift; sourceTree = "<group>"; };
 		950CA47185A3CEE462BEE2D2 /* APITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITests.swift; sourceTree = "<group>"; };
+		F3254D868227557EBEF47603 /* RealtimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimeTests.swift; sourceTree = "<group>"; };
 		9B014C1A76AE4BEB07C64223 /* StorageHistoryChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageHistoryChart.swift; sourceTree = "<group>"; };
 		9E4B217DF23619BABB944FC6 /* BeszelBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeszelBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ED5BDD6A2E09AB6CC21FF02 /* DetailedBandwidthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedBandwidthView.swift; sourceTree = "<group>"; };
@@ -247,6 +261,7 @@
 		D687528901B8719BA168809B /* MenuHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeaderView.swift; sourceTree = "<group>"; };
 		D879D61A2031231B42699579 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		D8FB1983B02FC00BAF135EA2 /* BeszelAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeszelAPIService.swift; sourceTree = "<group>"; };
+		BFFF85B2CF4B51A89BECB04E /* BeszelRealtimeConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeszelRealtimeConnection.swift; sourceTree = "<group>"; };
 		DA0890BF29EAB108B3E1CDA2 /* KeychainServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainServiceTests.swift; sourceTree = "<group>"; };
 		DC431407BFB143086971A825 /* DetailedExtraDiskIOView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedExtraDiskIOView.swift; sourceTree = "<group>"; };
 		E306F321988C9BDBA716CE6C /* ContainerMenuRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerMenuRowView.swift; sourceTree = "<group>"; };
@@ -347,6 +362,7 @@
 			isa = PBXGroup;
 			children = (
 				5EBAF76E6EBF34C669CB5396 /* MenuActions.swift */,
+				CE370A7F729A4A0E89F19B82 /* MenuAppearance.swift */,
 				EFB4A3B7EE637F0B0B23115D /* MenuBuilder.swift */,
 				A3B670E34223ABF8880B1B9A /* WindowManager.swift */,
 				4E0C85877B5A70640CB279EF /* Views */,
@@ -358,6 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				D8FB1983B02FC00BAF135EA2 /* BeszelAPIService.swift */,
+				BFFF85B2CF4B51A89BECB04E /* BeszelRealtimeConnection.swift */,
 				2EC122EE17F33834AFF561E1 /* HubConnection.swift */,
 				D879D61A2031231B42699579 /* KeychainService.swift */,
 				4EF36076631342404B904AA0 /* RefreshService.swift */,
@@ -409,7 +426,9 @@
 		6C5902106A0DB4FA5A67379A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A2B7D29EF44B4F03AEBCC703 /* RefreshServiceTests.swift */,
 				950CA47185A3CEE462BEE2D2 /* APITests.swift */,
+				F3254D868227557EBEF47603 /* RealtimeTests.swift */,
 				77B94DA3A3C743B59FE08F54 /* AppStateTests.swift */,
 				57A3D1D4DCF4FDB1B81F0984 /* ChartFixtures.swift */,
 				02AF1D0303C8AAB0873F5D6E /* ChartParityTests.swift */,
@@ -508,6 +527,7 @@
 				1CC182658B886A73EB29FBD4 /* HistorySeries.swift */,
 				7D20E00E40E73AA7C100CA91 /* HubSnapshot.swift */,
 				9464DC3B398E06901D68550F /* Models.swift */,
+				187DA787C9BD569AA5CFB98E /* RealtimeMetrics.swift */,
 				CA49F4C8D272E0AD46F079D3 /* iOS */,
 			);
 			path = Models;
@@ -545,6 +565,7 @@
 				B92A2F65BC847F28E92213A1 /* Assets.xcassets */,
 				EA91B07E6440309524DB0AEF /* BeszelBar.entitlements */,
 				507A5A8B512FA65A4233F8BC /* Info.plist */,
+				CD9C7A0E8CE34C5685047512 /* InfoPlist.xcstrings */,
 				2F0AB20EC0D8481FF0668B3B /* Localizable.xcstrings */,
 			);
 			path = Resources;
@@ -623,6 +644,7 @@
 				Base,
 				en,
 				fr,
+				"zh-Hans",
 			);
 			mainGroup = 35A5B4B5C5FA161634C663B7;
 			minimizedProjectReferenceProxies = 1;
@@ -644,6 +666,7 @@
 			files = (
 				3E53DE47A0C511620B19BE58 /* Assets.xcassets in Resources */,
 				8E9FF3D40E702B001CB26788 /* Localizable.xcstrings in Resources */,
+				CD9C7A0E8CE34C5685047511 /* InfoPlist.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,11 +685,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2B7D29EF44B4F03AEBCC701 /* RefreshService.swift in Sources */,
+				A2B7D29EF44B4F03AEBCC702 /* RefreshServiceTests.swift in Sources */,
 				7626E2F290CA38ECD86F9B8E /* APITests.swift in Sources */,
+				0D8CEF7CD49B54C8873E6B92 /* RealtimeTests.swift in Sources */,
 				18302D44918DB29C4528C454 /* AppState.swift in Sources */,
 				E3A92D7EF96FA547724DF13D /* AppStateTests.swift in Sources */,
 				A046278B894253B938482B28 /* BandwidthSummaryChartView.swift in Sources */,
 				54EE4EECD70FC8E443017B73 /* BeszelAPIService.swift in Sources */,
+				AEB26D3E93AC5552913D6224 /* BeszelRealtimeConnection.swift in Sources */,
 				344A697BDED71286D98D432D /* CardGroupBoxStyle.swift in Sources */,
 				3A37DBC78E0C7D7D25C67A02 /* ChartCatalog.swift in Sources */,
 				78044708FD58447218E3DBE1 /* ChartDataLoader.swift in Sources */,
@@ -700,6 +727,7 @@
 				D5E24E03235A4F08998A7D46 /* KeychainService.swift in Sources */,
 				227372C17BE34373B8CE6384 /* KeychainServiceTests.swift in Sources */,
 				6BA11964B29B9CFE967A8494 /* Models.swift in Sources */,
+				CDEBFAA8F564521BBE01BB90 /* RealtimeMetrics.swift in Sources */,
 				04414FEE9200D249052D36BE /* MonitoringDesignSystem.swift in Sources */,
 				855BBC59A3272440055E6716 /* PinButtonView.swift in Sources */,
 				FB7ECF98F9D2F3530AE64DD0 /* PinnedItem.swift in Sources */,
@@ -745,6 +773,7 @@
 				8E1E8F9CCC1383C3C406A35A /* AppState.swift in Sources */,
 				0E2F35A11F00B7F78129728F /* BandwidthSummaryChartView.swift in Sources */,
 				B0C0312A6D672B48C138F70B /* BeszelAPIService.swift in Sources */,
+				FB72F4760BAC5CC8AF322108 /* BeszelRealtimeConnection.swift in Sources */,
 				8D66DE0702E9593562581913 /* BeszelBarApp.swift in Sources */,
 				AADA319FE0E427E9B8DDE177 /* CardGroupBoxStyle.swift in Sources */,
 				E9C3D35AD9EAC403704A20A6 /* ChartCatalog.swift in Sources */,
@@ -776,9 +805,11 @@
 				1E13BD84CA99B1C01AAD9809 /* InfoMenuRowView.swift in Sources */,
 				8E94C9C4DDFA4ACAE37B963E /* KeychainService.swift in Sources */,
 				D34309692A8DBF8CDB89A18B /* MenuActions.swift in Sources */,
+				CE370A7F729A4A0E89F19B81 /* MenuAppearance.swift in Sources */,
 				EE3535E8F86A11221CA1C31B /* MenuBuilder.swift in Sources */,
 				8A85D81AA6D64658D6D8D645 /* MenuHeaderView.swift in Sources */,
 				6C904759DA3567365D9D1A01 /* Models.swift in Sources */,
+				D315B2511535597188EDEEB9 /* RealtimeMetrics.swift in Sources */,
 				22F40F4ED31F690081A64C0F /* MonitoringDesignSystem.swift in Sources */,
 				EC2C2A3EE8BC7960B2170E3A /* MonitoringStyle.swift in Sources */,
 				77B0735762EE78F247FEC5EE /* PinButtonView.swift in Sources */,

@@ -1,47 +1,336 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "settings.menuAppearance" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MENU BAR POPUP"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MENU DE LA BARRE DES MENUS"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "菜单栏弹窗"
+          }
+        }
+      }
+    },
+    "settings.menuFontSize" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Font size"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taille du texte"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "字体大小"
+          }
+        }
+      }
+    },
+    "settings.menuFontSize.description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adjusts text in the menu bar popup and its submenus. Changes apply the next time you open the menu."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajuste le texte du menu et de ses sous-menus. Les modifications s’appliquent à la prochaine ouverture du menu."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "调整菜单栏弹窗及子菜单的文字大小，下次打开弹窗时生效。"
+          }
+        }
+      }
+    },
+    "settings.menuFontSize.preview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text preview · BeszelBar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aperçu du texte · BeszelBar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "字体预览 · BeszelBar"
+          }
+        }
+      }
+    },
+    "settings.menuFontSize.reset" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réinitialiser"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢复默认"
+          }
+        }
+      }
+    },
+    "menu.openWebDashboard" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Web Dashboard"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir le tableau de bord web"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开 Web 面板"
+          }
+        }
+      }
+    },
+    "menu.settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réglages…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置…"
+          }
+        }
+      }
+    },
+    "menu.quit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quit BeszelBar"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitter BeszelBar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出 BeszelBar"
+          }
+        }
+      }
+    },
+    "menu.showHubs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Hubs"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher les hubs"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切换监控中心"
+          }
+        }
+      }
+    },
     "" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
     },
     " " : {
       "comment" : "A space",
-      "isCommentAutoGenerated" : true
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        }
+      }
     },
     " (%)" : {
       "comment" : "Suffix for a disk utilization value, e.g. \"100%\"",
-      "isCommentAutoGenerated" : true
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " (%)"
+          }
+        }
+      }
     },
     " (%@)" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " (%@)"
+          }
+        }
+      }
     },
     " (°C)" : {
       "comment" : "A unit of temperature.",
-      "isCommentAutoGenerated" : true
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " (°C)"
+          }
+        }
+      }
     },
     " (GB)" : {
       "comment" : "A unit of measurement for the size of a swap.",
-      "isCommentAutoGenerated" : true
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " (GB)"
+          }
+        }
+      }
     },
     " (MB/s)" : {
       "comment" : "A unit of measurement for bandwidth.",
-      "isCommentAutoGenerated" : true
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " (MB/s)"
+          }
+        }
+      }
     },
     " (ms)" : {
       "comment" : "A unit of measurement for await time.",
-      "isCommentAutoGenerated" : true
+      "isCommentAutoGenerated" : true,
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " (ms)"
+          }
+        }
+      }
     },
     "—" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "—"
+          }
+        }
+      }
     },
     "%@" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
     },
     "%@ · %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "%1$@ · %2$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "%1$@ · %2$@"
           }
         }
@@ -54,6 +343,12 @@
             "state" : "new",
             "value" : "%1$@ · Threshold: %2$@"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ · 阈值：%2$@"
+          }
         }
       }
     },
@@ -62,6 +357,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "%1$@ / %2$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "%1$@ / %2$@"
           }
         }
@@ -74,6 +375,12 @@
             "state" : "new",
             "value" : "%1$@ %2$@"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@"
+          }
         }
       }
     },
@@ -84,14 +391,34 @@
             "state" : "new",
             "value" : "%1$@ > %2$@"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ > %2$@"
+          }
         }
       }
     },
     "%@ charts" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 个图表"
+          }
+        }
+      }
     },
     "%@ cores" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 核"
+          }
+        }
+      }
     },
     "%@ hub%@" : {
       "localizations" : {
@@ -99,6 +426,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ hub%2$@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ 个监控中心%2$@"
           }
         }
       }
@@ -110,11 +443,24 @@
             "state" : "new",
             "value" : "%1$@ rx | %2$@ tx"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ 接收 | %2$@ 发送"
+          }
         }
       }
     },
     "%@%%" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@%%"
+          }
+        }
+      }
     },
     "%d charts" : {
       "extractionState" : "stale",
@@ -129,6 +475,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%d graphiques"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d 个图表"
           }
         }
       }
@@ -147,6 +499,12 @@
             "state" : "translated",
             "value" : "%d/%d en ligne"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d/%d 在线"
+          }
         }
       }
     },
@@ -163,6 +521,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld graphiques"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 个图表"
           }
         }
       }
@@ -181,26 +545,74 @@
             "state" : "translated",
             "value" : "%lld/%lld en ligne"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld/%lld 在线"
+          }
         }
       }
     },
     "•" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "•"
+          }
+        }
+      }
     },
     "© 2026 Bruno DURAND. MIT License." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2026 Bruno DURAND。MIT 许可证。"
+          }
+        }
+      }
     },
     "1 min" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 分钟"
+          }
+        }
+      }
     },
     "2 min" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2 分钟"
+          }
+        }
+      }
     },
     "5 min" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 分钟"
+          }
+        }
+      }
     },
     "10 sec" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "10 秒"
+          }
+        }
+      }
     },
     "15 min" : {
       "extractionState" : "manual",
@@ -216,11 +628,24 @@
             "state" : "translated",
             "value" : "15 min"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "15 分钟"
+          }
         }
       }
     },
     "30 sec" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30 秒"
+          }
+        }
+      }
     },
     "About" : {
       "extractionState" : "stale",
@@ -235,6 +660,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "À propos"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于"
           }
         }
       }
@@ -253,6 +684,12 @@
             "state" : "translated",
             "value" : "Charge système"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统负载"
+          }
         }
       }
     },
@@ -269,6 +706,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Critique"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "严重"
           }
         }
       }
@@ -287,6 +730,12 @@
             "state" : "translated",
             "value" : "Élevée"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高"
+          }
         }
       }
     },
@@ -303,6 +752,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Normal"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正常"
           }
         }
       }
@@ -321,11 +776,24 @@
             "state" : "translated",
             "value" : "Inconnu"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知"
+          }
         }
       }
     },
     "Active" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前使用"
+          }
+        }
+      }
     },
     "Add a Beszel hub to see your servers, containers and alerts here." : {
       "localizations" : {
@@ -340,11 +808,24 @@
             "state" : "translated",
             "value" : "Ajoutez un hub Beszel pour retrouver vos serveurs, conteneurs et alertes ici."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加 Beszel 监控中心，即可在此查看服务器、容器和告警。"
+          }
         }
       }
     },
     "Add a Beszel hub to start monitoring your servers" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加 Beszel 监控中心，开始监控服务器"
+          }
+        }
+      }
     },
     "Add a Hub" : {
       "extractionState" : "stale",
@@ -359,6 +840,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ajouter un hub"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加监控中心"
           }
         }
       }
@@ -376,17 +863,37 @@
             "state" : "translated",
             "value" : "Ajoutez un hub avec une adresse locale pour demander l’accès au réseau local."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加使用本地地址的监控中心，以请求本地网络访问权限。"
+          }
         }
       }
     },
     "Add Beszel Hub" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加 Beszel 监控中心"
+          }
+        }
+      }
     },
     "Add Hub" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加监控中心"
+          }
+        }
+      }
     },
     "Alerts" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -398,6 +905,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alertes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "告警"
           }
         }
       }
@@ -414,6 +927,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Les alertes configurées sur les hubs sélectionnés apparaissent ici."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选监控中心配置的告警将显示在此处。"
           }
         }
       }
@@ -432,6 +951,12 @@
             "state" : "translated",
             "value" : "Tous les graphiques"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全部图表"
+          }
         }
       }
     },
@@ -447,6 +972,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tous les conteneurs"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全部容器"
           }
         }
       }
@@ -465,11 +996,24 @@
             "state" : "translated",
             "value" : "Tous les hubs"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全部监控中心"
+          }
         }
       }
     },
     "Automatically open BeszelBar when you start your Mac." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动 Mac 时自动打开 BeszelBar。"
+          }
+        }
+      }
     },
     "Bandwidth" : {
       "extractionState" : "stale",
@@ -485,11 +1029,24 @@
             "state" : "translated",
             "value" : "Bande passante"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "带宽"
+          }
         }
       }
     },
     "BeszelBar" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BeszelBar"
+          }
+        }
+      }
     },
     "chart.bandwidth" : {
       "localizations" : {
@@ -503,6 +1060,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bande passante"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "带宽"
           }
         }
       }
@@ -520,6 +1083,12 @@
             "state" : "translated",
             "value" : "Téléchargement cumulé"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "累计下载"
+          }
         }
       }
     },
@@ -535,6 +1104,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Total des données reçues par interface"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各网络接口累计接收的数据量"
           }
         }
       }
@@ -552,6 +1127,12 @@
             "state" : "translated",
             "value" : "Envoi cumulé"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "累计上传"
+          }
         }
       }
     },
@@ -567,6 +1148,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Total des données envoyées par interface"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各网络接口累计发送的数据量"
           }
         }
       }
@@ -584,6 +1171,12 @@
             "state" : "translated",
             "value" : "Téléchargement"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载"
+          }
         }
       }
     },
@@ -599,6 +1192,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Téléchargement"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载"
           }
         }
       }
@@ -616,6 +1215,12 @@
             "state" : "translated",
             "value" : "Débit de téléchargement par interface"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各网络接口的下载速率"
+          }
         }
       }
     },
@@ -631,6 +1236,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Envoi"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上传"
           }
         }
       }
@@ -648,6 +1259,12 @@
             "state" : "translated",
             "value" : "Débit d'envoi par interface"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各网络接口的上传速率"
+          }
         }
       }
     },
@@ -663,6 +1280,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trafic réseau des interfaces publiques"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "公共网络接口的流量"
           }
         }
       }
@@ -680,6 +1303,12 @@
             "state" : "translated",
             "value" : "Envoi"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上传"
+          }
         }
       }
     },
@@ -695,6 +1324,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Charge"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电量"
           }
         }
       }
@@ -713,6 +1348,12 @@
             "state" : "translated",
             "value" : "Charge minimale"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最低电量"
+          }
         }
       }
     },
@@ -729,6 +1370,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Charge de la batterie (%)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池电量（%）"
           }
         }
       }
@@ -747,6 +1394,12 @@
             "state" : "translated",
             "value" : "Batterie"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池"
+          }
         }
       }
     },
@@ -763,6 +1416,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Graphique"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图表"
           }
         }
       }
@@ -781,6 +1440,12 @@
             "state" : "translated",
             "value" : "Hub"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控中心"
+          }
         }
       }
     },
@@ -797,6 +1462,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Système"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统"
           }
         }
       }
@@ -815,6 +1486,12 @@
             "state" : "translated",
             "value" : "Utilisation du CPU Docker"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker CPU 使用率"
+          }
         }
       }
     },
@@ -831,6 +1508,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utilisation moyenne du CPU des conteneurs"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "容器的平均 CPU 使用率"
           }
         }
       }
@@ -849,6 +1532,12 @@
             "state" : "translated",
             "value" : "Utilisation de la mémoire Docker"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker 内存用量"
+          }
         }
       }
     },
@@ -865,6 +1554,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utilisation mémoire des conteneurs Docker"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker 容器的内存用量"
           }
         }
       }
@@ -883,6 +1578,12 @@
             "state" : "translated",
             "value" : "Inactif"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空闲"
+          }
         }
       }
     },
@@ -899,6 +1600,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "IOWait"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I/O 等待"
           }
         }
       }
@@ -917,6 +1624,12 @@
             "state" : "translated",
             "value" : "Autre"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "其他"
+          }
         }
       }
     },
@@ -934,6 +1647,12 @@
             "state" : "translated",
             "value" : "Steal"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "被虚拟机宿主占用"
+          }
         }
       }
     },
@@ -949,6 +1668,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pourcentage de temps dans chaque état"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各状态占用的 CPU 时间百分比"
           }
         }
       }
@@ -967,6 +1692,12 @@
             "state" : "translated",
             "value" : "Système"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统"
+          }
         }
       }
     },
@@ -982,6 +1713,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Répartition du temps CPU"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CPU 时间分布"
           }
         }
       }
@@ -1000,6 +1737,12 @@
             "state" : "translated",
             "value" : "Utilisateur"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用户"
+          }
         }
       }
     },
@@ -1015,6 +1758,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utilisation moyenne par cœur"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各 CPU 核心的平均使用率"
           }
         }
       }
@@ -1032,6 +1781,12 @@
             "state" : "translated",
             "value" : "Cœurs CPU"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CPU 核心"
+          }
         }
       }
     },
@@ -1048,6 +1803,12 @@
             "state" : "translated",
             "value" : "Utilisation CPU"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CPU 使用率"
+          }
         }
       }
     },
@@ -1063,6 +1824,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utilisation moyenne du CPU système"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统的平均 CPU 使用率"
           }
         }
       }
@@ -1081,6 +1848,12 @@
             "state" : "translated",
             "value" : "Lectures cumulées"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "累计读取"
+          }
         }
       }
     },
@@ -1097,6 +1870,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Données lues depuis le démarrage"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自启动以来读取的数据量"
           }
         }
       }
@@ -1115,6 +1894,12 @@
             "state" : "translated",
             "value" : "Écritures cumulées"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "累计写入"
+          }
         }
       }
     },
@@ -1132,6 +1917,12 @@
             "state" : "translated",
             "value" : "Données écrites depuis le démarrage"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自启动以来写入的数据量"
+          }
         }
       }
     },
@@ -1147,6 +1938,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disque"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "磁盘"
           }
         }
       }
@@ -1164,6 +1961,12 @@
             "state" : "translated",
             "value" : "Total"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总计"
+          }
         }
       }
     },
@@ -1179,6 +1982,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utilisé"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已用"
           }
         }
       }
@@ -1196,6 +2005,12 @@
             "state" : "translated",
             "value" : "Disque Entrée/Sortie"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "磁盘 I/O"
+          }
         }
       }
     },
@@ -1211,6 +2026,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Attente E/S"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I/O 等待时间"
           }
         }
       }
@@ -1228,6 +2049,12 @@
             "state" : "translated",
             "value" : "Nombre moyen d'opérations d'E/S en attente"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "等待处理的 I/O 操作的平均数量"
+          }
         }
       }
     },
@@ -1243,6 +2070,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Profondeur de file d'attente"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "队列深度"
           }
         }
       }
@@ -1260,6 +2093,12 @@
             "state" : "translated",
             "value" : "Nombre moyen d'opérations d'E/S dans la file d'attente"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设备队列中 I/O 操作的平均数量"
+          }
         }
       }
     },
@@ -1275,6 +2114,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "r_attente"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读取等待"
           }
         }
       }
@@ -1292,6 +2137,12 @@
             "state" : "translated",
             "value" : "Lecture"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读取"
+          }
         }
       }
     },
@@ -1307,6 +2158,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Temps lecture"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读取时间"
           }
         }
       }
@@ -1324,6 +2181,12 @@
             "state" : "translated",
             "value" : "Débit du système de fichiers racine"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根文件系统的吞吐量"
+          }
         }
       }
     },
@@ -1339,6 +2202,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Temps E/S"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I/O 时间"
           }
         }
       }
@@ -1356,6 +2225,12 @@
             "state" : "translated",
             "value" : "Temps total passé en lecture/écriture (peut dépasser 100%)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读写操作占用的总时间（可能超过 100%）"
+          }
         }
       }
     },
@@ -1371,6 +2246,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utilisation E/S"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I/O 使用率"
           }
         }
       }
@@ -1388,6 +2269,12 @@
             "state" : "translated",
             "value" : "Pourcentage du temps où le disque est occupé par des E/S"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "磁盘忙于 I/O 操作的时间占比"
+          }
         }
       }
     },
@@ -1403,6 +2290,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "w_attente"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写入等待"
           }
         }
       }
@@ -1420,6 +2313,12 @@
             "state" : "translated",
             "value" : "Écriture"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写入"
+          }
         }
       }
     },
@@ -1435,6 +2334,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Temps ecriture"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写入时间"
           }
         }
       }
@@ -1452,6 +2357,12 @@
             "state" : "translated",
             "value" : "Utilisation Disque"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "磁盘用量"
+          }
         }
       }
     },
@@ -1467,6 +2378,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utilisation de la partition racine"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "根分区的磁盘用量"
           }
         }
       }
@@ -1485,6 +2402,12 @@
             "state" : "translated",
             "value" : "Entrée/Sortie"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I/O"
+          }
         }
       }
     },
@@ -1500,6 +2423,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ Entrée/Sortie"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ I/O"
           }
         }
       }
@@ -1518,6 +2447,12 @@
             "state" : "translated",
             "value" : "Utilisation"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用情况"
+          }
         }
       }
     },
@@ -1533,6 +2468,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ Utilisation"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 使用情况"
           }
         }
       }
@@ -1550,6 +2491,12 @@
             "state" : "translated",
             "value" : "Débit de %@"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 的吞吐量"
+          }
         }
       }
     },
@@ -1565,6 +2512,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utilisation du disque %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 的磁盘用量"
           }
         }
       }
@@ -1583,6 +2536,12 @@
             "state" : "translated",
             "value" : "Le plus rapide"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最高风扇转速"
+          }
         }
       }
     },
@@ -1599,6 +2558,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ tr/min"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 转/分"
           }
         }
       }
@@ -1617,6 +2582,12 @@
             "state" : "translated",
             "value" : "Vitesse des ventilateurs (tr/min)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "风扇转速（转/分）"
+          }
         }
       }
     },
@@ -1633,6 +2604,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ventilateurs"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "风扇转速"
           }
         }
       }
@@ -1651,6 +2628,12 @@
             "state" : "translated",
             "value" : "Détails GPU"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPU 详情"
+          }
         }
       }
     },
@@ -1667,6 +2650,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Moteurs GPU"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPU 引擎"
           }
         }
       }
@@ -1685,6 +2674,12 @@
             "state" : "translated",
             "value" : "Utilisation par moteur graphique"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各图形引擎的使用率"
+          }
         }
       }
     },
@@ -1701,6 +2696,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "VRAM GPU"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPU 显存"
           }
         }
       }
@@ -1719,6 +2720,12 @@
             "state" : "translated",
             "value" : "Mémoire vidéo utilisée et totale"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已用显存和显存总量"
+          }
         }
       }
     },
@@ -1735,6 +2742,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ · Package CPU"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · CPU 封装"
           }
         }
       }
@@ -1753,6 +2766,12 @@
             "state" : "translated",
             "value" : "Puissance GPU"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPU 功耗"
+          }
         }
       }
     },
@@ -1769,6 +2788,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Consommation du GPU et du package CPU"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPU 和 CPU 封装的功耗"
           }
         }
       }
@@ -1787,6 +2812,12 @@
             "state" : "translated",
             "value" : "%@ · Totale"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · 总计"
+          }
         }
       }
     },
@@ -1803,6 +2834,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ · Utilisée"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ · 已用"
           }
         }
       }
@@ -1821,6 +2858,12 @@
             "state" : "translated",
             "value" : "Utilisation GPU"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPU 使用率"
+          }
         }
       }
     },
@@ -1838,6 +2881,12 @@
             "state" : "translated",
             "value" : "Utilisation moyenne des moteurs GPU"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPU 引擎的平均使用率"
+          }
         }
       }
     },
@@ -1853,6 +2902,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "1 min"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 分钟"
           }
         }
       }
@@ -1870,6 +2925,12 @@
             "state" : "translated",
             "value" : "5 min"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5 分钟"
+          }
         }
       }
     },
@@ -1885,6 +2946,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "15 min"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "15 分钟"
           }
         }
       }
@@ -1902,6 +2969,12 @@
             "state" : "translated",
             "value" : "Charge Système"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平均负载"
+          }
         }
       }
     },
@@ -1917,6 +2990,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Charges moyennes du système dans le temps"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统平均负载的变化趋势"
           }
         }
       }
@@ -1935,6 +3014,12 @@
             "state" : "translated",
             "value" : "Utilisation Mémoire"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内存用量"
+          }
         }
       }
     },
@@ -1952,6 +3037,12 @@
             "state" : "translated",
             "value" : "Utilisation précise au moment enregistré"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "采样时刻的实际内存使用率"
+          }
         }
       }
     },
@@ -1968,6 +3059,12 @@
             "state" : "translated",
             "value" : "Interfaces réseau"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网络接口"
+          }
         }
       }
     },
@@ -1983,6 +3080,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Débit reçu et envoyé par interface"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "各网络接口的上传与下载总速率"
           }
         }
       }
@@ -2001,6 +3104,12 @@
             "state" : "translated",
             "value" : "Pas de données pour %@"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无 %@ 的数据"
+          }
         }
       }
     },
@@ -2016,6 +3125,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Non épinglé"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未固定"
           }
         }
       }
@@ -2033,6 +3148,12 @@
             "state" : "translated",
             "value" : "Épingler à l’accueil"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "固定到首页"
+          }
         }
       }
     },
@@ -2048,6 +3169,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Épinglé"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已固定"
           }
         }
       }
@@ -2065,6 +3192,12 @@
             "state" : "translated",
             "value" : "Désépingler de l’accueil"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从首页取消固定"
+          }
         }
       }
     },
@@ -2080,6 +3213,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Total"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总计"
           }
         }
       }
@@ -2097,6 +3236,12 @@
             "state" : "translated",
             "value" : "Utilisé"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已用"
+          }
         }
       }
     },
@@ -2112,6 +3257,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utilisation Swap"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "交换空间用量"
           }
         }
       }
@@ -2129,6 +3280,12 @@
             "state" : "translated",
             "value" : "Espace d'échange utilisé par le système"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统已使用的交换空间"
+          }
         }
       }
     },
@@ -2145,6 +3302,12 @@
             "state" : "translated",
             "value" : "Température"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "温度"
+          }
         }
       }
     },
@@ -2160,6 +3323,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Températures des capteurs système"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统传感器的温度"
           }
         }
       }
@@ -2178,6 +3347,12 @@
             "state" : "translated",
             "value" : "Graphiques"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图表"
+          }
         }
       }
     },
@@ -2193,6 +3368,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utilisation moyenne du CPU des conteneurs"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "容器的平均 CPU 使用率"
           }
         }
       }
@@ -2210,6 +3391,12 @@
             "state" : "translated",
             "value" : "Utilisation du CPU Docker"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker CPU 使用率"
+          }
         }
       }
     },
@@ -2225,6 +3412,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utilisation mémoire des conteneurs Docker"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker 容器的内存用量"
           }
         }
       }
@@ -2242,6 +3435,12 @@
             "state" : "translated",
             "value" : "Utilisation de la mémoire Docker (%@)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker 内存用量（%@）"
+          }
         }
       }
     },
@@ -2258,6 +3457,12 @@
             "state" : "translated",
             "value" : "Trafic réseau des conteneurs Docker"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker 容器的网络流量"
+          }
         }
       }
     },
@@ -2273,6 +3478,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Réseau I/O Docker (%@)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker 网络 I/O（%@）"
           }
         }
       }
@@ -2291,6 +3502,12 @@
             "state" : "translated",
             "value" : "Échec de l'authentification. Veuillez reconnecter votre instance."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "身份验证失败，请重新连接监控中心。"
+          }
         }
       }
     },
@@ -2307,6 +3524,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Configurée"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已配置"
           }
         }
       }
@@ -2325,6 +3548,12 @@
             "state" : "translated",
             "value" : "Les adresses des hubs configurés sont accessibles."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已配置的监控中心地址均可访问。"
+          }
         }
       }
     },
@@ -2341,6 +3570,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connexion…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在连接…"
           }
         }
       }
@@ -2359,6 +3594,12 @@
             "state" : "translated",
             "value" : "Conteneur"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "容器"
+          }
         }
       }
     },
@@ -2375,6 +3616,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Section du conteneur"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "容器分区"
           }
         }
       }
@@ -2393,6 +3640,12 @@
             "state" : "translated",
             "value" : "Aucun détail"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无详情"
+          }
         }
       }
     },
@@ -2409,6 +3662,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aucun détail disponible pour ce conteneur"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此容器暂无详细信息"
           }
         }
       }
@@ -2427,6 +3686,12 @@
             "state" : "translated",
             "value" : "Aucune instance active"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有正在使用的监控中心"
+          }
         }
       }
     },
@@ -2443,6 +3708,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Conteneur introuvable"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到容器"
           }
         }
       }
@@ -2461,6 +3732,12 @@
             "state" : "translated",
             "value" : "Sain"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正常"
+          }
         }
       }
     },
@@ -2477,6 +3754,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aucun"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无"
           }
         }
       }
@@ -2495,6 +3778,12 @@
             "state" : "translated",
             "value" : "Démarrage"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在启动"
+          }
         }
       }
     },
@@ -2511,6 +3800,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défaillant"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "异常"
           }
         }
       }
@@ -2529,6 +3824,12 @@
             "state" : "translated",
             "value" : "Aucun journal"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无日志"
+          }
         }
       }
     },
@@ -2545,6 +3846,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aucun journal disponible pour ce conteneur"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此容器暂无日志"
           }
         }
       }
@@ -2563,6 +3870,12 @@
             "state" : "translated",
             "value" : "En cours"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行中"
+          }
         }
       }
     },
@@ -2579,6 +3892,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Arrêté"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已停止"
           }
         }
       }
@@ -2597,6 +3916,12 @@
             "state" : "translated",
             "value" : "Liste des conteneurs Docker"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker 容器列表"
+          }
         }
       }
     },
@@ -2613,6 +3938,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Détails"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "详情"
           }
         }
       }
@@ -2631,6 +3962,12 @@
             "state" : "translated",
             "value" : "Infos"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "信息"
+          }
         }
       }
     },
@@ -2647,6 +3984,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Journaux"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日志"
           }
         }
       }
@@ -2665,11 +4008,17 @@
             "state" : "translated",
             "value" : "Conteneurs"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "容器"
+          }
         }
       }
     },
     "Containers" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2681,6 +4030,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Conteneurs"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "容器"
           }
         }
       }
@@ -2697,6 +4052,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Les conteneurs apparaissent lorsque votre hub les transmet."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控中心上报的容器将显示在此处。"
           }
         }
       }
@@ -2715,6 +4076,12 @@
             "state" : "translated",
             "value" : "Conteneur"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "容器"
+          }
         }
       }
     },
@@ -2728,6 +4095,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CPU"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "CPU"
@@ -2749,6 +4122,12 @@
             "state" : "translated",
             "value" : "Date"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日期"
+          }
         }
       }
     },
@@ -2764,6 +4143,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Détails bande passante"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "带宽详情"
           }
         }
       }
@@ -2781,6 +4166,12 @@
             "state" : "translated",
             "value" : "Faites glisser sur l'axe X pour sélectionner une date."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "沿横轴拖动以选择时间。"
+          }
         }
       }
     },
@@ -2796,6 +4187,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Total :"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总计："
           }
         }
       }
@@ -2813,6 +4210,12 @@
             "state" : "translated",
             "value" : "Valeurs le %@"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 的数值"
+          }
         }
       }
     },
@@ -2829,6 +4232,12 @@
             "state" : "translated",
             "value" : "Utilisation du CPU Docker"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker CPU 使用率"
+          }
         }
       }
     },
@@ -2844,6 +4253,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Details E/S disque"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "磁盘 I/O 详情"
           }
         }
       }
@@ -2862,6 +4277,12 @@
             "state" : "translated",
             "value" : "Détails E/S"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I/O 详情"
+          }
         }
       }
     },
@@ -2877,6 +4298,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Détails Utilisation Mémoire"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内存用量详情（%@）"
           }
         }
       }
@@ -2894,6 +4321,12 @@
             "state" : "translated",
             "value" : "Détails Réseau I/O"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网络 I/O 详情（%@）"
+          }
         }
       }
     },
@@ -2909,6 +4342,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Graphiques Docker"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker 图表"
           }
         }
       }
@@ -2927,11 +4366,24 @@
             "state" : "translated",
             "value" : "Reçu"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载"
+          }
         }
       }
     },
     "Edit Hub" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑监控中心"
+          }
+        }
+      }
     },
     "End" : {
       "extractionState" : "stale",
@@ -2946,6 +4398,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fin"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "结束"
           }
         }
       }
@@ -2964,6 +4422,12 @@
             "state" : "translated",
             "value" : "Général"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通用"
+          }
         }
       }
     },
@@ -2977,6 +4441,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPU"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPU"
@@ -2998,11 +4468,24 @@
             "state" : "translated",
             "value" : "Historique"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "历史记录"
+          }
         }
       }
     },
     "How often BeszelBar polls your hubs for updates." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BeszelBar 轮询监控中心以获取更新的频率。"
+          }
+        }
+      }
     },
     "Hub" : {
       "extractionState" : "stale",
@@ -3017,6 +4500,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hub"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控中心"
           }
         }
       }
@@ -3035,6 +4524,12 @@
             "state" : "translated",
             "value" : "Le hub nécessite votre attention"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控中心需要处理"
+          }
         }
       }
     },
@@ -3051,6 +4546,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hubs"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控中心"
           }
         }
       }
@@ -3069,6 +4570,12 @@
             "state" : "translated",
             "value" : "Interface"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "接口"
+          }
         }
       }
     },
@@ -3085,6 +4592,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dernières mesures disponibles"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近可用的读数"
           }
         }
       }
@@ -3103,6 +4616,12 @@
             "state" : "translated",
             "value" : "Charge"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "负载"
+          }
         }
       }
     },
@@ -3119,6 +4638,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Charge moyenne"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平均负载"
           }
         }
       }
@@ -3137,6 +4662,12 @@
             "state" : "translated",
             "value" : "Chargement de l’historique…"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在加载历史记录…"
+          }
         }
       }
     },
@@ -3153,6 +4684,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chargement des systèmes…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在加载系统…"
           }
         }
       }
@@ -3171,6 +4708,12 @@
             "state" : "translated",
             "value" : "Mémoire"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内存"
+          }
         }
       }
     },
@@ -3188,6 +4731,12 @@
             "state" : "translated",
             "value" : "Barre des menus"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "菜单栏"
+          }
         }
       }
     },
@@ -3201,6 +4750,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CPU"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "CPU"
@@ -3222,6 +4777,12 @@
             "state" : "translated",
             "value" : "DSK"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "磁盘"
+          }
         }
       }
     },
@@ -3238,6 +4799,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "RAM"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内存"
           }
         }
       }
@@ -3256,6 +4823,12 @@
             "state" : "translated",
             "value" : "Réseau"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网络"
+          }
         }
       }
     },
@@ -3272,6 +4845,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "RÉS"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网络"
           }
         }
       }
@@ -3290,11 +4869,24 @@
             "state" : "translated",
             "value" : "CHG"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "负载"
+          }
         }
       }
     },
     "Monitor your Beszel servers from the menu bar." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在菜单栏中监控 Beszel 服务器。"
+          }
+        }
+      }
     },
     "Monitoring" : {
       "extractionState" : "stale",
@@ -3309,6 +4901,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Surveillance"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控"
           }
         }
       }
@@ -3327,6 +4925,12 @@
             "state" : "translated",
             "value" : "Réseau"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网络"
+          }
         }
       }
     },
@@ -3343,6 +4947,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aucune alerte configurée"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未配置告警"
           }
         }
       }
@@ -3361,6 +4971,12 @@
             "state" : "translated",
             "value" : "Aucun conteneur"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无容器"
+          }
         }
       }
     },
@@ -3377,6 +4993,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aucun historique"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无历史记录"
           }
         }
       }
@@ -3395,11 +5017,24 @@
             "state" : "translated",
             "value" : "Aucun hub configuré"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未配置监控中心"
+          }
         }
       }
     },
     "No Hubs Configured" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未配置监控中心"
+          }
+        }
+      }
     },
     "No Measurements" : {
       "extractionState" : "stale",
@@ -3414,6 +5049,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aucune mesure"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无监测数据"
           }
         }
       }
@@ -3432,6 +5073,12 @@
             "state" : "translated",
             "value" : "Aucun graphique épinglé"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尚未固定图表"
+          }
         }
       }
     },
@@ -3447,6 +5094,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aucune mesure disponible pour cette période."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选时间范围内暂无采样数据。"
           }
         }
       }
@@ -3465,6 +5118,12 @@
             "state" : "translated",
             "value" : "Aucun système trouvé"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到系统"
+          }
         }
       }
     },
@@ -3480,6 +5139,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aucun système trouvé sur ce hub."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此监控中心中未找到系统。"
           }
         }
       }
@@ -3498,6 +5163,12 @@
             "state" : "translated",
             "value" : "Erreur réseau"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网络错误"
+          }
         }
       }
     },
@@ -3514,6 +5185,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "En ligne"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在线"
           }
         }
       }
@@ -3532,6 +5209,12 @@
             "state" : "translated",
             "value" : "Ouvrir le dashboard"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开仪表盘"
+          }
         }
       }
     },
@@ -3548,6 +5231,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ouvrir dans le navigateur"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在浏览器中打开"
           }
         }
       }
@@ -3566,6 +5255,12 @@
             "state" : "translated",
             "value" : "Ouvrez les réglages pour ajouter un hub"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开设置以添加监控中心"
+          }
         }
       }
     },
@@ -3582,6 +5277,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ouvrir les autorisations système"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开系统权限设置"
           }
         }
       }
@@ -3600,6 +5301,12 @@
             "state" : "translated",
             "value" : "Vue d’ensemble"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "概览"
+          }
         }
       }
     },
@@ -3616,6 +5323,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Période"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "时间范围"
           }
         }
       }
@@ -3634,6 +5347,12 @@
             "state" : "translated",
             "value" : "Épingler"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "固定"
+          }
         }
       }
     },
@@ -3650,6 +5369,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Épinglez des graphiques pour les retrouver ici."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "固定图表后，即可在此快速查看。"
           }
         }
       }
@@ -3668,6 +5393,12 @@
             "state" : "translated",
             "value" : "Épinglés"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已固定"
+          }
         }
       }
     },
@@ -3683,6 +5414,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "CPU Conteneurs Docker"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker 容器 CPU"
           }
         }
       }
@@ -3700,6 +5437,12 @@
             "state" : "translated",
             "value" : "Mémoire Conteneurs Docker"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker 容器内存"
+          }
         }
       }
     },
@@ -3715,6 +5458,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "CPU Docker"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker CPU"
           }
         }
       }
@@ -3732,6 +5481,12 @@
             "state" : "translated",
             "value" : "Mémoire Docker"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker 内存"
+          }
         }
       }
     },
@@ -3747,6 +5502,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Réseau I/O Docker"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Docker 网络 I/O"
           }
         }
       }
@@ -3764,6 +5525,12 @@
             "state" : "translated",
             "value" : "Bande passante Système"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统带宽"
+          }
         }
       }
     },
@@ -3779,6 +5546,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Téléchargement cumulé"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "累计下载"
           }
         }
       }
@@ -3796,6 +5569,12 @@
             "state" : "translated",
             "value" : "Envoi cumulé"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "累计上传"
+          }
         }
       }
     },
@@ -3811,6 +5590,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Téléchargement bande passante"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载带宽"
           }
         }
       }
@@ -3828,6 +5613,12 @@
             "state" : "translated",
             "value" : "Envoi bande passante"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上传带宽"
+          }
         }
       }
     },
@@ -3843,6 +5634,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "CPU Système"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统 CPU"
           }
         }
       }
@@ -3860,6 +5657,12 @@
             "state" : "translated",
             "value" : "Répartition du temps CPU"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CPU 时间分布"
+          }
         }
       }
     },
@@ -3875,6 +5678,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cœurs CPU"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CPU 核心"
           }
         }
       }
@@ -3892,6 +5701,12 @@
             "state" : "translated",
             "value" : "Entrée/Sortie Système"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统磁盘 I/O"
+          }
         }
       }
     },
@@ -3907,6 +5722,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Attente disque"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "磁盘等待时间"
           }
         }
       }
@@ -3924,6 +5745,12 @@
             "state" : "translated",
             "value" : "Profondeur de file d'attente I/O disque"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "磁盘 I/O 队列深度"
+          }
         }
       }
     },
@@ -3939,6 +5766,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Temps E/S disque"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "磁盘 I/O 时间"
           }
         }
       }
@@ -3956,6 +5789,12 @@
             "state" : "translated",
             "value" : "Utilisation E/S disque"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "磁盘 I/O 使用率"
+          }
         }
       }
     },
@@ -3971,6 +5810,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utilisation Disque Système"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统磁盘用量"
           }
         }
       }
@@ -3988,6 +5833,12 @@
             "state" : "translated",
             "value" : "GPU Système"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统 GPU"
+          }
         }
       }
     },
@@ -4003,6 +5854,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Infos Système"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统信息"
           }
         }
       }
@@ -4020,6 +5877,12 @@
             "state" : "translated",
             "value" : "Charge moyenne Système"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统平均负载"
+          }
         }
       }
     },
@@ -4035,6 +5898,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mémoire Système"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统内存"
           }
         }
       }
@@ -4052,6 +5921,12 @@
             "state" : "translated",
             "value" : "Interfaces réseau Système"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统网络接口"
+          }
         }
       }
     },
@@ -4068,6 +5943,12 @@
             "state" : "translated",
             "value" : "Swap Système"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统交换空间"
+          }
         }
       }
     },
@@ -4083,6 +5964,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Température Système"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统温度"
           }
         }
       }
@@ -4101,6 +5988,12 @@
             "state" : "translated",
             "value" : "Lecture"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读取"
+          }
         }
       }
     },
@@ -4117,6 +6010,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Actualiser"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刷新"
           }
         }
       }
@@ -4135,11 +6034,24 @@
             "state" : "translated",
             "value" : "Actualiser les hubs affichés"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刷新当前视图中的所有监控中心"
+          }
         }
       }
     },
     "Refresh interval" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刷新间隔"
+          }
+        }
+      }
     },
     "Refresh now" : {
       "extractionState" : "stale",
@@ -4154,6 +6066,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Actualiser"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "立即刷新"
           }
         }
       }
@@ -4172,6 +6090,12 @@
             "state" : "translated",
             "value" : "Actualiser"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "立即刷新"
+          }
         }
       }
     },
@@ -4189,6 +6113,12 @@
             "state" : "translated",
             "value" : "Réessayer"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重试"
+          }
         }
       }
     },
@@ -4204,6 +6134,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Réessayez la connexion à vos hubs pour déclencher une demande d’accès au réseau local en attente. Si vous avez déjà refusé, autorisez BeszelBar dans Réglages Système → Confidentialité et sécurité → Réseau local."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新访问已配置的监控中心，以触发本地网络权限请求。如果之前拒绝了访问，请前往“系统设置 → 隐私与安全性 → 本地网络”，允许 BeszelBar 访问。"
           }
         }
       }
@@ -4222,6 +6158,12 @@
             "state" : "translated",
             "value" : "Réessayer l’accès réseau"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重新请求网络访问"
+          }
         }
       }
     },
@@ -4238,6 +6180,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rechercher un système, hub ou conteneur"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索系统、监控中心或容器"
           }
         }
       }
@@ -4256,6 +6204,12 @@
             "state" : "translated",
             "value" : "URL secondaire"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "备用地址"
+          }
         }
       }
     },
@@ -4272,6 +6226,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sélectionner"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择监控中心"
           }
         }
       }
@@ -4290,6 +6250,12 @@
             "state" : "translated",
             "value" : "Capteurs et GPU"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "传感器与 GPU"
+          }
         }
       }
     },
@@ -4306,6 +6272,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Réglages"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置"
           }
         }
       }
@@ -4324,11 +6296,24 @@
             "state" : "translated",
             "value" : "Réglages…"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置…"
+          }
         }
       }
     },
     "Showing last available data from %@." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在显示 %@ 的最近可用数据。"
+          }
+        }
+      }
     },
     "Some hub addresses could not be reached. Check local network access in System Settings and your hub addresses, then retry." : {
       "extractionState" : "stale",
@@ -4343,6 +6328,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Certaines adresses de hubs sont inaccessibles. Vérifiez l’accès au réseau local dans les Réglages Système et les adresses de vos hubs, puis réessayez."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "部分监控中心地址无法访问。请检查系统设置中的本地网络权限和监控中心地址，然后重试。"
           }
         }
       }
@@ -4361,6 +6352,12 @@
             "state" : "translated",
             "value" : "Source"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "来源"
+          }
         }
       }
     },
@@ -4377,6 +6374,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Début"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始"
           }
         }
       }
@@ -4395,6 +6398,12 @@
             "state" : "translated",
             "value" : "Hors ligne"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "离线"
+          }
         }
       }
     },
@@ -4411,6 +6420,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "En ligne"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在线"
           }
         }
       }
@@ -4429,6 +6444,12 @@
             "state" : "translated",
             "value" : "En pause"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已暂停"
+          }
         }
       }
     },
@@ -4445,6 +6466,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connexion"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在连接"
           }
         }
       }
@@ -4463,6 +6490,12 @@
             "state" : "translated",
             "value" : "Inconnu"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知"
+          }
         }
       }
     },
@@ -4479,6 +6512,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Stockage"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储"
           }
         }
       }
@@ -4497,6 +6536,12 @@
             "state" : "translated",
             "value" : "Système"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统"
+          }
         }
       }
     },
@@ -4514,6 +6559,12 @@
             "state" : "translated",
             "value" : "Système"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统"
+          }
         }
       }
     },
@@ -4529,6 +6580,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Graphiques du système"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统图表"
           }
         }
       }
@@ -4546,11 +6603,17 @@
             "state" : "translated",
             "value" : "Autorisations système"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统权限"
+          }
         }
       }
     },
     "Systems" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4562,6 +6625,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Systèmes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统"
           }
         }
       }
@@ -4580,11 +6649,24 @@
             "state" : "translated",
             "value" : "Temp"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "温度"
+          }
         }
       }
     },
     "The secondary URL must point to the same Beszel hub. It is used automatically if the primary URL is unreachable." : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "备用地址必须指向同一个 Beszel 监控中心，主地址无法访问时将自动切换。"
+          }
+        }
+      }
     },
     "This system has no readings in this category for the selected time range." : {
       "extractionState" : "stale",
@@ -4599,6 +6681,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ce système n’a aucune mesure dans cette catégorie pour la période sélectionnée."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此系统在所选时间范围内暂无该分类的监测数据。"
           }
         }
       }
@@ -4617,6 +6705,12 @@
             "state" : "translated",
             "value" : "Période"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "时间范围"
+          }
         }
       }
     },
@@ -4633,6 +6727,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Temps écoulé depuis la dernière actualisation réussie"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "距上次成功刷新的时间"
           }
         }
       }
@@ -4651,6 +6751,12 @@
             "state" : "translated",
             "value" : "Total"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总计"
+          }
         }
       }
     },
@@ -4667,6 +6773,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Déclenchée"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已触发"
           }
         }
       }
@@ -4685,6 +6797,12 @@
             "state" : "translated",
             "value" : "Type"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "类型"
+          }
         }
       }
     },
@@ -4701,6 +6819,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Indisponible"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不可用"
           }
         }
       }
@@ -4719,6 +6843,12 @@
             "state" : "translated",
             "value" : "Désépingler"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消固定"
+          }
         }
       }
     },
@@ -4735,6 +6865,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Envoyé"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上传"
           }
         }
       }
@@ -4753,6 +6889,12 @@
             "state" : "translated",
             "value" : "Utilisé"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已用"
+          }
         }
       }
     },
@@ -4770,11 +6912,24 @@
             "state" : "translated",
             "value" : "Valeur"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数值"
+          }
         }
       }
     },
     "Version 1.0.0" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本 1.0.0"
+          }
+        }
+      }
     },
     "View charts" : {
       "extractionState" : "stale",
@@ -4789,6 +6944,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Afficher les graphiques"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看图表"
           }
         }
       }
@@ -4807,6 +6968,12 @@
             "state" : "translated",
             "value" : "Afficher les graphiques : %@"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看图表：%@"
+          }
         }
       }
     },
@@ -4824,6 +6991,12 @@
             "state" : "translated",
             "value" : "Bienvenue dans BeszelBar"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "欢迎使用 BeszelBar"
+          }
         }
       }
     },
@@ -4839,6 +7012,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aucune donnée disponible pour la période sélectionnée. Une reconnexion peut être nécessaire."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选时间范围内暂无数据，请尝试重新连接。"
           }
         }
       }
@@ -4857,6 +7036,12 @@
             "state" : "translated",
             "value" : "Écriture"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写入"
+          }
         }
       }
     },
@@ -4872,6 +7057,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vos serveurs en un coup d’œil"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务器状态，一目了然"
           }
         }
       }
@@ -4890,6 +7081,12 @@
             "state" : "translated",
             "value" : "Alloué"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已分配"
+          }
         }
       }
     },
@@ -4906,6 +7103,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jeux de données"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据集"
           }
         }
       }
@@ -4924,6 +7127,12 @@
             "state" : "translated",
             "value" : "Les détails du pool n’ont pas encore été reçus."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储池尚未上报详细信息。"
+          }
         }
       }
     },
@@ -4939,6 +7148,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Les détails du pool n’ont pas pu être actualisés. Actualisez l’onglet Système pour réessayer."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法刷新存储池详情，请刷新系统页面以重试。"
           }
         }
       }
@@ -4957,6 +7172,12 @@
             "state" : "translated",
             "value" : "Détails mis à jour"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "详情更新时间"
+          }
         }
       }
     },
@@ -4973,6 +7194,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Périphériques"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设备"
           }
         }
       }
@@ -4991,6 +7218,12 @@
             "state" : "translated",
             "value" : "Erreurs"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "错误"
+          }
         }
       }
     },
@@ -5007,6 +7240,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erreurs de somme de contrôle"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "校验错误"
           }
         }
       }
@@ -5025,6 +7264,12 @@
             "state" : "translated",
             "value" : "Erreurs de lecture"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读取错误"
+          }
         }
       }
     },
@@ -5041,6 +7286,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erreurs d’écriture"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写入错误"
           }
         }
       }
@@ -5059,6 +7310,12 @@
             "state" : "translated",
             "value" : "Disponible"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可用"
+          }
         }
       }
     },
@@ -5075,6 +7332,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Santé"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "健康状态"
           }
         }
       }
@@ -5093,6 +7356,12 @@
             "state" : "translated",
             "value" : "E/S du pool"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储池 I/O"
+          }
         }
       }
     },
@@ -5109,6 +7378,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Débits de lecture et d’écriture"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读写吞吐量"
           }
         }
       }
@@ -5127,6 +7402,12 @@
             "state" : "translated",
             "value" : "Progression"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "进度"
+          }
         }
       }
     },
@@ -5143,6 +7424,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vérification (scrub)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据校验"
           }
         }
       }
@@ -5161,6 +7448,12 @@
             "state" : "translated",
             "value" : "État"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "状态"
+          }
         }
       }
     },
@@ -5177,6 +7470,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pools ZFS"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ZFS 存储池"
           }
         }
       }
@@ -5195,6 +7494,12 @@
             "state" : "translated",
             "value" : "Utilisation du pool"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储池用量"
+          }
         }
       }
     },
@@ -5211,6 +7516,819 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Stockage alloué dans le pool"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存储池已分配的空间"
+          }
+        }
+      }
+    },
+    "%lld hubs" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 个监控中心"
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld hub"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld hubs"
+                }
+              }
+            }
+          }
+        },
+        "fr" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld hub"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld hubs"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld cores" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 核"
+          }
+        }
+      }
+    },
+    "1h" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 小时"
+          }
+        }
+      }
+    },
+    "12h" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12 小时"
+          }
+        }
+      }
+    },
+    "24h" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "24 小时"
+          }
+        }
+      }
+    },
+    "7d" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "7 天"
+          }
+        }
+      }
+    },
+    "30d" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30 天"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保存"
+          }
+        }
+      }
+    },
+    "Edit" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑"
+          }
+        }
+      }
+    },
+    "Name" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称"
+          }
+        }
+      }
+    },
+    "Primary URL" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主地址"
+          }
+        }
+      }
+    },
+    "Secondary URL (optional)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "备用地址（可选）"
+          }
+        }
+      }
+    },
+    "Email" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "邮箱"
+          }
+        }
+      }
+    },
+    "Password" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "密码"
+          }
+        }
+      }
+    },
+    "An alternative address for the same hub, used if the primary URL cannot be reached." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "指向同一监控中心的备用地址，主地址无法访问时使用。"
+          }
+        }
+      }
+    },
+    "Enter valid HTTP or HTTPS hub URLs, without query parameters or fragments." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请输入有效的 HTTP 或 HTTPS 监控中心地址，不包含查询参数或片段标识。"
+          }
+        }
+      }
+    },
+    "Connection failed: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接失败：%@"
+          }
+        }
+      }
+    },
+    "Open Dashboard…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开仪表盘…"
+          }
+        }
+      }
+    },
+    "Settings..." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置…"
+          }
+        }
+      }
+    },
+    "Start at Login" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录时启动"
+          }
+        }
+      }
+    },
+    "Quit BeszelBar" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出 BeszelBar"
+          }
+        }
+      }
+    },
+    "SYSTEM" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统"
+          }
+        }
+      }
+    },
+    "REFRESH" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刷新"
+          }
+        }
+      }
+    },
+    "How often BeszelBar polls your hubs in the background. The menu refreshes every second while open." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置 BeszelBar 在后台轮询监控中心的频率。菜单展开时每秒更新一次。"
+          }
+        }
+      }
+    },
+    "Refreshing hubs" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在刷新监控中心"
+          }
+        }
+      }
+    },
+    "Loading…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在加载…"
+          }
+        }
+      }
+    },
+    "Alerts (%lld)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "告警（%lld）"
+          }
+        }
+      }
+    },
+    "+%lld more alerts" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还有 %lld 条告警"
+          }
+        }
+      }
+    },
+    "+%lld more containers" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还有 %lld 个容器"
+          }
+        }
+      }
+    },
+    "Containers (%lld)" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "容器（%lld）"
+          }
+        }
+      }
+    },
+    "View Charts…" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查看图表…"
+          }
+        }
+      }
+    },
+    "Copy Hostname" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制主机名"
+          }
+        }
+      }
+    },
+    "Usage" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用情况"
+          }
+        }
+      }
+    },
+    "Disk" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "磁盘"
+          }
+        }
+      }
+    },
+    "Unknown system" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知系统"
+          }
+        }
+      }
+    },
+    "System details" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统详情"
+          }
+        }
+      },
+      "extractionState" : "manual"
+    },
+    "No Health Check" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未配置健康检查"
+          }
+        }
+      }
+    },
+    "Your session has expired. Check this hub's credentials in Settings." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录已过期，请在设置中检查此监控中心的登录凭据。"
+          }
+        }
+      }
+    },
+    "This account does not have access to the requested data." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此账户无权访问所请求的数据。"
+          }
+        }
+      }
+    },
+    "The hub could not complete the request (HTTP %lld)." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "监控中心未能完成请求（HTTP %lld）。"
+          }
+        }
+      }
+    },
+    "ZFS details: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ZFS 详情：%@"
+          }
+        }
+      }
+    },
+    "Container history: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "容器历史记录：%@"
+          }
+        }
+      }
+    },
+    "Last known: %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近状态：%@"
+          }
+        }
+      }
+    },
+    "Chart" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "图表"
+          }
+        }
+      }
+    },
+    "container.status.created" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Created"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已创建"
+          }
+        }
+      }
+    },
+    "container.status.restarting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restarting"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在重启"
+          }
+        }
+      }
+    },
+    "container.status.paused" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paused"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已暂停"
+          }
+        }
+      }
+    },
+    "container.status.exited" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exited"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已退出"
+          }
+        }
+      }
+    },
+    "container.status.dead" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dead"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "失效"
+          }
+        }
+      }
+    },
+    "container.status.removing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Removing"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在移除"
+          }
+        }
+      }
+    },
+    "zfs.health.degraded" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Degraded"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已降级"
+          }
+        }
+      }
+    },
+    "zfs.health.faulted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faulted"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "故障"
+          }
+        }
+      }
+    },
+    "zfs.health.removed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Removed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已移除"
+          }
+        }
+      }
+    },
+    "zfs.health.suspended" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suspended"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已挂起"
+          }
+        }
+      }
+    },
+    "%@, %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@，%2$@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld%%" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
+          }
+        }
+      }
+    },
+    "Beszel" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beszel"
+          }
+        }
+      }
+    },
+    "GitHub" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub"
+          }
+        }
+      }
+    },
+    "Category" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分类"
+          }
+        }
+      }
+    },
+    "Core" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "核心"
+          }
+        }
+      }
+    },
+    "Depth" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "深度"
+          }
+        }
+      }
+    },
+    "Rate" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "速率"
+          }
+        }
+      }
+    },
+    "Sensor" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "传感器"
+          }
+        }
+      }
+    },
+    "Series" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据系列"
+          }
+        }
+      }
+    },
+    "Util" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用率"
+          }
+        }
+      }
+    },
+    "rAwait" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读取等待"
+          }
+        }
+      }
+    },
+    "wAwait" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "写入等待"
           }
         }
       }

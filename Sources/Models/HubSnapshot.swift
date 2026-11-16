@@ -68,6 +68,15 @@ enum HistoryRange: String, CaseIterable, Identifiable, Sendable {
     case month = "30d"
 
     var id: String { rawValue }
+    var displayName: String {
+        switch self {
+        case .hour: String(localized: "1h")
+        case .halfDay: String(localized: "12h")
+        case .day: String(localized: "24h")
+        case .week: String(localized: "7d")
+        case .month: String(localized: "30d")
+        }
+    }
     var duration: TimeInterval {
         switch self {
         case .hour: 3_600

@@ -2,13 +2,23 @@ import SwiftUI
 import AppKit
 
 @MainActor
-final class WindowManager {
+final class WindowManager: NSObject, NSWindowDelegate {
     static let shared = WindowManager()
     private var settingsWindow: NSWindow?
     private var dashboardWindow: NSWindow?
     private let navigation = DashboardNavigation()
 
-    private init() {}
+    private override init() { super.init() }
+
+    func windowWillClose(_ notification: Notification) {
+        guard let window = notification.object as? NSWindow else { return }
+        guard window === dashboardWindow || window === settingsWindow else { return }
+        // A closed, retained NSWindow keeps its SwiftUI graph observing AppState.
+        // Detach it so chart .task refreshes stop and their history is released.
+        window.contentView = nil
+        if window === dashboardWindow { dashboardWindow = nil }
+        if window === settingsWindow { settingsWindow = nil }
+    }
 
     func showDashboard(systemID: HubRecordID? = nil) {
         if let systemID {
@@ -31,6 +41,7 @@ final class WindowManager {
             backing: .buffered, defer: false
         )
         window.title = "BeszelBar"
+        window.delegate = self
         window.contentView = NSHostingView(rootView: DashboardView(appState: AppState.shared, navigation: navigation))
         window.minSize = NSSize(width: 840, height: 600)
         window.isReleasedWhenClosed = false
@@ -56,6 +67,7 @@ final class WindowManager {
             defer: false
         )
         window.title = "BeszelBar"
+        window.delegate = self
         window.contentView = NSHostingView(rootView: settingsView)
         window.isReleasedWhenClosed = false
         window.center()

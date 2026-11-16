@@ -1,8 +1,17 @@
 import SwiftUI
 
 struct SystemDetailView: View {
-    let system: SystemRecord
-    var details: SystemDetailsRecord? = nil
+    @Environment(\.menuAppearance) private var appearance
+    let appState: AppState
+    let entry: HubSystem
+
+    private var system: SystemRecord {
+        appState.system(for: entry.id)?.system ?? entry.system
+    }
+
+    private var details: SystemDetailsRecord? {
+        appState.hubSnapshots[entry.instance.id]?.details[entry.system.id]
+    }
 
     private var cpuModel: String? {
         details?.cpu ?? system.info?.m
@@ -17,8 +26,8 @@ struct SystemDetailView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: appearance.size(8)) {
+            VStack(alignment: .leading, spacing: appearance.size(2)) {
                 HStack {
                     let displayName = hostname ?? system.name
                     Label {
@@ -27,16 +36,16 @@ struct SystemDetailView: View {
                     } icon: {
                         Image(systemName: "desktopcomputer")
                     }
-                    .font(.system(size: 12, weight: .semibold))
+                    .font(.system(size: appearance.size(12), weight: .semibold))
                     .foregroundColor(.primary)
 
                     Spacer()
                 }
 
                 if cpuModel != nil || cpuCores != nil {
-                    HStack(spacing: 4) {
+                    HStack(spacing: appearance.size(4)) {
                         Image(systemName: "cpu")
-                            .font(.system(size: 9))
+                            .font(.system(size: appearance.size(9)))
                         if let model = cpuModel {
                             Text(model)
                                 .lineLimit(1)
@@ -48,12 +57,12 @@ struct SystemDetailView: View {
                             Text("\(cores) cores")
                         }
                     }
-                    .font(.system(size: 10))
+                    .font(.system(size: appearance.size(10)))
                     .foregroundColor(.secondary)
                 }
 
                 if system.info?.dt != nil || system.info?.u != nil {
-                    HStack(spacing: 12) {
+                    HStack(spacing: appearance.size(12)) {
                         if let temp = system.info?.dt {
                             Label(String(format: "%.0f°C", temp), systemImage: "thermometer.medium")
                                 .foregroundColor(temp > 80 ? .red : (temp > 60 ? .orange : .secondary))
@@ -63,16 +72,16 @@ struct SystemDetailView: View {
                                 .foregroundColor(.secondary)
                         }
                     }
-                    .font(.system(size: 10))
+                    .font(.system(size: appearance.size(10)))
                 }
             }
 
             Divider()
-                .padding(.vertical, 2)
+                .padding(.vertical, appearance.size(2))
 
-            VStack(alignment: .leading, spacing: 6) {
+            VStack(alignment: .leading, spacing: appearance.size(6)) {
                 Label("Usage", systemImage: "chart.bar.fill")
-                    .font(.system(size: 11, weight: .semibold))
+                    .font(.system(size: appearance.size(11), weight: .semibold))
                     .foregroundColor(.primary)
 
                 if let cpu = system.cpuPercentage {
@@ -86,20 +95,16 @@ struct SystemDetailView: View {
                 }
             }
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 6)
-        .frame(width: 240)
+        .padding(.horizontal, appearance.size(8))
+        .padding(.vertical, appearance.size(6))
+        .frame(width: appearance.size(240))
     }
 
     private func formatUptime(_ seconds: Double) -> String {
-        let days = Int(seconds) / 86400
-        let hours = (Int(seconds) % 86400) / 3600
-        if days > 0 {
-            return "\(days)d \(hours)h"
-        } else {
-            let mins = (Int(seconds) % 3600) / 60
-            return "\(hours)h \(mins)m"
-        }
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = seconds >= 86_400 ? [.day, .hour] : [.hour, .minute]
+        formatter.unitsStyle = .abbreviated
+        return formatter.string(from: seconds) ?? "—"
     }
 
     private func formatBandwidth(_ mb: Double) -> String {
@@ -124,34 +129,35 @@ enum AppColors {
 }
 
 struct MetricBar: View {
-    let label: String
+    @Environment(\.menuAppearance) private var appearance
+    let label: LocalizedStringKey
     let value: Double
     let color: Color
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 3) {
+        VStack(alignment: .leading, spacing: appearance.size(3)) {
             HStack {
                 Text(label)
-                    .font(.system(size: 10, weight: .medium))
+                    .font(.system(size: appearance.size(10), weight: .medium))
                     .foregroundColor(.secondary)
                 Spacer()
                 Text("\(Int(value))%")
-                    .font(.system(size: 10, weight: .semibold, design: .monospaced))
+                    .font(.system(size: appearance.size(10), weight: .semibold, design: .monospaced))
                     .foregroundColor(.primary)
             }
 
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 3)
+                    RoundedRectangle(cornerRadius: appearance.size(3))
                         .fill(Color.secondary.opacity(0.2))
-                        .frame(height: 6)
+                        .frame(height: appearance.size(6))
 
-                    RoundedRectangle(cornerRadius: 3)
+                    RoundedRectangle(cornerRadius: appearance.size(3))
                         .fill(color)
-                        .frame(width: geometry.size.width * min(value / 100, 1.0), height: 6)
+                        .frame(width: geometry.size.width * min(value / 100, 1.0), height: appearance.size(6))
                 }
             }
-            .frame(height: 6)
+            .frame(height: appearance.size(6))
         }
     }
 }

@@ -191,6 +191,19 @@ private struct ZFSDatasetRow: View {
 struct ZFSHealthLabel: View {
     let health: String?
 
+    private var displayHealth: String {
+        switch health {
+        case "ONLINE": String(localized: "status.operational")
+        case "DEGRADED": String(localized: "zfs.health.degraded")
+        case "FAULTED": String(localized: "zfs.health.faulted")
+        case "OFFLINE": String(localized: "status.offline")
+        case "UNAVAIL": String(localized: "Unavailable")
+        case "REMOVED": String(localized: "zfs.health.removed")
+        case "SUSPENDED": String(localized: "zfs.health.suspended")
+        default: health ?? "—"
+        }
+    }
+
     private var color: Color {
         switch health {
         case "ONLINE": .green
@@ -202,7 +215,7 @@ struct ZFSHealthLabel: View {
 
     var body: some View {
         Label {
-            Text(verbatim: health ?? "—")
+            Text(displayHealth)
         } icon: {
             Image(systemName: health == "ONLINE" ? "checkmark.circle.fill" : "exclamationmark.triangle.fill")
         }

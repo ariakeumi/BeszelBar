@@ -1,0 +1,29 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSLocalNetworkUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BeszelBar connects to the Beszel hubs you configure on your local network to display your server metrics."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BeszelBar se connecte aux hubs Beszel que vous configurez sur votre réseau local pour afficher les mesures de vos serveurs."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BeszelBar 需要连接你在本地网络中配置的 Beszel 监控中心，以显示服务器的监控数据。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

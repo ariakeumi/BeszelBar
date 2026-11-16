@@ -6,6 +6,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var statusItem: NSStatusItem?
     private var isObserving = false
     private var menuIsOpen = false
+    private var menuGeneration = UUID()
 
     func applicationDidFinishLaunching(_: Notification) {
         #if DEBUG
@@ -17,7 +18,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             button.image?.size = NSSize(width: 18, height: 18)
         }
 
-        item.menu = MenuBuilder.build(appState: AppState.shared)
+        item.menu = NSMenu()
+        item.menu?.autoenablesItems = false
         item.menu?.delegate = self
         self.statusItem = item
 
@@ -82,14 +84,53 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             button.image?.size = NSSize(width: 18, height: 18)
         }
 
-        statusItem?.menu = MenuBuilder.build(appState: appState)
-        statusItem?.menu?.delegate = self
+        // Menu rows observe AppState while visible. Build their structure only
+        // when opening, rather than allocating hosting views on every poll.
     }
 
-    func menuWillOpen(_ menu: NSMenu) { menuIsOpen = true }
+    func menuNeedsUpdate(_ menu: NSMenu) {
+        guard !menuIsOpen else { return }
+        menuGeneration = UUID()
+        let updated = MenuBuilder.build(appState: AppState.shared)
+        menu.font = updated.font
+        releaseContent(of: menu)
+        for item in updated.items {
+            updated.removeItem(item)
+            menu.addItem(item)
+        }
+    }
+
+    func menuWillOpen(_ menu: NSMenu) {
+        menuGeneration = UUID()
+        menuIsOpen = true
+        AppState.shared.setRealtimeEnabled(true)
+        RefreshService.shared.setMenuOpen(true)
+    }
 
     func menuDidClose(_ menu: NSMenu) {
         menuIsOpen = false
+        AppState.shared.setRealtimeEnabled(false)
+        RefreshService.shared.setMenuOpen(false)
         refreshMenu()
+
+        // AppKit dispatches the selected action after menuDidClose. Release the
+        // hosting graphs on the next turn, unless a new menu has been prepared.
+        let generation = menuGeneration
+        DispatchQueue.main.async { [weak self, weak menu] in
+            guard let self, let menu, !self.menuIsOpen,
+                  self.menuGeneration == generation else { return }
+            self.releaseContent(of: menu)
+        }
+    }
+
+    private func releaseContent(of menu: NSMenu) {
+        for item in menu.items {
+            // AppKit or a pending action may still hold an item. Detach views
+            // explicitly so those references cannot retain SwiftUI observers.
+            item.view = nil
+            if let submenu = item.submenu { releaseContent(of: submenu) }
+            item.submenu = nil
+        }
+        menu.removeAllItems()
     }
 }

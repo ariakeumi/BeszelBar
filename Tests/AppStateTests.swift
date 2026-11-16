@@ -95,6 +95,78 @@ final class AppStateTests: XCTestCase {
         XCTAssertFalse(state.isLoading)
     }
 
+    func testSlowDetailsCoalesceWhileSystemsAndContainersContinuePolling() async throws {
+        let a = hub("A")
+        let service = ControlledDetailsService()
+        let (state, _) = state([a]) { _ in service }
+        defer { state.stopRefreshing() }
+        state.refresh()
+        await service.waitForDetailsStart()
+        await waitUntil { state.visibleSystems.first?.system.cpuPercentage == 1 && state.visibleContainers.first?.container.cpu == 1 }
+
+        state.refresh()
+        state.refresh()
+        await waitUntil { state.visibleSystems.first?.system.cpuPercentage == 2 && state.visibleContainers.first?.container.cpu == 2 }
+        let detailsCalls = await service.detailsCalls
+        XCTAssertEqual(detailsCalls, 1)
+        XCTAssertTrue(state.isLoading)
+
+        try await service.finishDetails()
+        await state.waitForRefresh()
+        XCTAssertEqual(state.hubSnapshots[a.id]?.details["same-system"]?.hostname, "late.local")
+        XCTAssertFalse(state.isLoading)
+    }
+
+    func testStoppingAndRestartingRejectsOldOptionalResponses() async throws {
+        let a = hub("A")
+        let service = ControlledDetailsService()
+        let (state, _) = state([a]) { _ in service }
+        state.refresh()
+        await service.waitForDetailsStart()
+        await waitUntil { state.visibleSystems.first?.system.cpuPercentage == 1 }
+        state.stopRefreshing()
+        XCTAssertFalse(state.isLoading)
+
+        state.refresh()
+        await state.waitForRefresh()
+        XCTAssertEqual(state.hubSnapshots[a.id]?.details["same-system"]?.hostname, "new.local")
+        try await service.finishDetails()
+        for _ in 0..<20 { await Task.yield() }
+        XCTAssertEqual(state.hubSnapshots[a.id]?.details["same-system"]?.hostname, "new.local")
+        XCTAssertFalse(state.isLoading)
+    }
+
+    func testOptionalErrorsRemainIndependentAndClearWhenTheirCollectionRecovers() async {
+        let a = hub("A")
+        let service = TestService(name: "A")
+        let (state, _) = state([a]) { _ in service }
+        await service.setResourceFailures(details: true, containers: true)
+        state.refresh()
+        await state.waitForRefresh()
+        XCTAssertEqual(state.hubSnapshots[a.id]?.resourceErrors.count, 2)
+
+        await service.setResourceFailures(details: false, containers: true)
+        state.refresh()
+        await state.waitForRefresh()
+        let errors = state.hubSnapshots[a.id]?.resourceErrors ?? []
+        XCTAssertEqual(errors.count, 1)
+        XCTAssertTrue(errors.first?.hasPrefix(String(localized: "Containers") + ": ") == true)
+        XCTAssertEqual(state.visibleSystems.count, 1)
+
+        await service.setResourceFailures(details: false, containers: false)
+        state.refresh()
+        await state.waitForRefresh()
+        XCTAssertTrue(state.hubSnapshots[a.id]?.resourceErrors.isEmpty == true)
+    }
+
+    private func waitUntil(_ condition: @MainActor () -> Bool) async {
+        for _ in 0..<100 {
+            if condition() { return }
+            try? await Task.sleep(for: .milliseconds(10))
+        }
+        XCTAssertTrue(condition(), "Expected the independent collection poll to complete")
+    }
+
     func testEditingHubInvalidatesOldServiceAndLateResults() async {
         let a = hub("A")
         let pending = ControlledService()
@@ -165,18 +237,26 @@ actor TestService: BeszelServing {
     let name: String
     let triggered: Bool
     var fails = false
+    private var failsDetails = false
+    private var failsContainers = false
 
     init(name: String, triggered: Bool = true) { self.name = name; self.triggered = triggered }
     func setFailure(_ value: Bool) { fails = value }
+    func setResourceFailures(details: Bool, containers: Bool) {
+        failsDetails = details
+        failsContainers = containers
+    }
     func fetchSystems() async throws -> [SystemRecord] {
         if fails { throw URLError(.cannotConnectToHost) }
         return [try fixture(#"{"id":"same-system","name":"\#(name) server","status":"up","info":{"cpu":0,"mp":40,"dp":50}}"#)]
     }
     func fetchSystemDetails() async throws -> [SystemDetailsRecord] {
-        [try fixture(#"{"id":"same-details","system":"same-system","hostname":"\#(name).local"}"#)]
+        if failsDetails { throw URLError(.timedOut) }
+        return [try fixture(#"{"id":"same-details","system":"same-system","hostname":"\#(name).local"}"#)]
     }
     func fetchContainers(filter: String?) async throws -> [ContainerRecord] {
-        [try fixture(#"{"id":"same-container","name":"web","cpu":0,"memory":32,"net":0,"health":2,"status":"running","image":"nginx","system":"same-system","updated":0}"#)]
+        if failsContainers { throw URLError(.timedOut) }
+        return [try fixture(#"{"id":"same-container","name":"web","cpu":0,"memory":32,"net":0,"health":2,"status":"running","image":"nginx","system":"same-system","updated":0}"#)]
     }
     func fetchAlerts(filter: String?) async throws -> [AlertRecord] {
         // Real Beszel 0.19 has neither an "enabled" filter nor a required triggered field.
@@ -186,6 +266,45 @@ actor TestService: BeszelServing {
     func fetchHistory(systemID: String, range: HistoryRange, now: Date) async throws -> [SystemStatsRecord] {
         [try fixture(#"{"id":"\#(name)-history","created":"2026-09-15 12:00:00.000Z","type":"1m","stats":{"cpu":0}}"#)]
     }
+}
+
+/// Holds the first optional response even when its task is cancelled.
+private actor ControlledDetailsService: BeszelServing {
+    private var systemsCalls = 0
+    private var containersCalls = 0
+    private(set) var detailsCalls = 0
+    private var response: CheckedContinuation<[SystemDetailsRecord], Never>?
+    private var startWaiter: CheckedContinuation<Void, Never>?
+
+    func waitForDetailsStart() async {
+        if detailsCalls > 0 { return }
+        await withCheckedContinuation { startWaiter = $0 }
+    }
+
+    func fetchSystems() async throws -> [SystemRecord] {
+        systemsCalls += 1
+        return [try fixture(#"{"id":"same-system","name":"Server","status":"up","info":{"cpu":\#(systemsCalls)}}"#)]
+    }
+    func fetchSystemDetails() async throws -> [SystemDetailsRecord] {
+        detailsCalls += 1
+        if detailsCalls == 1 {
+            startWaiter?.resume()
+            startWaiter = nil
+            return await withCheckedContinuation { response = $0 }
+        }
+        return [try fixture(#"{"id":"details","system":"same-system","hostname":"new.local"}"#)]
+    }
+    func finishDetails() throws {
+        let details: SystemDetailsRecord = try fixture(#"{"id":"details","system":"same-system","hostname":"late.local"}"#)
+        response?.resume(returning: [details])
+        response = nil
+    }
+    func fetchContainers(filter: String?) async throws -> [ContainerRecord] {
+        containersCalls += 1
+        return [try fixture(#"{"id":"container","system":"same-system","name":"web","cpu":\#(containersCalls),"memory":32,"net":0,"health":2,"status":"running","image":"nginx","updated":0}"#)]
+    }
+    func fetchAlerts(filter: String?) async throws -> [AlertRecord] { [] }
+    func fetchHistory(systemID: String, range: HistoryRange, now: Date) async throws -> [SystemStatsRecord] { [] }
 }
 
 /// Deliberately ignores cancellation, like an already completed network callback.

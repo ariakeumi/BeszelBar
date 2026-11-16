@@ -150,7 +150,7 @@ private struct DashboardSidebar: View {
                     }
                 }
                 Section("Hubs") {
-                    HubScopeRow(title: "All Hubs", icon: "square.stack.3d.up", selected: appState.showsAllHubs) {
+                    HubScopeRow(title: String(localized: "All Hubs"), icon: "square.stack.3d.up", selected: appState.showsAllHubs) {
                         navigation.show(navigation.section)
                         appState.selectInstance(nil)
                     }
@@ -179,7 +179,7 @@ private struct HubScopeRow: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 8) {
-                Label(LocalizedStringKey(title), systemImage: icon).lineLimit(1)
+                Label(title, systemImage: icon).lineLimit(1)
                 Spacer(minLength: 0)
                 if hasError {
                     Image(systemName: "exclamationmark.triangle.fill")

@@ -14,12 +14,12 @@ enum ChartDataLoader {
             catch {
                 try Task.checkCancellation()
                 pools = previous?.pools ?? []
-                notices.append("ZFS details: \(error.localizedDescription)")
+                notices.append(String(localized: "ZFS details: \(error.localizedDescription)"))
             }
         }
         let (containerRecords, error) = await containerResult
         try Task.checkCancellation()
-        if let error { notices.append("Container history: \(error)") }
+        if let error { notices.append(String(localized: "Container history: \(error)")) }
         let retainedContainers = error == nil ? containerRecords : (previous?.containerRecords ?? [])
         return ChartDataSet(records: records, containerRecords: retainedContainers, pools: pools, notices: notices)
     }

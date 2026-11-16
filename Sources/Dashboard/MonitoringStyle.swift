@@ -14,7 +14,7 @@ struct SystemStatusBadge: View {
     var stale = false
 
     var body: some View {
-        Label(stale ? "Last known: \(system.displayStatus)" : system.displayStatus,
+        Label(stale ? String(localized: "Last known: \(system.displayStatus)") : system.displayStatus,
               systemImage: stale ? "clock" : (system.isOnline ? "checkmark.circle.fill" : "exclamationmark.circle.fill"))
             .font(.caption.weight(.medium))
             .foregroundStyle(stale ? .orange : (system.isOnline ? .green : .secondary))
@@ -25,7 +25,7 @@ struct SystemStatusBadge: View {
 }
 
 struct UsageMetricView: View {
-    let title: String
+    let title: LocalizedStringKey
     let value: Double?
     let color: Color
 

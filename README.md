@@ -39,25 +39,27 @@ To choose a specific certificate when several are installed, set `BESZELBAR_SIGN
 
 ## Features
 
+- **Localized interface** — English, French, and Simplified Chinese, following your macOS app language preference
 - **Live system cards** — See all your servers with status indicators, CPU, memory, and disk at a glance
 - **Rich system details** — Hover for detailed metrics including temperature, uptime, and usage bars
 - **Container monitoring** — View Docker containers with health status, resource usage, and image info
 - **Alert notifications** — Active alerts displayed prominently with triggering conditions
-- **Dashboard window** — Open **Open Dashboard…** from the menu for system cards, searchable containers, and alert rules
+- **Compact menu** — Click the BeszelBar icon in the menu header to open the current hub's Web dashboard; settings and quit controls sit at the top right
+- **Dashboard window** — Open **View Charts…** from a system's submenu for system cards, searchable containers, and alert rules
 - **iOS chart parity** — The same chart and card components as Beszel iOS: CPU and cores, memory/swap, storage and ZFS, network interfaces, sensors/GPU, and container history. Choose 1h, 12h, 24h, 7d, or 30d; unavailable hardware metrics stay hidden.
 - **Multi-hub support** — Choose one hub or **All Hubs** in the menu and dashboard, with each system identified by its hub
 - **Fallback URL** — Configure a primary and optional secondary address for the same hub; BeszelBar switches automatically when an address is unreachable
 - **Native performance** — Built with SwiftUI and AppKit for minimal resource usage
 - **Secure authentication** — Credentials stored safely in macOS Keychain
-- **Auto-refresh** — Configurable polling interval from 10 seconds to 5 minutes
+- **Live refresh** — Uses Beszel's real-time metrics stream for second-by-second CPU, memory, disk, network, and temperature readings while the menu is open. Other data follows your configured background interval (10 seconds to 5 minutes; default 30 seconds). Reconnects automatically and falls back to polling when streaming is unavailable; closing the menu stops the stream.
 
 ## Setup
 
 1. Launch BeszelBar
 2. Click the menu bar icon and open **Settings**
 3. Add your Beszel hub's primary URL, email, and password. Optionally add a secondary URL pointing to the **same hub** (for example, a public HTTPS address alongside a local address).
-4. Your servers appear in the menu bar dropdown. Choose **Open Dashboard…** for the full interface.
-5. With multiple hubs, use **Show Hubs → All Hubs** or the dashboard sidebar to monitor them together.
+4. Your servers appear in the menu bar dropdown. Click the BeszelBar icon in the header for the Web dashboard, or choose **View Charts…** from a system's submenu for the native dashboard.
+5. With multiple hubs, use the hub selector below the menu title to choose **All Hubs**, or use the dashboard sidebar to monitor them together.
 
 The primary address is preferred. After a connection failure, the secondary address is used for 60 seconds before retrying the primary. HTTP errors, invalid credentials, and certificate errors do not trigger a switch. The dashboard indicates when the secondary URL is in use. Existing hubs keep working without adding a secondary URL.
 

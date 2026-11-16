@@ -40,12 +40,47 @@ final class ChartRenderTests: XCTestCase {
     }
 
     func testChartLabelsAreLocalizedInTheAppBundle() throws {
-        for language in ["en", "fr"] {
+        for language in ["en", "fr", "zh-Hans"] {
             let path = try XCTUnwrap(Bundle.main.path(forResource: language, ofType: "lproj"))
             let bundle = try XCTUnwrap(Bundle(path: path))
             for key in ["chart.cpuUsage", "chart.memoryUsage", "charts.stacked_memory.title %@", "charts.stacked_network.title %@"] {
                 XCTAssertNotEqual(bundle.localizedString(forKey: key, value: nil, table: nil), key)
             }
+        }
+    }
+
+    func testSimplifiedChineseInterfaceAndFormattedMessages() throws {
+        let path = try XCTUnwrap(Bundle.main.path(forResource: "zh-Hans", ofType: "lproj"))
+        let bundle = try XCTUnwrap(Bundle(path: path))
+        func localized(_ key: String) -> String {
+            bundle.localizedString(forKey: key, value: nil, table: nil)
+        }
+        for (key, expected) in [
+            "General": "通用", "SYSTEM": "系统", "Name": "名称", "Password": "密码",
+            "All Hubs": "全部监控中心", "View Charts…": "查看图表…", "Copy Hostname": "复制主机名",
+            "status.operational": "在线", "container.status.restarting": "正在重启",
+            "chart.cpuUsage": "CPU 使用率", "chart.memoryUsage": "内存用量",
+            "zfs.title": "ZFS 存储池", "1h": "1 小时", "7d": "7 天"
+        ] {
+            XCTAssertEqual(localized(key), expected, key)
+        }
+        XCTAssertEqual(String(format: localized("Alerts (%lld)"), Int64(12)), "告警（12）")
+        XCTAssertEqual(String(format: localized("%lld hubs"), Int64(2)), "2 个监控中心")
+        XCTAssertEqual(String(format: localized("+%lld more containers"), Int64(5)), "还有 5 个容器")
+        XCTAssertEqual(String(format: localized("Connection failed: %@"), "HTTP 403"), "连接失败：HTTP 403")
+        XCTAssertEqual(String(format: localized("%@ · Threshold: %@"), "CPU", "80"), "CPU · 阈值：80")
+        let permission = bundle.localizedString(forKey: "NSLocalNetworkUsageDescription", value: nil, table: "InfoPlist")
+        XCTAssertTrue(permission.contains("本地网络"))
+    }
+
+    func testSimplifiedChineseChartsInBothAppearances() throws {
+        let now = Date()
+        let data = try ChartFixtures.data(now: now)
+        let cards = Array(ChartCatalog.cards(in: data).prefix(4))
+        for scheme in [ColorScheme.light, .dark] {
+            try render(data: data, cards: cards, now: now, scheme: scheme,
+                       title: "简体中文 · 图表预览",
+                       file: "zh-Hans-\(scheme == .dark ? "dark" : "light")", language: "zh-Hans")
         }
     }
 
@@ -101,7 +136,7 @@ final class ChartRenderTests: XCTestCase {
     }
 
     private func render(data: ChartDataSet, cards: [ChartDescriptor], now: Date, scheme: ColorScheme,
-                        title: String, file: String) throws {
+                        title: String, file: String, language: String = "fr") throws {
         let suite = "com.nohitdev.BeszelBar.render-tests"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
@@ -120,7 +155,7 @@ final class ChartRenderTests: XCTestCase {
         .padding(24).frame(width: 992)
         .background(scheme == .dark ? Color.black : Color(red: 242/255, green: 242/255, blue: 247/255))
         .environment(\.colorScheme, scheme)
-        .environment(\.locale, Locale(identifier: "fr"))
+        .environment(\.locale, Locale(identifier: language))
         .environment(\.chartXDomain, now.addingTimeInterval(-3600)...now)
         .environment(\.chartShowXGridLines, true)
         .environment(settings).environment(ChartPins(defaults: defaults))

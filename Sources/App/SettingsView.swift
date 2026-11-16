@@ -95,7 +95,7 @@ enum SettingsTab: CaseIterable {
     case hubs
     case about
 
-    var title: String {
+    var title: LocalizedStringKey {
         switch self {
         case .general: return "General"
         case .hubs: return "Hubs"
@@ -152,7 +152,7 @@ struct HubsView: View {
                 .listStyle(.inset)
 
                 HStack {
-                    Text("\(appState.instances.count) hub\(appState.instances.count == 1 ? "" : "s")")
+                    Text("\(appState.instances.count) hubs")
                         .font(.caption)
                         .foregroundColor(.secondary)
 
@@ -310,7 +310,7 @@ struct AddHubSheet: View {
 
         guard let cleanURL = HubURL.normalized(url), HubURL.baseURL(cleanURL) != nil,
               HubURL.isValidFallback(fallbackURL) else {
-            errorMessage = "Enter valid HTTP or HTTPS hub URLs, without query parameters or fragments."
+            errorMessage = String(localized: "Enter valid HTTP or HTTPS hub URLs, without query parameters or fragments.")
             isLoading = false
             return
         }
@@ -338,7 +338,7 @@ struct AddHubSheet: View {
             } catch {
                 guard !Task.isCancelled else { return }
                 await MainActor.run {
-                    errorMessage = "Connection failed: \(error.localizedDescription)"
+                    errorMessage = String(localized: "Connection failed: \(error.localizedDescription)")
                     isLoading = false
                 }
             }
@@ -446,7 +446,7 @@ struct EditHubSheet: View {
 
         guard let cleanURL = HubURL.normalized(url), HubURL.baseURL(cleanURL) != nil,
               HubURL.isValidFallback(fallbackURL) else {
-            errorMessage = "Enter valid HTTP or HTTPS hub URLs, without query parameters or fragments."
+            errorMessage = String(localized: "Enter valid HTTP or HTTPS hub URLs, without query parameters or fragments.")
             isLoading = false
             return
         }
@@ -481,7 +481,7 @@ struct EditHubSheet: View {
             } catch {
                 guard !Task.isCancelled else { return }
                 await MainActor.run {
-                    errorMessage = "Connection failed: \(error.localizedDescription)"
+                    errorMessage = String(localized: "Connection failed: \(error.localizedDescription)")
                     isLoading = false
                 }
             }
@@ -493,6 +493,7 @@ struct GeneralView: View {
     let appState: AppState
     @AppStorage("refreshInterval") private var refreshInterval = 30
     @AppStorage("launchAtLogin") private var launchAtLogin = false
+    @AppStorage(MenuAppearance.fontSizeKey) private var menuFontSize = MenuAppearance.defaultFontSize
 
     var body: some View {
         ScrollView {
@@ -514,6 +515,39 @@ struct GeneralView: View {
                 Divider()
                     .padding(.horizontal, 20)
 
+                SectionHeader(title: "settings.menuAppearance")
+
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text("settings.menuFontSize")
+                        Spacer()
+                        Stepper(value: $menuFontSize, in: MenuAppearance.fontSizeRange, step: 1) {
+                            Text(verbatim: "\(Int(MenuAppearance(fontSize: menuFontSize).fontSize)) pt")
+                                .monospacedDigit()
+                                .frame(width: 44, alignment: .trailing)
+                        }
+                        .fixedSize()
+                        .accessibilityLabel("settings.menuFontSize")
+                    }
+                    Text("settings.menuFontSize.description")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    HStack {
+                        Text("settings.menuFontSize.preview")
+                            .font(.system(size: MenuAppearance(fontSize: menuFontSize).fontSize))
+                        Spacer()
+                        Button("settings.menuFontSize.reset") {
+                            menuFontSize = MenuAppearance.defaultFontSize
+                        }
+                        .disabled(menuFontSize == MenuAppearance.defaultFontSize)
+                    }
+                    .frame(minHeight: 28)
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 12)
+
+                Divider().padding(.horizontal, 20)
+
                 SectionHeader(title: "REFRESH")
 
                 VStack(alignment: .leading, spacing: 8) {
@@ -530,7 +564,7 @@ struct GeneralView: View {
                         .labelsHidden()
                         .frame(width: 100)
                     }
-                    Text("How often BeszelBar polls your hubs for updates.")
+                    Text("How often BeszelBar polls your hubs in the background. The menu refreshes every second while open.")
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
@@ -640,7 +674,7 @@ private struct SystemPermissionsSettings: View {
 }
 
 struct SectionHeader: View {
-    let title: String
+    let title: LocalizedStringKey
 
     var body: some View {
         Text(title)

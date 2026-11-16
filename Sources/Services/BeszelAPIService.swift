@@ -10,6 +10,7 @@ protocol BeszelServing: Sendable {
     func fetchContainerHistory(systemID: String, range: HistoryRange, now: Date) async throws -> [DetailedContainerRecord]
     func fetchZFSPools(systemID: String) async throws -> [ZFSPoolRecord]
     func currentEndpoint() async -> URL?
+    func realtimeUpdates(systemIDs: [String]) async throws -> AsyncThrowingStream<RealtimeSystemUpdate, Error>?
 }
 
 extension BeszelServing {
@@ -17,6 +18,7 @@ extension BeszelServing {
     func fetchContainerHistory(systemID: String, range: HistoryRange, now: Date) async throws -> [DetailedContainerRecord] { [] }
     func fetchZFSPools(systemID: String) async throws -> [ZFSPoolRecord] { [] }
     func currentEndpoint() async -> URL? { nil }
+    func realtimeUpdates(systemIDs: [String]) async throws -> AsyncThrowingStream<RealtimeSystemUpdate, Error>? { nil }
 }
 
 actor BeszelAPIService: BeszelServing {
@@ -25,6 +27,8 @@ actor BeszelAPIService: BeszelServing {
     private var authenticationTask: Task<String, Error>?
 
     private let connection: HubConnection
+    private let session: URLSession
+    private let ownsSession: Bool
 
     private let jsonDecoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -48,6 +52,7 @@ actor BeszelAPIService: BeszelServing {
         normalized.url = HubURL.normalized(instance.url) ?? instance.url
         normalized.fallbackURL = HubURL.normalized(instance.fallbackURL) ?? ""
         self.instance = normalized
+        self.ownsSession = session == nil
         let configuredSession: URLSession
         if let session {
             configuredSession = session
@@ -55,14 +60,49 @@ actor BeszelAPIService: BeszelServing {
             let config = URLSessionConfiguration.default
             config.timeoutIntervalForRequest = 15
             config.timeoutIntervalForResource = 30
+            // Polls and moving history ranges are always read fresh. Keeping
+            // their responses in URLCache duplicates the decoded snapshots.
+            config.urlCache = nil
+            config.requestCachePolicy = .reloadIgnoringLocalCacheData
             configuredSession = URLSession(configuration: config)
         }
+        self.session = configuredSession
         self.connection = HubConnection(baseURL: normalized.url, fallbackURL: normalized.fallbackURL) { request in
             try await configuredSession.data(for: request)
         }
     }
 
+    deinit {
+        if ownsSession { session.invalidateAndCancel() }
+    }
+
     func currentEndpoint() async -> URL? { await connection.currentEndpoint }
+
+    func realtimeUpdates(systemIDs: [String]) async throws -> AsyncThrowingStream<RealtimeSystemUpdate, Error>? {
+        guard !systemIDs.isEmpty else { return nil }
+        let token = try await getValidToken()
+        guard let base = HubURL.baseURL(instance.url) else { throw URLError(.badURL) }
+        // Use the existing connection policy to select a reachable endpoint.
+        // Keep the SSE GET and its subscription POST pinned to that endpoint:
+        // PocketBase client IDs belong to the connection that created them.
+        let probe = URLRequest(url: base.appendingPathComponent("api/health"),
+                               cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 4)
+        let (_, response) = try await connection.data(for: probe)
+        guard let response = response as? HTTPURLResponse else { throw URLError(.badServerResponse) }
+        guard response.statusCode == 200 else {
+            throw BeszelAPIError.httpError(statusCode: response.statusCode, url: probe.url!.absoluteString)
+        }
+        guard let endpoint = await connection.currentEndpoint else { throw URLError(.badURL) }
+        try Task.checkCancellation()
+        return BeszelRealtimeConnection.updates(endpoint: endpoint, token: token, systemIDs: systemIDs,
+                                                configuration: session.configuration) { [weak self] in
+            await self?.invalidateRealtimeToken(token)
+        }
+    }
+
+    private func invalidateRealtimeToken(_ token: String) {
+        if authToken == token { authToken = nil }
+    }
 
     private func getValidToken() async throws -> String {
         if let currentToken = authToken {
@@ -132,7 +172,7 @@ actor BeszelAPIService: BeszelServing {
     private func performRequest<T: Decodable>(with url: URL, retryCount: Int = 0) async throws -> T {
         let token = try await getValidToken()
 
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData)
         request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         let (data, response) = try await connection.data(for: request)
@@ -324,9 +364,9 @@ enum BeszelAPIError: LocalizedError {
         switch self {
         case .httpError(let statusCode, _):
             switch statusCode {
-            case 401: return "Your session has expired. Check this hub's credentials in Settings."
-            case 403: return "This account does not have access to the requested data."
-            default: return "The hub could not complete the request (HTTP \(statusCode))."
+            case 401: return String(localized: "Your session has expired. Check this hub's credentials in Settings.")
+            case 403: return String(localized: "This account does not have access to the requested data.")
+            default: return String(localized: "The hub could not complete the request (HTTP \(statusCode)).")
             }
         }
     }

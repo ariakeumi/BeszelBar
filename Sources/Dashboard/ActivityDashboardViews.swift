@@ -116,7 +116,7 @@ private struct ContainerDashboardRow: View {
                     .padding(.horizontal, 6).padding(.vertical, 2)
                     .foregroundStyle(healthColor).background(healthColor.opacity(0.15), in: Capsule())
             } else {
-                Text(entry.container.status.capitalized)
+                Text(entry.container.displayStatus)
                     .font(IOSFont.caption2.weight(.semibold))
                     .foregroundStyle(entry.container.status.lowercased() == "running" ? Color.green : .secondary)
             }

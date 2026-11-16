@@ -1,42 +1,43 @@
 import SwiftUI
 
 struct AlertMenuRowView: View {
+    @Environment(\.menuAppearance) private var appearance
     let alert: AlertRecord
     let systemName: String
     @State private var isHovered = false
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: appearance.size(10)) {
             Image(systemName: alertIcon)
-                .font(.system(size: 12, weight: .semibold))
+                .font(.system(size: appearance.size(12), weight: .semibold))
                 .foregroundColor(alertColor)
 
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: appearance.size(2)) {
                 Text(alert.name)
-                    .font(.system(size: 11, weight: .medium))
+                    .font(.system(size: appearance.size(11), weight: .medium))
                     .lineLimit(1)
 
-                HStack(spacing: 4) {
+                HStack(spacing: appearance.size(4)) {
                     Text(systemName)
-                        .font(.system(size: 10))
+                        .font(.system(size: appearance.size(10)))
                         .foregroundColor(.secondary)
 
                     Text("\u{2022}")
-                        .font(.system(size: 8))
+                        .font(.system(size: appearance.size(8)))
                         .foregroundColor(.secondary)
 
                     Text("\(alert.displayMetric) > \(alert.displayThreshold)")
-                        .font(.system(size: 10))
+                        .font(.system(size: appearance.size(10)))
                         .foregroundColor(.secondary)
                 }
             }
 
             Spacer()
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 8)
+        .padding(.horizontal, appearance.size(10))
+        .padding(.vertical, appearance.size(8))
         .background(
-            RoundedRectangle(cornerRadius: 6, style: .continuous)
+            RoundedRectangle(cornerRadius: appearance.size(6), style: .continuous)
                 .fill(isHovered ? Color.accentColor.opacity(0.1) : Color.clear)
         )
         .contentShape(Rectangle())

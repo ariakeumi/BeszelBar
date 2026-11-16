@@ -1,13 +1,19 @@
 import SwiftUI
 
 struct ContainerMenuRowView: View {
-    let container: ContainerRecord
+    @Environment(\.menuAppearance) private var appearance
+    let appState: AppState
+    let entry: HubContainer
+
+    private var container: ContainerRecord {
+        appState.hubSnapshots[entry.instance.id]?.containers.first { $0.id == entry.container.id } ?? entry.container
+    }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: appearance.size(4)) {
             HStack {
                 Text(container.name)
-                    .font(.system(size: 11, weight: .semibold))
+                    .font(.system(size: appearance.size(11), weight: .semibold))
                     .lineLimit(1)
 
                 Spacer()
@@ -15,19 +21,19 @@ struct ContainerMenuRowView: View {
                 HealthBadge(health: container.health)
             }
 
-            HStack(spacing: 8) {
+            HStack(spacing: appearance.size(8)) {
                 Label(String(format: "%.1f%%", container.cpu), systemImage: "cpu")
-                    .font(.system(size: 9))
+                    .font(.system(size: appearance.size(9)))
                     .foregroundColor(.secondary)
 
                 Label(formatMemory(container.memory), systemImage: "memorychip")
-                    .font(.system(size: 9))
+                    .font(.system(size: appearance.size(9)))
                     .foregroundColor(.secondary)
 
                 Spacer()
 
-                Text(container.status)
-                    .font(.system(size: 9))
+                Text(container.displayStatus)
+                    .font(.system(size: appearance.size(9)))
                     .foregroundColor(.secondary)
             }
 
@@ -39,12 +45,12 @@ struct ContainerMenuRowView: View {
                 } icon: {
                     Image(systemName: "shippingbox")
                 }
-                .font(.system(size: 9))
+                .font(.system(size: appearance.size(9)))
                 .foregroundColor(.secondary.opacity(0.8))
             }
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 6)
+        .padding(.horizontal, appearance.size(10))
+        .padding(.vertical, appearance.size(6))
     }
 
     private func formatMemory(_ mb: Double) -> String {
@@ -56,6 +62,7 @@ struct ContainerMenuRowView: View {
 }
 
 struct HealthBadge: View {
+    @Environment(\.menuAppearance) private var appearance
     let health: ContainerHealth
 
     var textColor: Color {
@@ -78,11 +85,11 @@ struct HealthBadge: View {
 
     var body: some View {
         Text(health.displayText)
-            .font(.system(size: 8, weight: .semibold))
+            .font(.system(size: appearance.size(8), weight: .semibold))
             .foregroundColor(textColor)
-            .padding(.horizontal, 6)
-            .padding(.vertical, 2)
+            .padding(.horizontal, appearance.size(6))
+            .padding(.vertical, appearance.size(2))
             .background(bgColor.opacity(0.15))
-            .cornerRadius(4)
+            .cornerRadius(appearance.size(4))
     }
 }
