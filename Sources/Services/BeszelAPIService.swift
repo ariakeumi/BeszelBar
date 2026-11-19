@@ -3,6 +3,7 @@ import Foundation
 protocol BeszelServing: Sendable {
     func fetchSystems() async throws -> [SystemRecord]
     func fetchSystemDetails() async throws -> [SystemDetailsRecord]
+    func fetchSystemStats(systemID: String, limit: Int) async throws -> [SystemStatsRecord]
     func fetchContainers(filter: String?) async throws -> [ContainerRecord]
     func fetchAlerts(filter: String?) async throws -> [AlertRecord]
     func fetchHistory(systemID: String, range: HistoryRange, now: Date) async throws -> [SystemStatsRecord]
@@ -14,6 +15,7 @@ protocol BeszelServing: Sendable {
 }
 
 extension BeszelServing {
+    func fetchSystemStats(systemID: String, limit: Int) async throws -> [SystemStatsRecord] { [] }
     func fetchDetailedHistory(systemID: String, range: HistoryRange, now: Date) async throws -> [DetailedSystemRecord] { [] }
     func fetchContainerHistory(systemID: String, range: HistoryRange, now: Date) async throws -> [DetailedContainerRecord] { [] }
     func fetchZFSPools(systemID: String) async throws -> [ZFSPoolRecord] { [] }

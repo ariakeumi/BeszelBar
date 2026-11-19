@@ -4,7 +4,6 @@ import AppKit
 struct MenuHeaderView: View {
     @Environment(\.menuAppearance) private var appearance
     var appState: AppState
-    var width: CGFloat = 320
     var onOpenWebDashboard: (URL) -> Void
     var onOpenSettings: () -> Void
     var onQuit: () -> Void
@@ -91,7 +90,7 @@ struct MenuHeaderView: View {
 
             Divider()
         }
-        .frame(width: width, height: appearance.size(46))
+        .frame(height: appearance.size(46))
     }
 
     @ViewBuilder

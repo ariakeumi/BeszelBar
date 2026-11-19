@@ -87,16 +87,40 @@ struct SystemStatsRecord: Identifiable, Codable {
     let type: String?
 }
 
-struct SystemStatsDetail: Codable {
+struct SystemStatsDetail: Codable, Sendable {
     let cpu: Double?
     let mp: Double?
     let dp: Double?
     let ns: Double?
     let nr: Double?
     var b: [Double]? = nil
+    var m: Double? = nil
+    var mu: Double? = nil
+    var d: Double? = nil
+    var du: Double? = nil
+    var mem: [Double]? = nil
 
     enum CodingKeys: String, CodingKey {
-        case cpu, mp, dp, ns, nr, b
+        case cpu, mp, dp, ns, nr, b, m, mu, d, du, mem
+    }
+
+    var memoryCapacityDisplay: String? {
+        if let mem, mem.count >= 2 {
+            return Self.capacityDisplay(used: mem[1] / 1_073_741_824, total: mem[0] / 1_073_741_824)
+        }
+        return Self.capacityDisplay(used: mu, total: m)
+    }
+
+    var diskCapacityDisplay: String? {
+        Self.capacityDisplay(used: du, total: d)
+    }
+
+    private static func capacityDisplay(used: Double?, total: Double?) -> String? {
+        guard let used, let total, used.isFinite, total.isFinite, used >= 0, total > 0 else { return nil }
+        let divisor = total >= 1024 ? 1024.0 : (total < 1 ? 1.0 / 1024 : 1)
+        let unit = total >= 1024 ? "TiB" : (total < 1 ? "MiB" : "GiB")
+        let format = FloatingPointFormatStyle<Double>.number.precision(.fractionLength(0...2))
+        return "\((used / divisor).formatted(format)) / \((total / divisor).formatted(format)) \(unit)"
     }
 }
 

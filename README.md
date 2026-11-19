@@ -45,6 +45,7 @@ To choose a specific certificate when several are installed, set `BESZELBAR_SIGN
 - **Container monitoring** — View Docker containers with health status, resource usage, and image info
 - **Alert notifications** — Active alerts displayed prominently with triggering conditions
 - **Compact menu** — Click the BeszelBar icon in the menu header to open the current hub's Web dashboard; settings and quit controls sit at the top right
+- **Menu appearance** — Adjust the font size and background transparency in Settings → General. Text and icons keep their full opacity; the next menu opening uses the saved appearance.
 - **Dashboard window** — Open **View Charts…** from a system's submenu for system cards, searchable containers, and alert rules
 - **iOS chart parity** — The same chart and card components as Beszel iOS: CPU and cores, memory/swap, storage and ZFS, network interfaces, sensors/GPU, and container history. Choose 1h, 12h, 24h, 7d, or 30d; unavailable hardware metrics stay hidden.
 - **Multi-hub support** — Choose one hub or **All Hubs** in the menu and dashboard, with each system identified by its hub

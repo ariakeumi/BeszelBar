@@ -1,6 +1,28 @@
 import XCTest
 
 final class HistoryTests: XCTestCase {
+    func testCapacityDisplaysUsedAndTotalWithMatchingUnits() throws {
+        let stats: SystemStatsDetail = try fixture(#"{"m":16,"mu":4,"d":2048,"du":1024}"#)
+        XCTAssertEqual(stats.memoryCapacityDisplay, "4 / 16 GiB")
+        XCTAssertEqual(stats.diskCapacityDisplay, "1 / 2 TiB")
+
+        let small: SystemStatsDetail = try fixture(#"{"m":0.5,"mu":0,"d":16,"du":0}"#)
+        XCTAssertEqual(small.memoryCapacityDisplay, "0 / 512 MiB")
+        XCTAssertEqual(small.diskCapacityDisplay, "0 / 16 GiB")
+    }
+
+    func testCapacitySupportsByteMemoryAndDoesNotInventMissingValues() throws {
+        let stats: SystemStatsDetail = try fixture(#"{"mem":[8589934592,2147483648,0,0],"m":16,"mu":4}"#)
+        XCTAssertEqual(stats.memoryCapacityDisplay, "2 / 8 GiB")
+        XCTAssertNil(stats.diskCapacityDisplay)
+        for payload in [#"{}"#, #"{"m":0,"mu":0,"d":0,"du":0}"#,
+                        #"{"m":8,"d":16}"#, #"{"m":8,"mu":-1,"d":16,"du":-1}"#] {
+            let missing: SystemStatsDetail = try fixture(payload)
+            XCTAssertNil(missing.memoryCapacityDisplay)
+            XCTAssertNil(missing.diskCapacityDisplay)
+        }
+    }
+
     func testHistoryPreservesZeroAndSeparatesMissingDataAndOutages() throws {
         let records: [SystemStatsRecord] = try fixture(#"""
         [

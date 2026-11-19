@@ -29,22 +29,18 @@ struct RealtimeSystemUpdate: Sendable {
 
 struct RealtimeMetrics: Decodable, Sendable {
     let info: SystemInfo
-    let stats: NetworkStats?
+    let stats: SystemStatsDetail?
+}
 
-    struct NetworkStats: Decodable, Sendable {
-        let b: [Double]?
-        let ns: Double?
-        let nr: Double?
-
-        var networkTraffic: SystemNetworkTraffic {
-            // New agents send bytes/s in [upload, download] order. Older
-            // agents use MB/s; zero rates may be omitted from their payload.
-            if let b, b.count >= 2 {
-                return SystemNetworkTraffic(upload: b[0], download: b[1])
-            }
-            return SystemNetworkTraffic(upload: (ns ?? 0) * 1_048_576,
-                                        download: (nr ?? 0) * 1_048_576)
+extension SystemStatsDetail {
+    var networkTraffic: SystemNetworkTraffic {
+        // New agents send bytes/s in [upload, download] order. Older
+        // agents use MB/s; zero rates may be omitted from their payload.
+        if let b, b.count >= 2 {
+            return SystemNetworkTraffic(upload: b[0], download: b[1])
         }
+        return SystemNetworkTraffic(upload: (ns ?? 0) * 1_048_576,
+                                    download: (nr ?? 0) * 1_048_576)
     }
 }
 

@@ -195,6 +195,10 @@ final class AppState {
         reconcileRealtime()
     }
 
+    func realtimeStats(for id: HubRecordID) -> SystemStatsDetail? {
+        freshRealtimeSample(hubID: id.hubID, systemID: id.recordID)?.metrics.stats
+    }
+
     private func reconcileRealtime() {
         let visibleIDs = Set(visibleInstances.map(\.id))
         for id in Array(realtimeSubscriptions.keys) where !isRealtimeEnabled || !visibleIDs.contains(id) {

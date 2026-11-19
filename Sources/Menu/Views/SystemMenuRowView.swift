@@ -13,17 +13,24 @@ struct SystemMenuRowView: View {
     var body: some View {
         HStack(spacing: appearance.size(8)) {
             VStack(alignment: .leading, spacing: appearance.size(6)) {
-                HStack(alignment: .top, spacing: appearance.size(8)) {
+                HStack(alignment: .firstTextBaseline, spacing: appearance.size(8)) {
                     StatusDot(color: statusColor)
-                        .padding(.top, appearance.size(1))
 
                     Text(system.name.isEmpty ? system.id : system.name)
                         .font(.system(size: appearance.size(12), weight: .medium))
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
+
+                    if let temperature = system.temperature, temperature.isFinite {
+                        Text(verbatim: String(format: "%.0f°C", temperature))
+                            .font(.system(size: appearance.size(10), weight: .semibold))
+                            .monospacedDigit()
+                            .foregroundStyle(temperature > 80 ? Color.red : (temperature > 60 ? Color.orange : Color.secondary))
+                            .fixedSize()
+                    }
                 }
 
-                if showStatsInMenu, hasStats {
+                if showsStatsRow {
                     HStack(spacing: appearance.size(4)) {
                         if let cpu = system.cpuPercentage {
                             StatPill(value: cpu, icon: "cpu", showsLessThanOnePercent: false)
@@ -35,16 +42,28 @@ struct SystemMenuRowView: View {
                             StatPill(value: disk, icon: "internaldrive")
                         }
 
-                        Spacer(minLength: appearance.size(4))
+                        if system.isOnline {
+                            let upload = system.networkTraffic?.uploadDisplay
+                            let download = system.networkTraffic?.downloadDisplay
+                            let uploadLabel = String(localized: "Upload")
+                            let downloadLabel = String(localized: "Download")
+                            let description = if let upload, let download {
+                                "\(uploadLabel): \(upload)/s | \(downloadLabel): \(download)/s"
+                            } else {
+                                "\(uploadLabel) | \(downloadLabel)"
+                            }
 
-                        if system.isOnline, let traffic = system.networkTraffic {
-                            Text(verbatim: traffic.compactDisplay)
-                                .font(.system(size: appearance.size(10), weight: .semibold))
-                                .monospacedDigit()
-                                .foregroundStyle(.secondary)
-                                .fixedSize()
-                                .help(Text("Upload") + Text(verbatim: ": \(traffic.uploadDisplay)/s | ")
-                                      + Text("Download") + Text(verbatim: ": \(traffic.downloadDisplay)/s"))
+                            HStack(spacing: appearance.size(6)) {
+                                trafficIndicator("arrow.up", rate: upload)
+                                trafficIndicator("arrow.down", rate: download)
+                            }
+                            .font(.system(size: appearance.size(10), weight: .semibold))
+                            .foregroundStyle(.secondary)
+                            .fixedSize()
+                            .padding(.leading, appearance.size(4))
+                            .help(Text(verbatim: description))
+                            .accessibilityElement(children: .ignore)
+                            .accessibilityLabel(Text(verbatim: description))
                         }
                     }
                 }
@@ -55,9 +74,26 @@ struct SystemMenuRowView: View {
         .padding(.vertical, appearance.size(4))
     }
 
-    private var hasStats: Bool {
-        system.cpuPercentage != nil || system.memoryPercentage != nil || system.diskPercentage != nil
-            || (system.isOnline && system.networkTraffic != nil)
+    private func trafficIndicator(_ icon: String, rate: String?) -> some View {
+        HStack(spacing: appearance.size(2)) {
+            Image(systemName: icon)
+                .frame(width: appearance.size(9))
+            Text(verbatim: "000K")
+                .hidden()
+                .overlay(alignment: .trailing) {
+                    if let rate {
+                        Text(verbatim: rate)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
+                    }
+                }
+                .font(.system(size: appearance.size(10), weight: .semibold, design: .monospaced))
+        }
+    }
+
+    private var showsStatsRow: Bool {
+        showStatsInMenu && (system.isOnline || system.cpuPercentage != nil
+            || system.memoryPercentage != nil || system.diskPercentage != nil)
     }
 
     private var statusColor: Color {
@@ -113,9 +149,11 @@ struct StatPill: View {
             Text(displayValue)
                 .font(.system(size: appearance.size(10), weight: .semibold))
                 .monospacedDigit()
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
                 .foregroundStyle(colorScheme == .light ? Color.secondary : Color.primary)
-                .padding(.horizontal, appearance.size(6))
-                .frame(width: appearance.size(48), height: appearance.size(18), alignment: .leading)
+                .padding(.horizontal, appearance.size(3))
+                .frame(width: appearance.size(38), height: appearance.size(18), alignment: .leading)
                 .background { usageFill }
                 .background(Color.secondary.opacity(0.12))
                 .clipShape(RoundedRectangle(cornerRadius: appearance.size(5), style: .continuous))

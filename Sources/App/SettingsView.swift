@@ -494,6 +494,15 @@ struct GeneralView: View {
     @AppStorage("refreshInterval") private var refreshInterval = 30
     @AppStorage("launchAtLogin") private var launchAtLogin = false
     @AppStorage(MenuAppearance.fontSizeKey) private var menuFontSize = MenuAppearance.defaultFontSize
+    @AppStorage(MenuAppearance.backgroundOpacityKey) private var menuBackgroundOpacity = MenuAppearance.defaultBackgroundOpacity
+
+    private var menuTransparency: Double {
+        1 - MenuAppearance(backgroundOpacity: menuBackgroundOpacity).backgroundOpacity
+    }
+
+    private var menuTransparencyLabel: String {
+        "\(Int((menuTransparency * 100).rounded()))%"
+    }
 
     var body: some View {
         ScrollView {
@@ -545,6 +554,33 @@ struct GeneralView: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 12)
+
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text("settings.menuBackgroundTransparency")
+                        Spacer()
+                        Text(verbatim: menuTransparencyLabel)
+                            .monospacedDigit()
+                    }
+                    Slider(value: Binding(
+                        get: { menuTransparency },
+                        set: { menuBackgroundOpacity = 1 - $0 }
+                    ), in: 0...0.8, step: 0.05)
+                    .accessibilityLabel("settings.menuBackgroundTransparency")
+                    .accessibilityValue(Text(verbatim: menuTransparencyLabel))
+                    HStack(alignment: .top) {
+                        Text("settings.menuBackgroundTransparency.description")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Button("settings.menuFontSize.reset") {
+                            menuBackgroundOpacity = MenuAppearance.defaultBackgroundOpacity
+                        }
+                        .disabled(abs(menuBackgroundOpacity - MenuAppearance.defaultBackgroundOpacity) < 0.001)
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 12)
 
                 Divider().padding(.horizontal, 20)
 

@@ -3,9 +3,9 @@ import AppKit
 
 @MainActor
 enum MenuBuilder {
-    private static let menuWidth: CGFloat = 320
+    private static let menuWidth: CGFloat = 276
 
-    static func build(appState: AppState, appearance: MenuAppearance = .load()) -> NSMenu {
+    static func build(appState: AppState, appearance: MenuAppearance = .load(), onDismiss: (() -> Void)? = nil) -> NSMenu {
         let menu = makeMenu(appearance: appearance)
         menu.autoenablesItems = false
         let actions = MenuActions.shared
@@ -13,21 +13,20 @@ enum MenuBuilder {
         let headerItem = NSMenuItem()
         let headerView = host(MenuHeaderView(
             appState: appState,
-            width: appearance.size(menuWidth),
             onOpenWebDashboard: { [weak headerItem] url in
-                headerItem?.menu?.cancelTracking()
+                if let onDismiss { onDismiss() } else { headerItem?.menu?.cancelTracking() }
                 NSWorkspace.shared.open(url)
             },
             onOpenSettings: { [weak headerItem] in
-                headerItem?.menu?.cancelTracking()
+                if let onDismiss { onDismiss() } else { headerItem?.menu?.cancelTracking() }
                 actions.openSettings(nil)
             },
             onQuit: { [weak headerItem] in
-                headerItem?.menu?.cancelTracking()
+                if let onDismiss { onDismiss() } else { headerItem?.menu?.cancelTracking() }
                 actions.quit(nil)
             },
             onSelectHub: { [weak headerItem] instance in
-                headerItem?.menu?.cancelTracking()
+                if let onDismiss { onDismiss() } else { headerItem?.menu?.cancelTracking() }
                 appState.selectInstance(instance)
             }
         ), width: menuWidth, minimumHeight: 46, appearance: appearance)
@@ -79,7 +78,7 @@ enum MenuBuilder {
             let alertItem = NSMenuItem()
 
             let view = host(AlertMenuRowView(alert: alert, systemName: systemName),
-                            width: menuWidth - 20, minimumHeight: 44, appearance: appearance)
+                            width: 300, minimumHeight: 44, appearance: appearance)
             alertItem.view = view
 
             submenu.addItem(alertItem)

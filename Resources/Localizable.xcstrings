@@ -1,6 +1,52 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "settings.menuBackgroundTransparency" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Background transparency"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transparence du fond"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "背景透明度"
+          }
+        }
+      }
+    },
+    "settings.menuBackgroundTransparency.description" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only the menu background becomes transparent. Text and icons stay clear. Applies the next time you open the menu."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seul le fond du menu devient transparent. Le texte et les icônes restent nets. Appliqué à la prochaine ouverture du menu."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仅调整菜单背景，文字和图标保持清晰。下次打开菜单时生效。"
+          }
+        }
+      }
+    },
     "settings.menuAppearance" : {
       "extractionState" : "manual",
       "localizations" : {

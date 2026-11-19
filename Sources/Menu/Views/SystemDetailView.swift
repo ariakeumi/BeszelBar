@@ -4,6 +4,11 @@ struct SystemDetailView: View {
     @Environment(\.menuAppearance) private var appearance
     let appState: AppState
     let entry: HubSystem
+    @State private var latestStats: SystemStatsDetail?
+
+    private var realtimeStats: SystemStatsDetail? {
+        appState.realtimeStats(for: entry.id)
+    }
 
     private var system: SystemRecord {
         appState.system(for: entry.id)?.system ?? entry.system
@@ -64,7 +69,7 @@ struct SystemDetailView: View {
                 if system.info?.dt != nil || system.info?.u != nil {
                     HStack(spacing: appearance.size(12)) {
                         if let temp = system.info?.dt {
-                            Label(String(format: "%.0f°C", temp), systemImage: "thermometer.medium")
+                            Text(verbatim: String(format: "%.0f°C", temp))
                                 .foregroundColor(temp > 80 ? .red : (temp > 60 ? .orange : .secondary))
                         }
                         if let uptime = system.info?.u {
@@ -88,16 +93,37 @@ struct SystemDetailView: View {
                     MetricBar(label: "CPU", value: cpu, color: valueColor(cpu))
                 }
                 if let mem = system.memoryPercentage {
-                    MetricBar(label: "Memory", value: mem, color: valueColor(mem))
+                    MetricBar(label: "Memory", value: mem, color: valueColor(mem),
+                              capacity: realtimeStats?.memoryCapacityDisplay ?? latestStats?.memoryCapacityDisplay ?? "—")
                 }
                 if let disk = system.diskPercentage {
-                    MetricBar(label: "Disk", value: disk, color: valueColor(disk))
+                    MetricBar(label: "Disk", value: disk, color: valueColor(disk),
+                              capacity: realtimeStats?.diskCapacityDisplay ?? latestStats?.diskCapacityDisplay ?? "—")
                 }
             }
         }
         .padding(.horizontal, appearance.size(8))
         .padding(.vertical, appearance.size(6))
         .frame(width: appearance.size(240))
+        .task(id: appState.connectionRevision) {
+            // Seed capacities for older hubs and refresh while streaming is unavailable.
+            while !Task.isCancelled {
+                if realtimeStats?.memoryCapacityDisplay == nil || realtimeStats?.diskCapacityDisplay == nil {
+                    do {
+                        let service = try appState.chartService(for: entry.id)
+                        let records = try await service.fetchSystemStats(systemID: entry.system.id, limit: 1)
+                        try Task.checkCancellation()
+                        latestStats = records.first?.stats
+                    } catch is CancellationError {
+                        return
+                    } catch {
+                        // Keep percentages available when capacity data cannot be read.
+                    }
+                }
+                do { try await Task.sleep(for: .seconds(30)) }
+                catch { return }
+            }
+        }
     }
 
     private func formatUptime(_ seconds: Double) -> String {
@@ -133,6 +159,7 @@ struct MetricBar: View {
     let label: LocalizedStringKey
     let value: Double
     let color: Color
+    var capacity: String? = nil
 
     var body: some View {
         VStack(alignment: .leading, spacing: appearance.size(3)) {
@@ -158,6 +185,14 @@ struct MetricBar: View {
                 }
             }
             .frame(height: appearance.size(6))
+
+            if let capacity {
+                Text(verbatim: capacity)
+                    .font(.system(size: appearance.size(10)))
+                    .monospacedDigit()
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
         }
     }
 }

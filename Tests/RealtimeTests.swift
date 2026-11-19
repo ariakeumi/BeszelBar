@@ -1,6 +1,13 @@
 import XCTest
 
 final class RealtimeProtocolTests: XCTestCase {
+    func testRealtimeStatsIncludeMemoryAndDiskCapacities() throws {
+        let metrics: RealtimeMetrics = try fixture(#"{"info":{"mp":25,"dp":50},"stats":{"m":16,"mu":4,"d":100,"du":50,"b":[1024,2048]}}"#)
+        XCTAssertEqual(metrics.stats?.memoryCapacityDisplay, "4 / 16 GiB")
+        XCTAssertEqual(metrics.stats?.diskCapacityDisplay, "50 / 100 GiB")
+        XCTAssertEqual(metrics.stats?.networkTraffic.compactDisplay, "1K | 2K")
+    }
+
     func testParserHandlesFragmentedUTF8CommentsMultilineAndLineEndings() throws {
         var parser = ServerSentEventParser()
         let text = "\u{FEFF}: keepalive\r\n\r\nid: 1\revent: metrics\rdata: {\"name\":\"主机\",\rdata: \"cpu\":12}\r\rdata: next\n\n"

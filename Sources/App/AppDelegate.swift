@@ -7,6 +7,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private var isObserving = false
     private var menuIsOpen = false
     private var menuGeneration = UUID()
+    private lazy var menuPresenter = MenuPanelController { [weak self] menu in
+        self?.menuDidClose(menu)
+    }
 
     func applicationDidFinishLaunching(_: Notification) {
         #if DEBUG
@@ -16,11 +19,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if let button = item.button {
             button.image = NSImage(systemSymbolName: "server.rack", accessibilityDescription: "BeszelBar")
             button.image?.size = NSSize(width: 18, height: 18)
+            button.target = self
+            button.action = #selector(toggleMenu(_:))
+            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
 
-        item.menu = NSMenu()
-        item.menu?.autoenablesItems = false
-        item.menu?.delegate = self
         self.statusItem = item
 
         RefreshService.shared.start()
@@ -36,9 +39,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         #if DEBUG
         if DevelopmentSession.isTestHost { return }
         #endif
+        menuPresenter.close()
         RefreshService.shared.stop()
         isObserving = false
         AppState.shared.stopRefreshing()
+    }
+
+    @objc private func toggleMenu(_ sender: Any?) {
+        if menuPresenter.isOpen {
+            menuPresenter.close()
+            return
+        }
+        guard let button = statusItem?.button, button.window != nil else { return }
+        let menu = MenuBuilder.build(appState: .shared, onDismiss: { [weak self] in
+            self?.menuPresenter.close()
+        })
+        menuWillOpen(menu)
+        menuPresenter.show(menu, relativeTo: button)
+        if !menuPresenter.isOpen { menuDidClose(menu) }
     }
 
     private func startObserving() {

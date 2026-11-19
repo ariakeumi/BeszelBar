@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE370A7F729A4A0E89F19B83 /* MenuPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE370A7F729A4A0E89F19B84 /* MenuPanelController.swift */; };
 		CD9C7A0E8CE34C5685047511 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = CD9C7A0E8CE34C5685047512 /* InfoPlist.xcstrings */; };
 		CE370A7F729A4A0E89F19B81 /* MenuAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE370A7F729A4A0E89F19B82 /* MenuAppearance.swift */; };
 		A2B7D29EF44B4F03AEBCC701 /* RefreshService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF36076631342404B904AA0 /* RefreshService.swift */; };
@@ -181,6 +182,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE370A7F729A4A0E89F19B84 /* MenuPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuPanelController.swift; sourceTree = "<group>"; };
 		CD9C7A0E8CE34C5685047512 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		CE370A7F729A4A0E89F19B82 /* MenuAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuAppearance.swift; sourceTree = "<group>"; };
 		A2B7D29EF44B4F03AEBCC703 /* RefreshServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshServiceTests.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 			children = (
 				5EBAF76E6EBF34C669CB5396 /* MenuActions.swift */,
 				CE370A7F729A4A0E89F19B82 /* MenuAppearance.swift */,
+				CE370A7F729A4A0E89F19B84 /* MenuPanelController.swift */,
 				EFB4A3B7EE637F0B0B23115D /* MenuBuilder.swift */,
 				A3B670E34223ABF8880B1B9A /* WindowManager.swift */,
 				4E0C85877B5A70640CB279EF /* Views */,
@@ -806,6 +809,7 @@
 				8E94C9C4DDFA4ACAE37B963E /* KeychainService.swift in Sources */,
 				D34309692A8DBF8CDB89A18B /* MenuActions.swift in Sources */,
 				CE370A7F729A4A0E89F19B81 /* MenuAppearance.swift in Sources */,
+				CE370A7F729A4A0E89F19B83 /* MenuPanelController.swift in Sources */,
 				EE3535E8F86A11221CA1C31B /* MenuBuilder.swift in Sources */,
 				8A85D81AA6D64658D6D8D645 /* MenuHeaderView.swift in Sources */,
 				6C904759DA3567365D9D1A01 /* Models.swift in Sources */,
