@@ -37,105 +37,170 @@ final class WindowLifecycleTests: XCTestCase {
 
 @MainActor
 final class MenuLifecycleTests: XCTestCase {
-    func testRepeatedLargeMenusReleaseAllHostingViewsBeforeBackgroundPolling() async throws {
+    func testPopupFitsShortContentAndScrollsWhenTheListOverflows() {
+        for (height, expectedHeight) in [(CGFloat(90), CGFloat(90)), (580, 580), (850, 650)] {
+            let hostingView = NSHostingView(rootView: BeszelBar.MenuFittingContent(maximumHeight: 650) {
+                Text("System rows").frame(width: 306, height: height)
+            })
+            XCTAssertEqual(hostingView.fittingSize.height, expectedHeight, accuracy: 0.5)
+        }
+    }
+
+    func testHoverPreviewFitsNearScreenEdgesAndOnNarrowScreens() {
+        let screen = NSRect(x: -900, y: -100, width: 900, height: 600)
+        let menuAtRight = NSRect(x: -335, y: 45, width: 306, height: 430)
+        let row = NSRect(x: -325, y: 367, width: 286, height: 42)
+        let leftPlacement = BeszelBar.SystemMenuHoverPreview.placement(
+            width: 276, row: row, menu: menuAtRight, bounds: screen
+        )
+        let left = leftPlacement.frame(contentHeight: 550, within: screen)
+        XCTAssertTrue(screen.contains(left))
+        XCTAssertEqual(menuAtRight.minX - left.maxX, 4)
+        XCTAssertEqual(left.height, 550)
+        XCTAssertEqual(leftPlacement.frame(contentHeight: 800, within: screen).height, screen.height)
+
+        let menuAtLeft = NSRect(x: -880, y: 45, width: 306, height: 430)
+        let right = BeszelBar.SystemMenuHoverPreview.placement(
+            width: 276, row: row.offsetBy(dx: menuAtLeft.minX - menuAtRight.minX, dy: 0),
+            menu: menuAtLeft, bounds: screen
+        ).frame(contentHeight: 300, within: screen)
+        XCTAssertTrue(screen.contains(right))
+        XCTAssertEqual(right.minX - menuAtLeft.maxX, 4)
+
+        let narrowScreen = NSRect(x: 0, y: 0, width: 550, height: 480)
+        let wideMenu = NSRect(x: 50, y: 16, width: 459, height: 448)
+        let bottomRow = NSRect(x: 56, y: 24, width: 444, height: 36)
+        let above = BeszelBar.SystemMenuHoverPreview.placement(
+            width: 414, row: bottomRow, menu: wideMenu, bounds: narrowScreen
+        ).frame(contentHeight: 800, within: narrowScreen)
+        XCTAssertTrue(narrowScreen.contains(above))
+        XCTAssertGreaterThan(above.minY, bottomRow.maxY)
+        XCTAssertEqual(above.maxY, narrowScreen.maxY)
+    }
+
+    func testReopeningLargeMenuStartsAndStopsFastRefresh() async throws {
         let suite = "BeszelBarTests.MenuMemory.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
         let storage = BeszelBar.StorageManager(defaults: defaults)
         storage.saveInstances([BeszelBar.Instance(name: "Memory test", url: "https://example.invalid", email: "", credential: "")])
         let state = BeszelBar.AppState(storage: storage, credentials: MenuTestCredentials(), serviceFactory: { _ in MenuMemoryService() })
-        state.refresh()
+        let service = BeszelBar.RefreshService(defaults: defaults, refresh: { state.poll() })
+        service.start()
         await state.waitForRefresh()
-        defer { state.stopRefreshing() }
-        let delegate = BeszelBar.AppDelegate()
+        defer { service.stop(); state.stopRefreshing() }
+        XCTAssertEqual(state.visibleSystems.count, 12)
+        XCTAssertEqual(state.visibleContainers.count, 98)
 
+        let menu = MenuTestWindow(state: state, service: service)
+        defer { menu.close() }
         for _ in 0..<3 {
-            let menu = BeszelBar.MenuBuilder.build(appState: state)
-            let views = trackedViews(in: menu)
-            XCTAssertEqual(views.count, 131)
-            delegate.menuWillOpen(menu)
-            delegate.menuDidClose(menu)
-            try await Task.sleep(for: .milliseconds(100))
-            state.poll()
-            await state.waitForRefresh()
-            XCTAssertEqual(menu.numberOfItems, 0)
-            XCTAssertTrue(views.allSatisfy { $0.value == nil }, "Closed menus must release every hosting graph, including container overflow menus")
+            menu.show()
+            for _ in 0..<100 where service.scheduledInterval != 1 {
+                try await Task.sleep(for: .milliseconds(10))
+            }
+            XCTAssertEqual(service.scheduledInterval, 1)
+
+            menu.window.orderOut(nil)
+            for _ in 0..<100 where service.scheduledInterval != 30 {
+                try await Task.sleep(for: .milliseconds(10))
+            }
+            XCTAssertEqual(service.scheduledInterval, 30)
         }
     }
 
-    private final class WeakView {
-        weak var value: NSView?
-        init(_ value: NSView) { self.value = value }
-    }
+    func testHoveringSystemRowShowsSeparatePreviewWithoutResizingThePopup() async throws {
+        let suite = "BeszelBarTests.MenuHover.\(UUID())"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let storage = BeszelBar.StorageManager(defaults: defaults)
+        storage.saveInstances([BeszelBar.Instance(name: "Hover test", url: "https://example.invalid", email: "", credential: "")])
+        let state = BeszelBar.AppState(storage: storage, credentials: MenuTestCredentials(), serviceFactory: { _ in MenuMemoryService() })
+        let service = BeszelBar.RefreshService(defaults: defaults, refresh: { state.poll() })
+        service.start()
+        await state.waitForRefresh()
+        defer { service.stop(); state.stopRefreshing() }
 
-    private func trackedViews(in menu: NSMenu) -> [WeakView] {
-        menu.items.flatMap { item -> [WeakView] in
-            // System rows wrap the hosting view in a plain AppKit view.
-            let own = item.view.map {
-                [WeakView((type(of: $0) == NSView.self ? $0.subviews.first : nil) ?? $0)]
-            } ?? []
-            return own + (item.submenu.map { trackedViews(in: $0) } ?? [])
+        var pointer = CGPoint.zero
+        let hoverPreview = BeszelBar.SystemMenuHoverPreview(mouseLocation: { pointer })
+        let menuInset: CGFloat = 20
+        let menu = MenuTestWindow(state: state, service: service, defaults: defaults, hoverPreview: hoverPreview,
+                                  horizontalInset: menuInset)
+        defer { menu.close() }
+        menu.window.appearance = NSAppearance(named: .darkAqua)
+        let host = try XCTUnwrap(menu.window.contentView)
+        XCTAssertGreaterThan(host.fittingSize.height, 400, "The first window sizing pass must include the host list")
+        menu.show()
+        let row = try XCTUnwrap(hoverAnchor(in: host))
+        let trackingArea = try XCTUnwrap(row.trackingAreas.first)
+        func hoverEvent(_ type: NSEvent.EventType, in window: NSWindow) throws -> NSEvent {
+            try XCTUnwrap(NSEvent.enterExitEvent(
+                with: type, location: .zero, modifierFlags: [], timestamp: 0,
+                windowNumber: window.windowNumber, context: nil, eventNumber: 0,
+                trackingNumber: 0, userData: nil))
         }
+        XCTAssertTrue(trackingArea.options.contains(.inVisibleRect))
+        let menuFrame = menu.window.frame
+        row.mouseEntered(with: try hoverEvent(.mouseEntered, in: menu.window))
+        for _ in 0..<100 where menu.window.childWindows?.isEmpty != false {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+
+        let preview = try XCTUnwrap(menu.window.childWindows?.first)
+        XCTAssertTrue(preview.isVisible)
+        XCTAssertFalse(preview.canBecomeKey)
+        XCTAssertTrue(menu.window.isKeyWindow)
+        XCTAssertEqual(menu.window.frame, menuFrame)
+        let screen = try XCTUnwrap(menu.window.screen)
+        XCTAssertTrue(screen.visibleFrame.contains(preview.frame))
+        let menuContent = menu.window.convertToScreen(host.convert(host.bounds.insetBy(dx: menuInset, dy: 0), to: nil))
+        let gap = max(preview.frame.minX - menuContent.maxX, menuContent.minX - preview.frame.maxX)
+        XCTAssertEqual(gap, 4, accuracy: 0.5, "The gap starts at the menu content edge")
+
+        let previewContent = try XCTUnwrap(preview.contentView)
+        XCTAssertEqual(previewContent.effectiveAppearance.bestMatch(from: [.aqua, .darkAqua]), .aqua)
+        XCTAssertEqual(previewContent.layer?.backgroundColor, NSColor.white.cgColor)
+        previewContent.layoutSubtreeIfNeeded()
+        var trackingView = hoverAnchor(in: previewContent)
+        for _ in 0..<100 where trackingView == nil {
+            try await Task.sleep(for: .milliseconds(10))
+            trackingView = hoverAnchor(in: previewContent)
+        }
+        let previewAnchor = try XCTUnwrap(trackingView)
+        row.mouseExited(with: try hoverEvent(.mouseExited, in: menu.window))
+        pointer = CGPoint(x: preview.frame.midX, y: preview.frame.midY)
+        previewAnchor.mouseEntered(with: try hoverEvent(.mouseEntered, in: preview))
+        try await Task.sleep(for: .milliseconds(250))
+        XCTAssertTrue(preview.isVisible, "Moving from the row into the separate preview must keep it open")
+        XCTAssertEqual(menu.window.frame, menuFrame)
+
+        pointer = CGPoint(x: preview.frame.maxX + 20, y: preview.frame.midY)
+        previewAnchor.mouseExited(with: try hoverEvent(.mouseExited, in: preview))
+        for _ in 0..<100 where preview.isVisible {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        XCTAssertFalse(preview.isVisible)
+        XCTAssertNil(preview.contentView)
+        XCTAssertEqual(menu.window.frame, menuFrame)
+
+        row.mouseEntered(with: try hoverEvent(.mouseEntered, in: menu.window))
+        for _ in 0..<100 where menu.window.childWindows?.isEmpty != false {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        let reopenedPreview = try XCTUnwrap(menu.window.childWindows?.first)
+        menu.window.orderOut(nil)
+        for _ in 0..<100 where menu.window.childWindows?.isEmpty == false {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        XCTAssertTrue(menu.window.childWindows?.isEmpty ?? true)
+        XCTAssertNil(reopenedPreview.contentView)
     }
 
-    func testClosingMenuReleasesNestedViewsAfterActionsHaveRun() async throws {
-        let delegate = BeszelBar.AppDelegate()
-        let menu = NSMenu()
-        let item = NSMenuItem(title: "System", action: nil, keyEquivalent: "")
-        let submenu = NSMenu()
-        let detail = NSMenuItem()
-        item.representedObject = "pending-action"
-        item.view = NSHostingView(rootView: Text("System"))
-        detail.view = NSHostingView(rootView: Text("Details"))
-        weak var rowView = item.view
-        weak var detailView = detail.view
-        submenu.addItem(detail)
-        item.submenu = submenu
-        menu.addItem(item)
-
-        delegate.menuWillOpen(menu)
-        delegate.menuDidClose(menu)
-        XCTAssertEqual(menu.numberOfItems, 1, "Keep the selection intact until AppKit dispatches its action")
-        try await Task.sleep(for: .milliseconds(100))
-
-        XCTAssertEqual(menu.numberOfItems, 0)
-        XCTAssertNil(item.view)
-        XCTAssertNil(detail.view)
-        XCTAssertNil(item.submenu)
-        XCTAssertNil(rowView)
-        XCTAssertNil(detailView)
-        XCTAssertEqual(item.representedObject as? String, "pending-action")
-
-        delegate.menuNeedsUpdate(menu)
-        XCTAssertGreaterThan(menu.numberOfItems, 0, "Reopening must rebuild the menu")
-    }
-
-    func testPendingCleanupDoesNotClearReopenedMenu() async throws {
-        let delegate = BeszelBar.AppDelegate()
-        let menu = NSMenu()
-        delegate.menuNeedsUpdate(menu)
-        delegate.menuWillOpen(menu)
-        delegate.menuDidClose(menu)
-        delegate.menuNeedsUpdate(menu)
-        delegate.menuWillOpen(menu)
-        let header = try XCTUnwrap(menu.items.first?.view)
-        try await Task.sleep(for: .milliseconds(100))
-        XCTAssertTrue(menu.items.first?.view === header)
-        delegate.menuDidClose(menu)
-        try await Task.sleep(for: .milliseconds(100))
-        XCTAssertEqual(menu.numberOfItems, 0)
-    }
-
-    func testPendingCleanupDoesNotClearNewlyPreparedMenu() async throws {
-        let delegate = BeszelBar.AppDelegate()
-        let menu = NSMenu()
-        delegate.menuNeedsUpdate(menu)
-        delegate.menuWillOpen(menu)
-        delegate.menuDidClose(menu)
-        delegate.menuNeedsUpdate(menu)
-        let header = try XCTUnwrap(menu.items.first?.view)
-        try await Task.sleep(for: .milliseconds(100))
-        XCTAssertTrue(menu.items.first?.view === header)
+    private func hoverAnchor(in view: NSView) -> BeszelBar.SystemMenuHoverAnchor.TrackingView? {
+        if let anchor = view as? BeszelBar.SystemMenuHoverAnchor.TrackingView, !anchor.visibleRect.isEmpty {
+            return anchor
+        }
+        return view.subviews.lazy.compactMap { self.hoverAnchor(in: $0) }.first
     }
 }
 
@@ -253,7 +318,7 @@ final class RefreshServiceTests: XCTestCase {
 // Exercise the app module's menu views, not only the duplicated test models.
 @MainActor
 final class MenuRefreshTests: XCTestCase {
-    func testMenuRendersRealtimeMetricsDuringTrackingWithoutPollingEverySecond() async throws {
+    func testOpenMenuRendersRealtimeMetricsWithoutPollingEverySecond() async throws {
         let suite = "BeszelBarTests.MenuRealtime.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
@@ -262,22 +327,18 @@ final class MenuRefreshTests: XCTestCase {
         storage.saveInstances([hub])
         let api = MenuRealtimeService()
         let state = BeszelBar.AppState(storage: storage, credentials: MenuTestCredentials(), serviceFactory: { _ in api })
-        state.refresh()
-        await state.waitForRefresh()
-        state.setRealtimeEnabled(true)
-        let menu = BeszelBar.MenuBuilder.build(appState: state)
         let service = BeszelBar.RefreshService(defaults: defaults, refresh: { state.poll() })
         service.start()
-        service.setMenuOpen(true)
+        await state.waitForRefresh()
         defer { service.stop(); state.stopRefreshing() }
-        let tracking = MenuTrackingSession(menu: menu, state: state)
-        await tracking.run()
-        XCTAssertGreaterThanOrEqual(Set(tracking.samples.compactMap(\.cpu)).count, 3)
-        XCTAssertGreaterThanOrEqual(Set(tracking.samples.map(\.image)).count, 3,
+        let menu = MenuTestWindow(state: state, service: service)
+        let samples = try await menu.sampleWhileVisible()
+        XCTAssertGreaterThanOrEqual(Set(samples.compactMap(\.cpu)).count, 3)
+        XCTAssertGreaterThanOrEqual(Set(samples.map(\.image)).count, 3,
                                     "The open menu must render incoming realtime metrics")
         let systemsCalls = await api.systemsCalls
         XCTAssertEqual(systemsCalls, 1, "Fresh realtime metrics must not trigger second-by-second collection reads")
-        state.setRealtimeEnabled(false)
+        XCTAssertEqual(service.scheduledInterval, 30)
         for _ in 0..<100 {
             if await api.streamClosed { break }
             try await Task.sleep(for: .milliseconds(10))
@@ -286,7 +347,7 @@ final class MenuRefreshTests: XCTestCase {
         XCTAssertTrue(closed)
     }
 
-    func testMenuDisplaysAsyncPollingResultsWhileTracking() async throws {
+    func testOpenMenuDisplaysAsyncPollingResults() async throws {
         let suite = "BeszelBarTests.MenuRefresh.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
@@ -298,17 +359,15 @@ final class MenuRefreshTests: XCTestCase {
         state.refresh()
         await state.waitForRefresh()
         await api.delayDetails()
-        let menu = BeszelBar.MenuBuilder.build(appState: state)
         let service = BeszelBar.RefreshService(defaults: defaults, refresh: { state.refresh() })
         service.start()
-        service.setMenuOpen(true)
         defer { service.stop(); state.stopRefreshing() }
 
-        let tracking = MenuTrackingSession(menu: menu, state: state)
-        await tracking.run()
-        XCTAssertGreaterThanOrEqual(Set(tracking.samples.compactMap(\.cpu)).count, 3,
+        let menu = MenuTestWindow(state: state, service: service)
+        let samples = try await menu.sampleWhileVisible()
+        XCTAssertGreaterThanOrEqual(Set(samples.compactMap(\.cpu)).count, 3,
                                     "Slow system details must not hold up the one-second systems poll")
-        XCTAssertGreaterThanOrEqual(Set(tracking.samples.map(\.image)).count, 3,
+        XCTAssertGreaterThanOrEqual(Set(samples.map(\.image)).count, 3,
                                     "The open menu must render the new polling results")
         let detailsCalls = await api.detailsCalls
         XCTAssertEqual(detailsCalls, 2, "The slow collection must keep only one in-flight request")
@@ -317,81 +376,28 @@ final class MenuRefreshTests: XCTestCase {
 
 @MainActor
 final class MenuFontSizeTests: XCTestCase {
-    func testSavedFontSizeAppliesWhenRebuildingMenus() throws {
+    func testSavedFontSizeScalesMenuContent() throws {
         let suite = "BeszelBarTests.MenuFont.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
         let state = BeszelBar.AppState(storage: BeszelBar.StorageManager(defaults: defaults), credentials: MenuTestCredentials())
-        let standard = BeszelBar.MenuBuilder.build(appState: state, appearance: .load(from: defaults))
-        let standardHeader = try XCTUnwrap(standard.items.first?.view)
-        XCTAssertEqual(standardHeader.frame.width, 276)
+        let service = BeszelBar.RefreshService(defaults: defaults, refresh: {})
+        let standard = MenuTestWindow(state: state, service: service, defaults: defaults)
+        standard.show()
+        let standardWidth = try XCTUnwrap(standard.window.contentView).fittingSize.width
+        standard.close()
 
         defaults.set(18.0, forKey: BeszelBar.MenuAppearance.fontSizeKey)
         let restored = try XCTUnwrap(UserDefaults(suiteName: suite))
-        let large = BeszelBar.MenuBuilder.build(appState: state, appearance: .load(from: restored))
-        let largeHeader = try XCTUnwrap(large.items.first?.view)
-        XCTAssertEqual(largeHeader.frame.width, 414)
-        XCTAssertGreaterThan(largeHeader.frame.height, standardHeader.frame.height)
-        XCTAssertGreaterThan(try XCTUnwrap(large.font).pointSize, try XCTUnwrap(standard.font).pointSize)
+        let large = MenuTestWindow(state: state, service: service, defaults: restored)
+        large.show()
+        defer { large.close() }
+        XCTAssertGreaterThan(standardWidth, 0)
+        XCTAssertEqual(try XCTUnwrap(large.window.contentView).fittingSize.width, standardWidth * 1.5, accuracy: 0.5)
 
-        defaults.set(0.0, forKey: BeszelBar.MenuAppearance.fontSizeKey)
-        XCTAssertEqual(BeszelBar.MenuAppearance.load(from: defaults).fontSize, 10)
-        defaults.set(100.0, forKey: BeszelBar.MenuAppearance.fontSizeKey)
-        XCTAssertEqual(BeszelBar.MenuAppearance.load(from: defaults).fontSize, 18)
-        defaults.removeObject(forKey: BeszelBar.MenuAppearance.fontSizeKey)
-        XCTAssertEqual(BeszelBar.MenuAppearance.load(from: defaults).fontSize, 12)
-    }
-
-    func testMenuLayoutsAtSmallDefaultAndLargeFontSizes() async throws {
-        let suite = "BeszelBarTests.MenuFontLayout.\(UUID().uuidString)"
-        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
-        defer { defaults.removePersistentDomain(forName: suite) }
-        let storage = BeszelBar.StorageManager(defaults: defaults)
-        let hub = BeszelBar.Instance(name: "Menu font test", url: "https://example.invalid", email: "", credential: "")
-        storage.saveInstances([hub])
-        let state = BeszelBar.AppState(storage: storage, credentials: MenuTestCredentials(), serviceFactory: { _ in MenuRealtimeService() })
-        state.refresh()
-        await state.waitForRefresh()
-        defer { state.stopRefreshing() }
-        let folder = URL(fileURLWithPath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
-            .appendingPathComponent("build/screenshots-menu-fonts")
-        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
-        for fontSize in [10.0, 12, 18] {
-            let appearance = BeszelBar.MenuAppearance(fontSize: fontSize)
-            let menu = BeszelBar.MenuBuilder.build(appState: state, appearance: appearance)
-            let systemItem = try XCTUnwrap(menu.items.last)
-            let submenu = try XCTUnwrap(systemItem.submenu)
-            XCTAssertEqual(submenu.font?.pointSize, menu.font?.pointSize)
-            for view in menu.items.compactMap(\.view) + submenu.items.compactMap(\.view) {
-                // System rows use a clear AppKit wrapper around the hosting view.
-                let content = view.subviews.first ?? view
-                XCTAssertGreaterThanOrEqual(view.frame.height + 0.5, content.fittingSize.height)
-            }
-            for (name, content) in [("menu", menu), ("details", submenu)] {
-                for (index, view) in content.items.compactMap(\.view).enumerated() {
-                    try saveRender(view, to: folder.appendingPathComponent("\(name)-\(Int(fontSize))-\(index).png"))
-                }
-            }
-        }
-        let settings = NSHostingView(rootView: BeszelBar.SettingsView(appState: state))
-        settings.frame = NSRect(x: 0, y: 0, width: 500, height: 420)
-        try saveRender(settings, to: folder.appendingPathComponent("settings.png"))
-    }
-
-    private func saveRender(_ view: NSView, to url: URL) throws {
-        let window = NSWindow(contentRect: NSRect(origin: .zero, size: view.frame.size),
-                              styleMask: .borderless, backing: .buffered, defer: false)
-        window.isReleasedWhenClosed = false
-        window.appearance = NSAppearance(named: .aqua)
-        window.contentView = view
-        view.wantsLayer = true
-        view.layer?.backgroundColor = NSColor(white: 0.95, alpha: 1).cgColor
-        view.layoutSubtreeIfNeeded()
-        let bitmap = try XCTUnwrap(view.bitmapImageRepForCachingDisplay(in: view.bounds))
-        view.cacheDisplay(in: view.bounds, to: bitmap)
-        let png = try XCTUnwrap(bitmap.representation(using: .png, properties: [:]))
-        try png.write(to: url)
-        window.close()
+        XCTAssertEqual(BeszelBar.MenuAppearance(fontSize: 0).fontSize, 10)
+        XCTAssertEqual(BeszelBar.MenuAppearance(fontSize: 100).fontSize, 18)
+        XCTAssertEqual(BeszelBar.MenuAppearance(fontSize: .nan).fontSize, 12)
     }
 }
 
@@ -429,49 +435,54 @@ private actor MenuRealtimeService: BeszelBar.BeszelServing {
     func fetchHistory(systemID: String, range: BeszelBar.HistoryRange, now: Date) -> [BeszelBar.SystemStatsRecord] { [] }
 }
 
-/// Enter tracking from the run loop, outside the test's executing Swift task,
-/// just as AppKit does for a status-item click.
 @MainActor
-private final class MenuTrackingSession {
+private final class MenuTestWindow {
     struct Sample {
         let cpu: Double?
         let image: Data
     }
-    let menu: NSMenu
-    let state: BeszelBar.AppState
-    var samples: [Sample] = []
+    let window: NSWindow
+    private let state: BeszelBar.AppState
 
-    init(menu: NSMenu, state: BeszelBar.AppState) {
-        self.menu = menu
+    init(state: BeszelBar.AppState, service: BeszelBar.RefreshService, defaults: UserDefaults = .standard,
+         hoverPreview: BeszelBar.SystemMenuHoverPreview? = nil, horizontalInset: CGFloat = 0) {
         self.state = state
+        window = NSWindow(contentRect: NSRect(x: 100, y: 100, width: 306 + 2 * horizontalInset, height: 470),
+                          styleMask: .titled, backing: .buffered, defer: false)
+        window.isReleasedWhenClosed = false
+        window.contentView = NSHostingView(rootView: BeszelBar.StatusMenuView(appState: state, hoverPreview: hoverPreview) { isOpen in
+            state.setRealtimeEnabled(isOpen)
+            service.setMenuOpen(isOpen)
+        }
+        .defaultAppStorage(defaults)
+        .padding(.horizontal, horizontalInset))
     }
 
-    func run() async {
-        let sampleTimer = Timer(timeInterval: 0.5, repeats: true) { _ in
-            MainActor.assumeIsolated { self.sample() }
-        }
-        let closeTimer = Timer(timeInterval: 3.3, repeats: false) { _ in
-            MainActor.assumeIsolated { self.menu.cancelTracking() }
-        }
-        RunLoop.main.add(sampleTimer, forMode: .common)
-        RunLoop.main.add(closeTimer, forMode: .common)
-        defer { sampleTimer.invalidate(); closeTimer.invalidate() }
-        await withCheckedContinuation { continuation in
-            RunLoop.main.perform(inModes: [.common]) {
-                MainActor.assumeIsolated {
-                    _ = self.menu.popUp(positioning: nil, at: NSPoint(x: 100, y: 100), in: nil)
-                }
-                continuation.resume()
-            }
-        }
+    func show() {
+        NSApp.activate(ignoringOtherApps: true)
+        window.makeKeyAndOrderFront(nil)
+        window.contentView?.layoutSubtreeIfNeeded()
     }
 
-    private func sample() {
-        guard let view = menu.items.last?.view,
-              let bitmap = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { return }
-        view.cacheDisplay(in: view.bounds, to: bitmap)
-        guard let image = bitmap.representation(using: .png, properties: [:]) else { return }
-        samples.append(Sample(cpu: state.visibleSystems.first?.system.cpuPercentage, image: image))
+    func close() {
+        window.orderOut(nil)
+        window.contentView = nil
+        window.close()
+    }
+
+    func sampleWhileVisible() async throws -> [Sample] {
+        show()
+        defer { close() }
+        var samples: [Sample] = []
+        for _ in 0..<6 {
+            try await Task.sleep(for: .milliseconds(500))
+            let view = try XCTUnwrap(window.contentView)
+            let bitmap = try XCTUnwrap(view.bitmapImageRepForCachingDisplay(in: view.bounds))
+            view.cacheDisplay(in: view.bounds, to: bitmap)
+            let image = try XCTUnwrap(bitmap.representation(using: .png, properties: [:]))
+            samples.append(Sample(cpu: state.visibleSystems.first?.system.cpuPercentage, image: image))
+        }
+        return samples
     }
 }
 
@@ -500,201 +511,4 @@ private actor MenuPollingService: BeszelBar.BeszelServing {
     func fetchContainers(filter: String?) async throws -> [BeszelBar.ContainerRecord] { [] }
     func fetchAlerts(filter: String?) async throws -> [BeszelBar.AlertRecord] { [] }
     func fetchHistory(systemID: String, range: BeszelBar.HistoryRange, now: Date) async throws -> [BeszelBar.SystemStatsRecord] { [] }
-}
-
-@MainActor
-final class MenuTransparencyTests: XCTestCase {
-    func testBackgroundOpacityPersistsAndClampsInvalidPreferences() throws {
-        let suite = "BeszelBarTests.MenuOpacity.\(UUID())"
-        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
-        defer { defaults.removePersistentDomain(forName: suite) }
-        XCTAssertEqual(BeszelBar.MenuAppearance.load(from: defaults).backgroundOpacity, 0.95)
-        defaults.set(0.4, forKey: BeszelBar.MenuAppearance.backgroundOpacityKey)
-        XCTAssertEqual(BeszelBar.MenuAppearance.load(from: try XCTUnwrap(UserDefaults(suiteName: suite))).backgroundOpacity, 0.4)
-        defaults.set(-2.0, forKey: BeszelBar.MenuAppearance.backgroundOpacityKey)
-        XCTAssertEqual(BeszelBar.MenuAppearance.load(from: defaults).backgroundOpacity, 0.2)
-        defaults.set(4.0, forKey: BeszelBar.MenuAppearance.backgroundOpacityKey)
-        XCTAssertEqual(BeszelBar.MenuAppearance.load(from: defaults).backgroundOpacity, 1)
-        XCTAssertEqual(BeszelBar.MenuAppearance(backgroundOpacity: .nan).backgroundOpacity, 0.95)
-    }
-
-    func testRenderingChangesOnlyBackgroundAlphaInLightAndDarkModes() throws {
-        for name in [NSAppearance.Name.aqua, .darkAqua] {
-            for opacity in [0.2, 0.6, 1.0] {
-                let menu = NSMenu()
-                let item = NSMenuItem()
-                item.view = OpacityTestForeground(frame: NSRect(x: 0, y: 0, width: 60, height: 40))
-                menu.addItem(item)
-                let panel = BeszelBar.MenuPanel(menu: menu, appearance: .init(backgroundOpacity: opacity), maximumHeight: 500)
-                defer { panel.contentView = nil; panel.close() }
-                panel.appearance = NSAppearance(named: name)
-                let surface = try XCTUnwrap(panel.contentView)
-                surface.layoutSubtreeIfNeeded()
-                let bitmap = try XCTUnwrap(surface.bitmapImageRepForCachingDisplay(in: surface.bounds))
-                surface.cacheDisplay(in: surface.bounds, to: bitmap)
-                let foreground = try XCTUnwrap(bitmap.colorAt(x: 30, y: bitmap.pixelsHigh / 2))
-                let background = try XCTUnwrap(bitmap.colorAt(x: 150, y: bitmap.pixelsHigh / 2))
-                XCTAssertEqual(foreground.alphaComponent, 1, accuracy: 0.02, "Foreground must stay opaque at \(opacity)")
-                XCTAssertEqual(background.alphaComponent, opacity, accuracy: 0.02, "Background alone must change at \(opacity)")
-                XCTAssertEqual(panel.alphaValue, 1)
-                XCTAssertEqual(item.view?.alphaValue, 1)
-            }
-        }
-    }
-
-    func testSubmenusShareOpacityAndActionsDismissAndReleasePanels() async throws {
-        let menu = NSMenu()
-        menu.autoenablesItems = false
-        let parent = NSMenuItem(title: "Systems", action: nil, keyEquivalent: "")
-        let submenu = NSMenu()
-        submenu.autoenablesItems = false
-        let action = OpacityTestAction()
-        let leaf = NSMenuItem(title: "Open", action: #selector(OpacityTestAction.invoke(_:)), keyEquivalent: "")
-        leaf.target = action
-        leaf.representedObject = "system-id"
-        submenu.addItem(leaf)
-        parent.submenu = submenu
-        menu.addItem(parent)
-        let anchorWindow = NSWindow(contentRect: NSRect(x: 100, y: 300, width: 40, height: 24),
-                                    styleMask: .borderless, backing: .buffered, defer: false)
-        anchorWindow.isReleasedWhenClosed = false
-        defer { anchorWindow.close() }
-        let anchor = try XCTUnwrap(anchorWindow.contentView)
-        var closeCount = 0
-        let controller = BeszelBar.MenuPanelController { _ in closeCount += 1 }
-        defer { controller.close() }
-        controller.show(menu, relativeTo: anchor, appearance: .init(backgroundOpacity: 0.4))
-        XCTAssertTrue(controller.isOpen)
-        weak var rootPanel = controller.panels.first
-        controller.panels.first?.onHover?(0)
-        try await Task.sleep(for: .milliseconds(250))
-        XCTAssertEqual(controller.panels.count, 2)
-        weak var childPanel = controller.panels.last
-        XCTAssertTrue(controller.panels.allSatisfy { $0.menuAppearance.backgroundOpacity == 0.4 && $0.alphaValue == 1 })
-        controller.panels.last?.onActivate?(0)
-        XCTAssertEqual(action.receivedID, "system-id")
-        XCTAssertFalse(controller.isOpen)
-        XCTAssertTrue(controller.panels.isEmpty)
-        try await Task.sleep(for: .milliseconds(100))
-        // AppKit may cache the most recent key window. It must no longer own
-        // any hosting views or row closures even while that window is cached.
-        XCTAssertNil(rootPanel?.contentView)
-        XCTAssertTrue(rootPanel?.rows.isEmpty ?? true)
-        XCTAssertNil(childPanel)
-        controller.close()
-        XCTAssertEqual(closeCount, 1)
-    }
-
-    func testKeyboardNavigationSkipsInformationalRowsAndClosesSubmenus() throws {
-        let menu = NSMenu()
-        menu.autoenablesItems = false
-        menu.addItem(.separator())
-        let parent = NSMenuItem(title: "Systems", action: nil, keyEquivalent: "")
-        let child = NSMenu()
-        child.autoenablesItems = false
-        let action = OpacityTestAction()
-        let leaf = NSMenuItem(title: "Open", action: #selector(OpacityTestAction.invoke(_:)), keyEquivalent: "")
-        leaf.target = action
-        leaf.representedObject = "keyboard-system"
-        child.addItem(leaf)
-        parent.submenu = child
-        menu.addItem(parent)
-        let anchorWindow = NSWindow(contentRect: NSRect(x: 100, y: 300, width: 40, height: 24),
-                                    styleMask: .borderless, backing: .buffered, defer: false)
-        anchorWindow.isReleasedWhenClosed = false
-        defer { anchorWindow.close() }
-        var closes = 0
-        let controller = BeszelBar.MenuPanelController { _ in closes += 1 }
-        defer { controller.close() }
-        controller.show(menu, relativeTo: try XCTUnwrap(anchorWindow.contentView))
-        let root = try XCTUnwrap(controller.panels.first)
-        func key(_ code: UInt16) throws {
-            let event = try XCTUnwrap(NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: [],
-                                                     timestamp: 0, windowNumber: root.windowNumber, context: nil,
-                                                     characters: "", charactersIgnoringModifiers: "", isARepeat: false, keyCode: code))
-            XCTAssertTrue(controller.handleKey(event))
-        }
-        try key(125)
-        XCTAssertEqual(root.selectedIndex, 1)
-        try key(124)
-        XCTAssertEqual(controller.panels.count, 2)
-        let detailPanel = try XCTUnwrap(controller.panels.last)
-        XCTAssertEqual(detailPanel.selectedIndex, 0)
-        XCTAssertFalse(detailPanel.frame.intersects(root.frame))
-        try key(123)
-        XCTAssertEqual(controller.panels.count, 1)
-        try key(124)
-        try key(36)
-        XCTAssertEqual(action.receivedID, "keyboard-system")
-        XCTAssertFalse(controller.isOpen)
-        XCTAssertEqual(closes, 1)
-        controller.show(menu, relativeTo: try XCTUnwrap(anchorWindow.contentView))
-        let escape = try XCTUnwrap(NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: [], timestamp: 0,
-                                                  windowNumber: try XCTUnwrap(controller.panels.first).windowNumber,
-                                                  context: nil, characters: "", charactersIgnoringModifiers: "", isARepeat: false, keyCode: 53))
-        XCTAssertTrue(controller.handleKey(escape))
-        XCTAssertFalse(controller.isOpen)
-        XCTAssertEqual(closes, 2)
-    }
-
-    func testPanelsFitOnScreensWithNegativeOrigins() {
-        let screen = NSRect(x: -1440, y: -200, width: 1440, height: 900)
-        for point in [NSPoint(x: -1500, y: 1000), NSPoint(x: 100, y: -400)] {
-            let frame = BeszelBar.MenuPanelController.frame(size: NSSize(width: 350, height: 300), topLeft: point, within: screen)
-            XCTAssertTrue(screen.contains(frame))
-        }
-        XCTAssertEqual(BeszelBar.MenuPanelController.frame(size: NSSize(width: 2000, height: 2000), topLeft: .zero, within: screen), screen)
-    }
-
-    func testSubmenuOpensBesideParentAtEitherScreenEdge() {
-        let screen = NSRect(x: -900, y: -200, width: 900, height: 600)
-        let size = NSSize(width: 284, height: 200)
-        for x in [screen.minX, screen.maxX - 300] {
-            let parent = NSRect(x: x, y: 100, width: 300, height: 270)
-            let frames = BeszelBar.MenuPanelController.submenuFrames(size: size, parent: parent, row: parent, within: screen)
-            XCTAssertEqual(frames.parent, parent)
-            XCTAssertEqual(frames.child.size, size)
-            XCTAssertTrue(screen.contains(frames.child))
-            if x == screen.minX {
-                XCTAssertEqual(frames.child.minX, parent.maxX + 4)
-            } else {
-                XCTAssertEqual(frames.child.maxX, parent.minX - 4)
-            }
-        }
-    }
-
-    func testSubmenuShiftsParentOrStacksWhenScreenSpaceIsLimited() {
-        let screen = NSRect(x: 0, y: 0, width: 800, height: 600)
-        let parent = NSRect(x: 250, y: 20, width: 300, height: 540)
-        let size = NSSize(width: 284, height: 320)
-        let beside = BeszelBar.MenuPanelController.submenuFrames(size: size, parent: parent, row: parent, within: screen)
-        XCTAssertLessThan(beside.parent.minX, parent.minX)
-        XCTAssertEqual(beside.parent.minY, parent.minY)
-        XCTAssertEqual(beside.child.minX, beside.parent.maxX + 4)
-        XCTAssertEqual(beside.child.size, size)
-        XCTAssertTrue(screen.contains(beside.parent))
-        XCTAssertTrue(screen.contains(beside.child))
-
-        let narrow = NSRect(x: 0, y: 0, width: 560, height: 600)
-        let tallParent = NSRect(x: 150, y: 40, width: 300, height: 540)
-        let stacked = BeszelBar.MenuPanelController.submenuFrames(size: size, parent: tallParent, row: tallParent, within: narrow)
-        XCTAssertEqual(stacked.child.maxY, stacked.parent.minY - 4)
-        XCTAssertEqual(stacked.parent.width, tallParent.width)
-        XCTAssertEqual(stacked.child.width, size.width)
-        XCTAssertGreaterThan(stacked.child.height, 0)
-        XCTAssertTrue(narrow.contains(stacked.parent))
-        XCTAssertTrue(narrow.contains(stacked.child))
-    }
-}
-
-private final class OpacityTestForeground: NSView {
-    override func draw(_ dirtyRect: NSRect) {
-        NSColor.green.setFill()
-        bounds.fill()
-    }
-}
-
-private final class OpacityTestAction: NSObject {
-    var receivedID: String?
-    @objc func invoke(_ sender: NSMenuItem) { receivedID = sender.representedObject as? String }
 }

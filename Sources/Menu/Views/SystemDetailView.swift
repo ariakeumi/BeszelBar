@@ -4,6 +4,8 @@ struct SystemDetailView: View {
     @Environment(\.menuAppearance) private var appearance
     let appState: AppState
     let entry: HubSystem
+    var onAction: (() -> Void)? = nil
+    var showsLoadAverage = false
     @State private var latestStats: SystemStatsDetail?
 
     private var realtimeStats: SystemStatsDetail? {
@@ -30,10 +32,14 @@ struct SystemDetailView: View {
         details?.hostname ?? system.info?.h
     }
 
+    private var loadAverage: [Double]? {
+        realtimeStats?.loadAverage ?? system.info?.loadAverage ?? latestStats?.loadAverage
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: appearance.size(8)) {
             VStack(alignment: .leading, spacing: appearance.size(2)) {
-                HStack {
+                HStack(spacing: appearance.size(8)) {
                     let displayName = hostname ?? system.name
                     Label {
                         Text(displayName)
@@ -43,8 +49,11 @@ struct SystemDetailView: View {
                     }
                     .font(.system(size: appearance.size(12), weight: .semibold))
                     .foregroundColor(.primary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Spacer()
+                    if let onAction {
+                        SystemDetailActions(appState: appState, entry: entry, onAction: onAction)
+                    }
                 }
 
                 if cpuModel != nil || cpuCores != nil {
@@ -92,6 +101,9 @@ struct SystemDetailView: View {
                 if let cpu = system.cpuPercentage {
                     MetricBar(label: "CPU", value: cpu, color: valueColor(cpu))
                 }
+                if showsLoadAverage, let loadAverage {
+                    loadAverageRow(loadAverage)
+                }
                 if let mem = system.memoryPercentage {
                     MetricBar(label: "Memory", value: mem, color: valueColor(mem),
                               capacity: realtimeStats?.memoryCapacityDisplay ?? latestStats?.memoryCapacityDisplay ?? "—")
@@ -104,7 +116,7 @@ struct SystemDetailView: View {
         }
         .padding(.horizontal, appearance.size(8))
         .padding(.vertical, appearance.size(6))
-        .frame(width: appearance.size(240))
+        .frame(maxWidth: onAction == nil ? appearance.size(240) : .infinity, alignment: .leading)
         .task(id: appState.connectionRevision) {
             // Seed capacities for older hubs and refresh while streaming is unavailable.
             while !Task.isCancelled {
@@ -124,6 +136,27 @@ struct SystemDetailView: View {
                 catch { return }
             }
         }
+    }
+
+    private func loadAverageRow(_ load: [Double]) -> some View {
+        HStack(spacing: appearance.size(6)) {
+            loadReading("1m", value: load[0])
+            loadReading("5m", value: load[1])
+            loadReading("15m", value: load[2])
+        }
+        .font(.system(size: appearance.size(10)))
+        .frame(maxWidth: .infinity, alignment: .trailing)
+        .accessibilityElement(children: .combine)
+    }
+
+    private func loadReading(_ period: String, value: Double) -> some View {
+        HStack(spacing: appearance.size(2)) {
+            Text(verbatim: period)
+                .foregroundStyle(.secondary)
+            Text(value, format: .number.precision(.fractionLength(0...2)))
+                .monospacedDigit()
+        }
+        .fixedSize(horizontal: true, vertical: false)
     }
 
     private func formatUptime(_ seconds: Double) -> String {

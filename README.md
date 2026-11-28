@@ -41,11 +41,11 @@ To choose a specific certificate when several are installed, set `BESZELBAR_SIGN
 
 - **Localized interface** — English, French, and Simplified Chinese, following your macOS app language preference
 - **Live system cards** — See all your servers with status indicators, CPU, memory, and disk at a glance
-- **Rich system details** — Hover for detailed metrics including temperature, uptime, and usage bars
+- **Rich system details** — Hover over or select a system for detailed metrics including temperature, uptime, and usage bars
 - **Container monitoring** — View Docker containers with health status, resource usage, and image info
 - **Alert notifications** — Active alerts displayed prominently with triggering conditions
 - **Compact menu** — Click the BeszelBar icon in the menu header to open the current hub's Web dashboard; settings and quit controls sit at the top right
-- **Menu appearance** — Adjust the font size and background transparency in Settings → General. Text and icons keep their full opacity; the next menu opening uses the saved appearance.
+- **Menu appearance** — Adjust the menu font size in Settings → General.
 - **Dashboard window** — Open **View Charts…** from a system's submenu for system cards, searchable containers, and alert rules
 - **iOS chart parity** — The same chart and card components as Beszel iOS: CPU and cores, memory/swap, storage and ZFS, network interfaces, sensors/GPU, and container history. Choose 1h, 12h, 24h, 7d, or 30d; unavailable hardware metrics stay hidden.
 - **Multi-hub support** — Choose one hub or **All Hubs** in the menu and dashboard, with each system identified by its hub
@@ -59,7 +59,7 @@ To choose a specific certificate when several are installed, set `BESZELBAR_SIGN
 1. Launch BeszelBar
 2. Click the menu bar icon and open **Settings**
 3. Add your Beszel hub's primary URL, email, and password. Optionally add a secondary URL pointing to the **same hub** (for example, a public HTTPS address alongside a local address).
-4. Your servers appear in the menu bar dropdown. Click the BeszelBar icon in the header for the Web dashboard, or choose **View Charts…** from a system's submenu for the native dashboard.
+4. Your servers appear in the menu bar popup. Click the BeszelBar icon in the header for the Web dashboard, or select a system and choose **View Charts…** for the native dashboard.
 5. With multiple hubs, use the hub selector below the menu title to choose **All Hubs**, or use the dashboard sidebar to monitor them together.
 
 The primary address is preferred. After a connection failure, the secondary address is used for 60 seconds before retrying the primary. HTTP errors, invalid credentials, and certificate errors do not trigger a switch. The dashboard indicates when the secondary URL is in use. Existing hubs keep working without adding a secondary URL.

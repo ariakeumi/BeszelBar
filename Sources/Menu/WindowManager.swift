@@ -54,7 +54,8 @@ final class WindowManager: NSObject, NSWindowDelegate {
 
     func showSettings() {
         if let existing = settingsWindow, existing.isVisible {
-            existing.orderFrontRegardless()
+            existing.makeKeyAndOrderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
             return
         }
 

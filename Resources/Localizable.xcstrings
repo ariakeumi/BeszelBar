@@ -1,48 +1,18 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "settings.menuBackgroundTransparency" : {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Background transparency"
+    "Back" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retour"
           }
         },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Transparence du fond"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "背景透明度"
-          }
-        }
-      }
-    },
-    "settings.menuBackgroundTransparency.description" : {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Only the menu background becomes transparent. Text and icons stay clear. Applies the next time you open the menu."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Seul le fond du menu devient transparent. Le texte et les icônes restent nets. Appliqué à la prochaine ouverture du menu."
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "仅调整菜单背景，文字和图标保持清晰。下次打开菜单时生效。"
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "返回"
           }
         }
       }
@@ -99,19 +69,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adjusts text in the menu bar popup and its submenus. Changes apply the next time you open the menu."
+            "value" : "Adjusts text in the menu bar popup."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ajuste le texte du menu et de ses sous-menus. Les modifications s’appliquent à la prochaine ouverture du menu."
+            "value" : "Ajuste la taille du texte dans le menu de la barre des menus."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "调整菜单栏弹窗及子菜单的文字大小，下次打开弹窗时生效。"
+            "value" : "调整菜单栏弹窗的文字大小。"
           }
         }
       }

@@ -35,7 +35,7 @@ struct SystemInfo: Codable, Hashable, Sendable {
     let l1: Double?
     let l5: Double?
     let l15: Double?
-    let la: [Double]?
+    var la: [Double]?
     let bat: [Double]?
     let g: Double?
     var dt: Double?
@@ -43,6 +43,10 @@ struct SystemInfo: Codable, Hashable, Sendable {
     let ct: Int?
     let efs: [String: Double]?
     let sv: [Int]?
+
+    var loadAverage: [Double]? {
+        loadAverageValues(la, legacy: (l1, l5, l15))
+    }
 }
 
 extension SystemRecord {
@@ -99,9 +103,17 @@ struct SystemStatsDetail: Codable, Sendable {
     var d: Double? = nil
     var du: Double? = nil
     var mem: [Double]? = nil
+    var la: [Double]? = nil
+    var l1: Double? = nil
+    var l5: Double? = nil
+    var l15: Double? = nil
 
     enum CodingKeys: String, CodingKey {
-        case cpu, mp, dp, ns, nr, b, m, mu, d, du, mem
+        case cpu, mp, dp, ns, nr, b, m, mu, d, du, mem, la, l1, l5, l15
+    }
+
+    var loadAverage: [Double]? {
+        loadAverageValues(la, legacy: (l1, l5, l15))
     }
 
     var memoryCapacityDisplay: String? {
@@ -122,6 +134,16 @@ struct SystemStatsDetail: Codable, Sendable {
         let format = FloatingPointFormatStyle<Double>.number.precision(.fractionLength(0...2))
         return "\((used / divisor).formatted(format)) / \((total / divisor).formatted(format)) \(unit)"
     }
+}
+
+private func loadAverageValues(_ values: [Double]?, legacy: (Double?, Double?, Double?)) -> [Double]? {
+    if let values, values.count >= 3 {
+        return Array(values.prefix(3))
+    }
+    if let l1 = legacy.0, let l5 = legacy.1, let l15 = legacy.2 {
+        return [l1, l5, l15]
+    }
+    return nil
 }
 
 struct SystemDetailsRecord: Identifiable, Codable, Hashable {

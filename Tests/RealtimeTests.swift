@@ -8,6 +8,21 @@ final class RealtimeProtocolTests: XCTestCase {
         XCTAssertEqual(metrics.stats?.networkTraffic.compactDisplay, "1K | 2K")
     }
 
+    func testLoadAverageSupportsCurrentAndLegacyPayloads() throws {
+        let saved: SystemRecord = try fixture(#"{"id":"server","name":"Server","status":"up","info":{"l1":2,"l5":1.5,"l15":1}}"#)
+        XCTAssertEqual(saved.info?.loadAverage, [2, 1.5, 1])
+
+        let live: RealtimeMetrics = try fixture(#"{"info":{"la":[0,0.5,1]},"stats":{"la":[0,0.5,1]}}"#)
+        XCTAssertEqual(live.stats?.loadAverage, [0, 0.5, 1])
+        let updated = RealtimeSystemUpdate(systemID: "server", metrics: live).applying(to: saved)
+        XCTAssertEqual(updated.info?.loadAverage, [0, 0.5, 1])
+
+        let partial: RealtimeMetrics = try fixture(#"{"info":{"la":[0.25]},"stats":{"la":[0.25],"l1":1,"l5":2,"l15":3}}"#)
+        XCTAssertEqual(partial.stats?.loadAverage, [1, 2, 3])
+        let unchanged = RealtimeSystemUpdate(systemID: "server", metrics: partial).applying(to: updated)
+        XCTAssertEqual(unchanged.info?.loadAverage, [0, 0.5, 1])
+    }
+
     func testParserHandlesFragmentedUTF8CommentsMultilineAndLineEndings() throws {
         var parser = ServerSentEventParser()
         let text = "\u{FEFF}: keepalive\r\n\r\nid: 1\revent: metrics\rdata: {\"name\":\"主机\",\rdata: \"cpu\":12}\r\rdata: next\n\n"

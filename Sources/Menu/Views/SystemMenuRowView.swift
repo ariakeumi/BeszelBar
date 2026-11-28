@@ -1,6 +1,9 @@
+import AppKit
 import SwiftUI
 
 struct SystemMenuRowView: View {
+    private static let metricSpacing: CGFloat = 4
+
     @Environment(\.menuAppearance) private var appearance
     let appState: AppState
     let entry: HubSystem
@@ -11,17 +14,25 @@ struct SystemMenuRowView: View {
     }
 
     var body: some View {
+        let temperature = system.temperature.flatMap { $0.isFinite ? $0 : nil }
+        let hostnameFont = NSFont.systemFont(ofSize: appearance.size(12), weight: .medium)
+        let hostnameCapHeight = hostnameFont.capHeight
+
         HStack(spacing: appearance.size(8)) {
             VStack(alignment: .leading, spacing: appearance.size(6)) {
                 HStack(alignment: .firstTextBaseline, spacing: appearance.size(8)) {
                     StatusDot(color: statusColor)
+                        .alignmentGuide(.firstTextBaseline) { dimensions in
+                            dimensions[VerticalAlignment.center] + hostnameCapHeight / 2
+                        }
 
                     Text(system.name.isEmpty ? system.id : system.name)
-                        .font(.system(size: appearance.size(12), weight: .medium))
+                        .font(Font(hostnameFont))
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
 
-                    if let temperature = system.temperature, temperature.isFinite {
+                    if let temperature {
                         Text(verbatim: String(format: "%.0f°C", temperature))
                             .font(.system(size: appearance.size(10), weight: .semibold))
                             .monospacedDigit()
@@ -29,18 +40,13 @@ struct SystemMenuRowView: View {
                             .fixedSize()
                     }
                 }
+                .frame(width: temperature == nil ? nil : appearance.size(3 * StatPill.width + 2 * Self.metricSpacing))
 
                 if showsStatsRow {
-                    HStack(spacing: appearance.size(4)) {
-                        if let cpu = system.cpuPercentage {
-                            StatPill(value: cpu, icon: "cpu", showsLessThanOnePercent: false)
-                        }
-                        if let mem = system.memoryPercentage {
-                            StatPill(value: mem, icon: "memorychip")
-                        }
-                        if let disk = system.diskPercentage {
-                            StatPill(value: disk, icon: "internaldrive")
-                        }
+                    HStack(spacing: appearance.size(Self.metricSpacing)) {
+                        StatPill(value: system.cpuPercentage, icon: "cpu", showsLessThanOnePercent: false)
+                        StatPill(value: system.memoryPercentage, icon: "memorychip")
+                        StatPill(value: system.diskPercentage, icon: "internaldrive")
 
                         if system.isOnline {
                             let upload = system.networkTraffic?.uploadDisplay
@@ -124,15 +130,23 @@ struct StatusDot: View {
 }
 
 struct StatPill: View {
+    private static let iconWidth: CGFloat = 12
+    private static let barWidth: CGFloat = 38
+    private static let height: CGFloat = 18
+    private static let spacing: CGFloat = 4
+
+    static let width = iconWidth + spacing + barWidth
+
     @Environment(\.menuAppearance) private var appearance
-    let value: Double
+    let value: Double?
     let icon: String
     var showsLessThanOnePercent = true
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.displayScale) private var displayScale
 
     private var percentage: Double {
-        min(max(value.isFinite ? value : 0, 0), 100)
+        guard let value, value.isFinite else { return 0 }
+        return min(max(value, 0), 100)
     }
 
     private var displayValue: String {
@@ -140,26 +154,40 @@ struct StatPill: View {
     }
 
     var body: some View {
-        HStack(spacing: appearance.size(4)) {
-            Image(systemName: icon)
-                .font(.system(size: appearance.size(10), weight: .medium))
-                .foregroundStyle(.secondary)
-                .frame(width: appearance.size(12))
+        ZStack {
+            if value != nil {
+                HStack(spacing: appearance.size(Self.spacing)) {
+                    Image(systemName: icon)
+                        .font(.system(size: appearance.size(10), weight: .medium))
+                        .foregroundStyle(.secondary)
+                        .frame(width: appearance.size(Self.iconWidth))
 
-            Text(displayValue)
-                .font(.system(size: appearance.size(10), weight: .semibold))
-                .monospacedDigit()
-                .lineLimit(1)
-                .minimumScaleFactor(0.75)
-                .foregroundStyle(colorScheme == .light ? Color.secondary : Color.primary)
-                .padding(.horizontal, appearance.size(3))
-                .frame(width: appearance.size(38), height: appearance.size(18), alignment: .leading)
-                .background { usageFill }
-                .background(Color.secondary.opacity(0.12))
-                .clipShape(RoundedRectangle(cornerRadius: appearance.size(5), style: .continuous))
+                    percentageLabel
+                        .foregroundStyle(colorScheme == .light ? Color.secondary : Color.primary)
+                        .overlay {
+                            percentageLabel
+                                .foregroundStyle(.white)
+                                .mask { usageFill }
+                                .accessibilityHidden(true)
+                        }
+                        .background { usageFill }
+                        .background(Color.secondary.opacity(0.12))
+                        .clipShape(RoundedRectangle(cornerRadius: appearance.size(5), style: .continuous))
+                }
+                .accessibilityElement(children: .combine)
+            }
         }
-        .fixedSize()
-        .accessibilityElement(children: .combine)
+        .frame(width: appearance.size(Self.width), height: appearance.size(Self.height))
+    }
+
+    private var percentageLabel: some View {
+        Text(displayValue)
+            .font(.system(size: appearance.size(10), weight: .semibold))
+            .monospacedDigit()
+            .lineLimit(1)
+            .minimumScaleFactor(0.75)
+            .padding(.horizontal, appearance.size(3))
+            .frame(width: appearance.size(Self.barWidth), height: appearance.size(Self.height), alignment: .leading)
     }
 
     private var usageFill: some View {

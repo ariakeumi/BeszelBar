@@ -20,6 +20,7 @@ struct RealtimeSystemUpdate: Sendable {
         info.b = metrics.info.b ?? info.b
         info.bb = metrics.info.bb ?? info.bb
         info.dt = metrics.info.dt ?? info.dt
+        info.la = metrics.info.loadAverage ?? info.la
         return SystemRecord(id: system.id, name: system.name, status: system.status,
                             host: system.host, port: system.port, info: info,
                             v: system.v, updated: system.updated,
